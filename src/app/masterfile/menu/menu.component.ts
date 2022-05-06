@@ -1,0 +1,78 @@
+import { Component, OnInit } from '@angular/core';
+import { PrimeNGConfig, SelectItemGroup } from "primeng/api";
+import { Masterfile } from 'src/app/models/menu.model';
+import {MegaMenuModule} from 'primeng/megamenu';
+import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+
+@Component({
+  selector: 'app-menu',
+  templateUrl: './menu.component.html',
+  styleUrls: ['./menu.component.css']
+})
+export class MenuComponent implements OnInit {
+
+  cities: Masterfile[] = [];
+  selectedCity: Masterfile;
+  countries: any[];
+  selectedCountries: any[];
+
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) { 
+
+    this.cities = [
+      {name: 'Ancillary Department', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Ancillary Section', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Chief Complaint', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Chief Complaint Details', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Consultation Type', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Barangay', code: "['barangay']", routerLink: "/barangay"},
+      {name: 'Brand', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Department', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Diagnostics', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Doctors', code: "['icd']", routerLink: "/address"},
+      {name: 'Health Facility', code: "['icd']", routerLink: "/icd"},
+      {name: 'ICD10', code: "['icd']", routerLink: "/icd"},
+      {name: 'Immunization', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Immunization Type', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Laboratory', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Medicine', code: "['medicine']", routerLink: "/medicine"},
+      {name: 'Medicine Category', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Municipality', code: "['municipality']", routerLink: "/municipality"},
+      {name: 'Pharmacy', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Patient Type', code: "['icd']", routerLink: "/medicine"},
+      {name: 'PE Sketch', code: "['icd']", routerLink: "/medicine"},
+      {name: 'PHIC Member Category', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Physical Examination Detail', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Physical Examination Detail Type', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Physical Examination Type', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Province', code: "['province']", routerLink: "/province"},
+      {name: 'Radiology', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Region', code: "['icd']", routerLink: "/address"},
+      {name: 'RVS', code: "['icd']", routerLink: "/rvs"},
+      {name: 'Section', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Users', code: "['icd']", routerLink: "/icd"}
+    ]
+
+    this.countries = [
+      { name: "Australia", code: "AU", routerLink: "/icd" },
+      { name: "Brazil", code: "BR", routerLink: "/icd" },
+      { name: "China", code: "CN", routerLink: "/icd" },
+      { name: "Egypt", code: "EG", routerLink: "/icd" },
+      { name: "France", code: "FR", routerLink: "/icd" },
+      { name: "Germany", code: "DE", routerLink: "/icd" },
+      { name: "India", code: "IN", routerLink: "/icd" },
+      { name: "Japan", code: "JP", routerLink: "/icd" },
+      { name: "Spain", code: "ES", routerLink: "/icd" },
+      { name: "United States", code: "US", routerLink: "/icd" }
+    ];
+  
+  }
+
+  ngOnInit(): void {
+  }
+  selectedCitiy(event: any): void {
+    let toRoute = 'masterfile/menu' + event.routerLink;
+    this.router.navigate([toRoute]);
+  }
+
+}

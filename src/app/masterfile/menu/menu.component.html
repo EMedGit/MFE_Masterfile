@@ -1,0 +1,35 @@
+
+
+<div class="card h-1240rem mt-0">
+    <div class="grid">
+        <div class="col-12 md:col-4 lg:col-2">
+            <div>
+                <div class="flex-initial flex align-items-center justify-content-center bg-cyan-400 font-bold text-white m-2 px-5 py-3 border-round">
+                    <label>MASTERFILE</label>
+                </div>
+                
+                <p-listbox [options]="cities" [(ngModel)]="selectedCity" [metaKeySelection]="false" (click)="selectedCitiy(selectedCity)"
+                        [filter]="true" optionLabel="name" [listStyle]="{'max-height':'750px'}" [style]="{'width':'20rem'}" style="height: 800px;">
+                <ng-template let-country pTemplate="item">
+                <div class="country-item">
+                    <div>
+                       
+                        <a class="p-link">
+                            <span>{{country.name}}</span>
+                        </a>
+                    </div>
+                </div>
+                </ng-template>
+                </p-listbox>
+            </div>
+        </div>
+
+        <div class="col-12 md:col-8 lg:col-10" style="background-color: rgb(229, 243, 241);">
+            <router-outlet>
+            </router-outlet>
+            
+        </div>
+
+    </div>
+
+</div>

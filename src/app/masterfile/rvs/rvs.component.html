@@ -1,0 +1,61 @@
+<div class="card">
+    <div class="flex-initial flex align-items-center justify-content-center bg-blue-500 font-bold text-white m-2 px-5 py-3 border-round">
+        <label>RVS</label>
+    </div>
+
+    <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left" class="flex">
+            <button pButton pRipple label="NEW" icon="pi pi-plus-circle" class="p-button-success mr-2" (click)="addRVSPopup()"></button>
+            <button pButton pRipple label="REMOVE" icon="pi pi-trash" class="p-button-danger" [disabled]="!selectedRVS || !selectedRVS.length" ></button>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Search..."/>
+                </span>
+            </div>
+        </ng-template>
+    </p-toolbar>
+
+    <p-table #dt [value]="rvsList" [rows]="5" [paginator]="true"
+        [(selection)]="selectedRVS"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 1rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="code">Code<p-sortIcon field="code"></p-sortIcon></th>
+                <th pSortableColumn="description">Description <p-sortIcon field="description"></p-sortIcon></th>
+                <th pSortableColumn="caseRateAmount">Case Rate Amount<p-sortIcon field="caseRateAmount"></p-sortIcon></th>
+                <th pSortableColumn="hospitalFee">Hospital Fee<p-sortIcon field="hospitalFee"></p-sortIcon></th>
+                <th pSortableColumn="professionalFee">Professional Fee<p-sortIcon field="professionalFee"></p-sortIcon></th>
+                <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rvs>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="rvs"></p-tableCheckbox>
+                </td>
+                <td>{{rvs.code}}</td>
+                <td pTooltip="{{rvs.description.length > 90 ? rvs.description : ''}}">{{(rvs.description.length > 90 ) ? (rvs.description | slice:0:90)+'...': (rvs.description) }}</td>
+                <td>{{rvs.caseRateAmount | currency:'PHP'}}</td>
+                <td>{{rvs.hospitalFee | currency:'PHP'}}</td>
+                <td>{{rvs.professionalFee | currency:'PHP'}}</td>
+                <td>
+                    <i class="pi" style="font-size: 2rem" [ngClass]="{'true-icon pi-check-circle': rvs.status, 'false-icon pi-times-circle': !rvs.status}"></i>
+                </td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" (click)="updateRVSPopUp(rvs)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"></button>
+                </td>
+            </tr>
+        </ng-template>
+        
+    </p-table>
+</div>

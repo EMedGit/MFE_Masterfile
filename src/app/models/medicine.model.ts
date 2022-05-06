@@ -1,0 +1,21 @@
+export interface Medicine {
+    id?:string;
+    code?:string;
+    description?:string;
+    cost?:number;
+    price?:number;
+    drugPriceReferenceIndex?:number;
+    highestPrice?:number;
+    lowestPrice?:number;
+    departmentId?:number;
+    sectionId?:number;
+    activeInactiveStatus?:boolean;
+    category?:number;
+    formCode?:string;
+    genericCode?:string;
+    packageCode?:string;
+    saltCode?:string;
+    strengthCode?:string;
+    unitCode?:string;
+    status?:boolean;
+}

@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+
+.false-icon {
+    color: rgb(206, 29, 6);
+}
+
+.true-icon {
+    color: #256029;
+}
