@@ -9,9 +9,9 @@ import { ButtonModule } from 'primeng/button';
 import { PopupAddressComponent } from './popup/popup-address/popup-address.component';
 import { PopupIcdComponent } from './popup/popup-icd/popup-icd.component';
 import { PopupRvsComponent } from './popup/popup-rvs/popup-rvs.component';
-import {DialogModule} from 'primeng/dialog';
+import { DialogModule } from 'primeng/dialog';
 import { MenuComponent } from './menu/menu.component';
-import {ListboxModule} from 'primeng/listbox';
+import { ListboxModule } from 'primeng/listbox';
 import { FormsModule } from '@angular/forms';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TableModule } from 'primeng/table';
@@ -32,6 +32,10 @@ import { ProvinceComponent } from './province/province.component';
 import { MunicipalityComponent } from './municipality/municipality.component';
 import { BarangayComponent } from './barangay/barangay.component';
 import { PopupProvinceComponent } from './popup/popup-province/popup-province.component';
+import { ImmunizationComponent } from './immunization/immunization.component';
+import { PopupImmunizationComponent } from './popup/popup-immunization/popup-immunization.component';
+import { CivilstatusComponent } from './civilstatus/civilstatus.component';
+import { PopupCivilstatusComponent } from './popup/popup-civilstatus/popup-civilstatus.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +51,11 @@ import { PopupProvinceComponent } from './popup/popup-province/popup-province.co
     ProvinceComponent,
     MunicipalityComponent,
     BarangayComponent,
-    PopupProvinceComponent
+    PopupProvinceComponent,
+    ImmunizationComponent,
+    PopupImmunizationComponent,
+    CivilstatusComponent,
+    PopupCivilstatusComponent
   ],
   imports: [
     CommonModule,

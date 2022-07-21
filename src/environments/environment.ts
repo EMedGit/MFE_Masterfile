@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+
+ masterfileAPI: 'https://masterfile-development.azurewebsites.net/api/v1'
+   //masterfileAPI: 'https://localhost:44353/api/v1'
 };
 
 /*
