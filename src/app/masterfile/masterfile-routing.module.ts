@@ -1,8 +1,10 @@
+
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddressComponent } from './address/address.component';
 import { BarangayComponent } from './barangay/barangay.component';
 import { CivilstatusComponent } from './civilstatus/civilstatus.component';
+import { HealthfacilityComponent } from './healthfacility/healthfacility.component';
 import { IcdComponent } from './icd/icd.component';
 import { ImmunizationComponent } from './immunization/immunization.component';
 import { MedicineComponent } from './medicine/medicine.component';
@@ -22,7 +24,7 @@ const routes: Routes = [
               { path: 'municipality', component: MunicipalityComponent },
               { path: 'barangay', component: BarangayComponent },
               { path: 'immunization', component: ImmunizationComponent },
-              { path: 'civilStatus', component: CivilstatusComponent}] },
+              { path: 'civilStatus', component: CivilstatusComponent}, { path: 'healthfacility', component: HealthfacilityComponent}] },
 ];
 
 @NgModule({
