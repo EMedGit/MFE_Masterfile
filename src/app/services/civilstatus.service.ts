@@ -11,7 +11,6 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class CivilstatusService {
-
   CivilStatus: CivilStatus[];
   constructor(private http: HttpClient) { }
 
@@ -22,11 +21,16 @@ export class CivilstatusService {
     return this.http.get<CivilStatus[]>(`${environment.masterfileAPI}/civilStatus`, { params })
   }
   postCivilStatus(data : CivilStatus) : Observable<CivilStatus>{
-    const params = new HttpParams()      
-    .set('Code ', data.code)
-    .set('Description', data.description);
-    const url = `${environment.masterfileAPI}/civilStatus`;
-    return this.http.post<CivilStatus>(url, { params }, httpOptions);
+    return this.http.post<CivilStatus>(`${environment.masterfileAPI}/civilStatus/`, data, httpOptions);
   }
-
+  putCivilStatus(id: number, data : CivilStatus) : Observable<CivilStatus>{
+    return this.http.put<CivilStatus>(`${environment.masterfileAPI}/civilStatus/${id}`, data, httpOptions);
+  }
+  deleteCivilStatus(id: number) : Observable<any>{
+    return this.http.delete<CivilStatus>(`${environment.masterfileAPI}/civilStatus/${id}`, httpOptions);
+  }
+  batchdeleteCivilStatus(data: CivilStatus[]) : Observable<boolean> {
+    const url = `${environment.masterfileAPI}/civilStatus/batchDelete`;
+    return this.http.post<boolean>(url, data, httpOptions);
+  }
 }
