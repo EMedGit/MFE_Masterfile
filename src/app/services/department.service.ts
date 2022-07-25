@@ -33,7 +33,6 @@ export class DepartmentService {
         );
     }
 
-<<<<<<< HEAD
     // insert(departments: Department) : Observable<boolean> {
     //     return this.http.post<boolean>(`${environment.masterfileAPI}/department`, departments, httpOptions);
     // }    
@@ -41,11 +40,6 @@ export class DepartmentService {
         const url = `${environment.masterfileAPI}/department`;
         return this.http.post<Department>(url, data, httpOptions);
     } 
-=======
-    insert(departments: Department) : Observable<boolean> {
-        return this.http.post<boolean>(`${environment.masterfileAPI}/department`, departments, httpOptions);
-    }    
->>>>>>> 951bb33ea59638b0ec81316e9afecbdbad1d5c42
     update(id: number, data: Department): Observable<any> {
         return this.http.put(`${environment.masterfileAPI}/department/${id}`, data, httpOptions);
     }

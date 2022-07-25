@@ -32,7 +32,6 @@ export class SectionService {
         );
     }
 
-<<<<<<< HEAD
     // insert(section: Section) : Observable<boolean> {
     //     return this.http.post<boolean>(`${environment.masterfileAPI}/section`, section, httpOptions);
     // }
@@ -40,11 +39,6 @@ export class SectionService {
         const url = `${environment.masterfileAPI}/section`;
         return this.http.post<Section>(url, data, httpOptions);
     } 
-=======
-    insert(section: Section) : Observable<boolean> {
-        return this.http.post<boolean>(`${environment.masterfileAPI}/section`, section, httpOptions);
-    }
->>>>>>> 951bb33ea59638b0ec81316e9afecbdbad1d5c42
     update(id: number, data: Section): Observable<any> {
         return this.http.put(`${environment.masterfileAPI}/section/${id}`, data, httpOptions);
     }

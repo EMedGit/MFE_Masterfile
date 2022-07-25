@@ -6,9 +6,5 @@ export interface Department {
     description? : string;
     status? : boolean;
 
-<<<<<<< HEAD
     //sections? : Section[];
-=======
-    sections? : Section[];
->>>>>>> 951bb33ea59638b0ec81316e9afecbdbad1d5c42
 }

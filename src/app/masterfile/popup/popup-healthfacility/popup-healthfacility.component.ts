@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-<<<<<<< HEAD
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { HealthFacility } from 'src/app/models/healthfacility.model';
 import { HealthFacilityService } from 'src/app/services/healthfacility.service';
-=======
->>>>>>> 951bb33ea59638b0ec81316e9afecbdbad1d5c42
 
 @Component({
   selector: 'app-popup-healthfacility',
@@ -14,7 +11,6 @@ import { HealthFacilityService } from 'src/app/services/healthfacility.service';
 })
 export class PopupHealthfacilityComponent implements OnInit {
 
-<<<<<<< HEAD
   healthFacilityForm: FormGroup;
   formBuilder: FormBuilder;
 
@@ -99,11 +95,4 @@ export class PopupHealthfacilityComponent implements OnInit {
   }
 
 
-=======
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
->>>>>>> 951bb33ea59638b0ec81316e9afecbdbad1d5c42
 }
