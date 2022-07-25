@@ -28,10 +28,10 @@ export class MenuComponent implements OnInit {
       {name: 'Chief Complaint Details', code: "['icd']", routerLink: "/medicine"},
       {name: 'Civil Status', code: "[civilStatus]", routerLink: "/civilStatus" },
       {name: 'Consultation Type', code: "['icd']", routerLink: "/medicine"},
-      {name: 'Department', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Department', code: "['department']", routerLink: "/department"},
       {name: 'Diagnostics', code: "['icd']", routerLink: "/medicine"},
       {name: 'Doctors', code: "['icd']", routerLink: "/address"},
-      {name: 'Health Facility', code: "['icd']", routerLink: "/icd"},
+      {name: 'Health Facility', code: "['healthfacility']", routerLink: "/healthfacility"},
       {name: 'ICD10', code: "['icd']", routerLink: "/icd"},
       {name: 'Immunization', code: "['immunization']", routerLink: "/immunization"},
       {name: 'Immunization Type', code: "['icd']", routerLink: "/medicine"},
@@ -50,7 +50,7 @@ export class MenuComponent implements OnInit {
       {name: 'Radiology', code: "['icd']", routerLink: "/medicine"},
       {name: 'Region', code: "['icd']", routerLink: "/address"},
       {name: 'RVS', code: "['icd']", routerLink: "/rvs"},
-      {name: 'Section', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Section', code: "['section']", routerLink: "/section"},
       {name: 'Users', code: "['icd']", routerLink: "/icd"}
     ]
 
