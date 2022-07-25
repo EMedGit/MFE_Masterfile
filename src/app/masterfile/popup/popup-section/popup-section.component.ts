@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+<<<<<<< HEAD
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Section } from 'src/app/models/section.model';
 import { SectionService } from 'src/app/services/section.service';
+=======
+>>>>>>> 951bb33ea59638b0ec81316e9afecbdbad1d5c42
 
 @Component({
   selector: 'app-popup-section',
@@ -11,6 +14,7 @@ import { SectionService } from 'src/app/services/section.service';
 })
 export class PopupSectionComponent implements OnInit {
 
+<<<<<<< HEAD
   sectionForm: FormGroup;
   formBuilder: FormBuilder;
 
@@ -70,4 +74,11 @@ export class PopupSectionComponent implements OnInit {
   }
 
 
+=======
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+>>>>>>> 951bb33ea59638b0ec81316e9afecbdbad1d5c42
 }

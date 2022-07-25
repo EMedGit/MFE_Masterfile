@@ -15,6 +15,8 @@ export class PopupCivilstatusComponent implements OnInit {
   formBuilder: FormBuilder;
   civilstatus: CivilStatus;
   arrCivilStatus: CivilStatus[] = [];
+  civilstatusList: CivilStatus[];
+  id: number = 0;
 
   isActiveStatus=  false;
   isForSaving= false;
@@ -25,6 +27,7 @@ export class PopupCivilstatusComponent implements OnInit {
   ngOnInit(): void {
     this.isForUpdating = this.config.data.isForUpdating;
     this.isForSaving = this.config.data.isForSaving;
+    
     this.buildFormGroup();
     this.civilstatusForm.patchValue(this.config.data.civilStatus);
   }
@@ -36,8 +39,8 @@ export class PopupCivilstatusComponent implements OnInit {
         description: ['']   
       });
   }
-  ClosePopUp(){
-    this.ref.close();
+  ClosePopUp(data:CivilStatus){
+    this.ref.close(data);
   }
 
   ngOnDestroy() {
@@ -47,39 +50,35 @@ export class PopupCivilstatusComponent implements OnInit {
   }
   saveData(){
     if(this.isForSaving){
-        this.civilstatusService.postCivilStatus(this.getValue()).subscribe();
+        this.civilstatusService.postCivilStatus(this.getValue()).subscribe(result=>{
+          this.ClosePopUp(result);  
+        });      
     }
-    else{
-    } 
-    this.ClosePopUp();  
   }
-
-  // saveData(){   
-  //   if(this.isForSaving){
-  //     // this.civilstatusService.postCivilStatus(this.getValue()).subscribe((retval) => { this.civilstatus = retval });     
-  //     this.civilstatusService.postCivilStatus(this.getValue()).subscribe((result: boolean) => {this.arrCivilStatus.push(this.getValue())} );
-  //   }else{      
-  //   }
-  //   this.ClosePopUp(); 
-  // }
-
+  updateData(){    
+    let data = this.config.data.civilStatus;
+    let obj = new CivilStatus();
+    obj.code = this.civilstatusForm.controls['code'].value;
+    obj.description = this.civilstatusForm.controls['description'].value;
+    if(this.isForUpdating){
+      this.civilstatusService.putCivilStatus(data.id, obj).subscribe({
+      next: (result : CivilStatus) => {
+          obj = result;
+          this.ClosePopUp(result); 
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {        
+        console.log('complete');
+      }
+      });
+    }
+  }
   getValue(): CivilStatus {
-    // const currentDate = new Date();
     this.civilstatus = new CivilStatus();
     this.civilstatus.code = this.civilstatusForm.controls['code'].value;
     this.civilstatus.description = this.civilstatusForm.controls['description'].value;
-    // this.civilstatus.createdBy = this.civilstatusForm.controls['createdBy'].value;
-    // this.civilstatus.createdDateTime = currentDate;
-    console.log(this.civilstatus,'test');
     return this.civilstatus;
   }
-
-  // getValue() : CivilStatus {
-  //   let obj : CivilStatus = {
-  //     code : this.civilstatusForm.controls['code'].value,
-  //     description : this.civilstatusForm.controls['description'].value,
-  //   }
-  //   console.log(obj,'keyyyyy');
-  //   return obj;
-  // }
 }

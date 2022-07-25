@@ -28,12 +28,19 @@ export class SectionComponent implements OnInit {
         .getSections('','',0,100)
         .subscribe((retval : Section[]) => {
           console.log(retval);
+<<<<<<< HEAD
           
+=======
+>>>>>>> 951bb33ea59638b0ec81316e9afecbdbad1d5c42
           this.sections = retval;
         });
     }
     catch (error){
+<<<<<<< HEAD
       console.log(error)
+=======
+      console.log
+>>>>>>> 951bb33ea59638b0ec81316e9afecbdbad1d5c42
     }
   }
 
@@ -51,7 +58,11 @@ export class SectionComponent implements OnInit {
       header: 'SECTION DETAILS',
       closable: true,
       data: {
+<<<<<<< HEAD
         section: {},
+=======
+        immunization: {},
+>>>>>>> 951bb33ea59638b0ec81316e9afecbdbad1d5c42
         isForSaving: true
       }
     })
