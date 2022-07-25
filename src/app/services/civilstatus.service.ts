@@ -11,7 +11,6 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class CivilstatusService {
-
   CivilStatus: CivilStatus[];
   constructor(private http: HttpClient) { }
 
@@ -29,5 +28,9 @@ export class CivilstatusService {
   }
   deleteCivilStatus(id: number) : Observable<any>{
     return this.http.delete<CivilStatus>(`${environment.masterfileAPI}/civilStatus/${id}`, httpOptions);
+  }
+  batchdeleteCivilStatus(data: CivilStatus[]) : Observable<boolean> {
+    const url = `${environment.masterfileAPI}/civilStatus/batchDelete`;
+    return this.http.post<boolean>(url, data, httpOptions);
   }
 }

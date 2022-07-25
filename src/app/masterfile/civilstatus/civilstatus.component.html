@@ -6,7 +6,7 @@
     <p-toolbar styleClass="p-mb-4">
         <ng-template pTemplate="left" class="flex">
             <button pButton pRipple label="NEW" icon="pi pi-plus-circle" class="p-button-success mr-2" (click)="addCivilStatusPopup()"></button>
-            <button pButton pRipple label="REMOVE" icon="pi pi-trash" class="p-button-danger" [disabled]="!selectedCivilStatus || !selectedCivilStatus.length" ></button>
+            <button pButton pRipple label="REMOVE" icon="pi pi-trash" class="p-button-danger" (click)="batchdeleteCivilStatus()" [disabled]="!selectedCivilStatus || !selectedCivilStatus.length" ></button>
         </ng-template>
 
         <ng-template pTemplate="right">

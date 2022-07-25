@@ -52,8 +52,7 @@ export class PopupCivilstatusComponent implements OnInit {
     if(this.isForSaving){
         this.civilstatusService.postCivilStatus(this.getValue()).subscribe(result=>{
           this.ClosePopUp(result);  
-        });
-       
+        });      
     }
   }
   updateData(){    
@@ -75,7 +74,6 @@ export class PopupCivilstatusComponent implements OnInit {
       }
       });
     }
-
   }
   getValue(): CivilStatus {
     this.civilstatus = new CivilStatus();

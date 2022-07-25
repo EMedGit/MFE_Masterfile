@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 import { Component, OnInit } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -12,14 +13,14 @@ import { PopupCivilstatusComponent } from '../popup/popup-civilstatus/popup-civi
   providers: [DialogService]
 })
 export class CivilstatusComponent implements OnInit {
-  searchkey:""
+  searchkey: ""
   ref: DynamicDialogRef;
   civilstatus: CivilStatus;
   prevCivilStatusList: CivilStatus[];
   civilstatusList: CivilStatus[];
   selectedCivilStatus: CivilStatus[];
 
-  constructor(private civilstatusService: CivilstatusService, private dialogService : DialogService) { }
+  constructor(private civilstatusService: CivilstatusService, private dialogService: DialogService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.fetchData();
@@ -27,9 +28,9 @@ export class CivilstatusComponent implements OnInit {
   fetchData() {
 
     this.civilstatusService.getCivilStatus().subscribe({
-      next: (result : CivilStatus[]) => {
+      next: (result: CivilStatus[]) => {
         this.civilstatusList = result;
-        this.prevCivilStatusList = this.civilstatusList.filter(x=>x.status);
+        this.prevCivilStatusList = this.civilstatusList.filter(x => x.status);
       },
       error: (err) => {
         console.log(err);
@@ -42,14 +43,13 @@ export class CivilstatusComponent implements OnInit {
 
   filter() {
     console.log(this.selectedCivilStatus)
-    let filter:any[]=[];
+    let filter: any[] = [];
     this.civilstatusList.forEach(val => {
       console.log(val)
-      if(val.description.toUpperCase().includes(this.searchkey.toUpperCase()) && val.status)
-      {
+      if (val.description.toUpperCase().includes(this.searchkey.toUpperCase()) && val.status) {
         filter.push(val);
       }
-      
+
     });
     console.log(filter)
     this.prevCivilStatusList = filter;
@@ -66,11 +66,10 @@ export class CivilstatusComponent implements OnInit {
         isForSaving: true
       }
     })
-    this.ref.onClose.subscribe((data:CivilStatus)=>{
-      if(data!=undefined)
-      {
+    this.ref.onClose.subscribe((data: CivilStatus) => {
+      if (data != undefined) {
         this.civilstatusList.push(data);
-        this.prevCivilStatusList = this.civilstatusList.filter(x=>x.status);
+        this.prevCivilStatusList = this.civilstatusList.filter(x => x.status);
       }
     })
   }
@@ -82,37 +81,34 @@ export class CivilstatusComponent implements OnInit {
       closable: true,
       data: {
         civilStatus,
-        isForUpdating:true
-      }    
+        isForUpdating: true
+      }
     })
-    this.ref.onClose.subscribe((data:CivilStatus)=>{
+    this.ref.onClose.subscribe((data: CivilStatus) => {
 
-      if(data!=undefined)
-      {
+      if (data != undefined) {
         this.civilstatusList.forEach(val => {
-          if(val.id==data.id)
-          {
-           val.code = data.code;
-           val.description = data.description;
-           val.status = data.status;
-           val.createdBy = data.createdBy;
-           val.createdDateTime = data.createdDateTime;
+          if (val.id == data.id) {
+            val.code = data.code;
+            val.description = data.description;
+            val.status = data.status;
+            val.createdBy = data.createdBy;
+            val.createdDateTime = data.createdDateTime;
           }
         });
-        this.prevCivilStatusList = this.civilstatusList.filter(x=>x.status);
+        this.prevCivilStatusList = this.civilstatusList.filter(x => x.status);
       }
     })
   }
-  removeCivilStatusRecord(civilStatus: CivilStatus){
+  removeCivilStatusRecord(civilStatus: CivilStatus) {
     this.civilstatusService.deleteCivilStatus(civilStatus.id).subscribe({
-      next : (result : boolean) => {
+      next: (result: boolean) => {
         result;
         this.civilstatusList.forEach(element => {
-          if(civilStatus.id ==element.id)
-          {
+          if (civilStatus.id == element.id) {
             element.status = false;
           }
-          
+
         });
       },
       error: (err: any) => {
@@ -120,9 +116,39 @@ export class CivilstatusComponent implements OnInit {
       },
       complete: () => {
         console.log('complete');
-        this.prevCivilStatusList = this.civilstatusList.filter(x=>x.status);
+        this.prevCivilStatusList = this.civilstatusList.filter(x => x.status);
       }
-
     });
+  }
+  batchdeleteCivilStatus() {
+    if (this.selectedCivilStatus.length > 0) {
+      console.log(this.selectedCivilStatus)
+      this.selectedCivilStatus.forEach(val => {
+        val.modifiedBy = '';
+        val.modifiedDateTime = this.datePipe.transform(
+          new Date(), 'yyyy-MM-ddTHH:mm:ss'
+        ) as string;
+        val.status = false;
+      });
+      this.civilstatusService.batchdeleteCivilStatus(this.selectedCivilStatus).subscribe({
+        next: (result: boolean) => {
+          if (result) {
+            this.civilstatusList.forEach(val => {
+              let x = this.selectedCivilStatus.find(x => x.id == val.id);
+              if (x != undefined && x != null) {
+                val.status = false;
+              }
+            });
+          }
+        },
+        error: (err: any) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('complete');
+          this.prevCivilStatusList = this.civilstatusList.filter(x => x.status);
+        }
+      });
+    }
   }
 }

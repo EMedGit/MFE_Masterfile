@@ -3,6 +3,8 @@ export class CivilStatus {
     code:string;
     description:string;
     createdBy:string;
-    createdDateTime: Date;
+    createdDateTime: string;
+    modifiedBy: string;
+    modifiedDateTime: string;
     status:boolean;
 }
