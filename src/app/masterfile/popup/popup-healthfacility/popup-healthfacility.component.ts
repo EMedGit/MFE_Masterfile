@@ -60,14 +60,13 @@ export class PopupHealthfacilityComponent implements OnInit {
 
   updateData(){    
     let data = this.config.data.healthFacility;
-    let obj = new HealthFacility();
-    obj.code = this.healthFacilityForm.controls['code'].value;
-    obj.name = this.healthFacilityForm.controls['name'].value;
-    obj.facilityaddress = this.healthFacilityForm.controls['facilityaddress'].value;
+    data.code = this.healthFacilityForm.controls['code'].value;
+    data.name = this.healthFacilityForm.controls['name'].value;
+    data.facilityaddress = this.healthFacilityForm.controls['facilityAddress'].value;
     if(this.isForUpdating){
-      this.healthFacilityService.update(data.id, obj).subscribe({
+      this.healthFacilityService.update(data.id, data).subscribe({
       next: (result : HealthFacility) => {
-          obj = result;
+        data = result;
           this.ClosePopUp(result); 
       },
       error: (err) => {
@@ -85,7 +84,7 @@ export class PopupHealthfacilityComponent implements OnInit {
     this.healthFacility = new HealthFacility();
     this.healthFacility.code = this.healthFacilityForm.controls['code'].value;
     this.healthFacility.name = this.healthFacilityForm.controls['name'].value;
-    this.healthFacility.facilityaddress = this.healthFacilityForm.controls['facilityaddress'].value
+    this.healthFacility.facilityaddress = this.healthFacilityForm.controls['facilityAddress'].value
     return this.healthFacility;
   }
 
