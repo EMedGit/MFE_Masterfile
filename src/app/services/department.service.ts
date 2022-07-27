@@ -41,7 +41,10 @@ export class DepartmentService {
         return this.http.post<Department>(url, data, httpOptions);
     } 
     update(id: number, data: Department): Observable<any> {
-        return this.http.put(`${environment.masterfileAPI}/department/${id}`, data, httpOptions);
+        console.log(data);
+        console.log(JSON.stringify(data));
+        const url = `${environment.masterfileAPI}/department/${id}`;
+        return this.http.put(url, data, httpOptions);
     }
     delete(id: number): Observable<any> {
         return this.http.delete(`${environment.masterfileAPI}/department/${id}`);

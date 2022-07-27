@@ -16,19 +16,18 @@ export class PopupDepartmentComponent implements OnInit {
 
   department: Department;
 
-  isActiveStatus=  false;
-  isForSaving= false;
-  isForUpdating= false;
-
-  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private departmentService : DepartmentService) { }
+  isActiveStatus = false;
+  isForSaving = false;
+  isForUpdating = false;
+  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private departmentService: DepartmentService) { }
 
   ngOnInit(): void {
     this.isActiveStatus = this.config.data.department.status;
-    this.isForUpdating= this.config.data.isForUpdating;
+    this.isForUpdating = this.config.data.isForUpdating;
     this.isForSaving = this.config.data.isForSaving;
-    
+
     this.buildFormGroup();
-    this.departmentForm.patchValue(this.config.data.department)   
+    this.departmentForm.patchValue(this.config.data.department)
   }
 
   buildFormGroup(): void {
@@ -40,8 +39,9 @@ export class PopupDepartmentComponent implements OnInit {
       });
   }
 
-  ClosePopUp(){
-    this.ref.close();
+  ClosePopUp(data: Department) {
+    console.log(this.ref);
+    this.ref.close(data);
   }
 
   ngOnDestroy() {
@@ -50,24 +50,40 @@ export class PopupDepartmentComponent implements OnInit {
     }
   }
 
-  saveData(){
-    if(this.isForSaving){
-        this.departmentService.insert(this.getData()).subscribe((retval) => { this.department = retval });
+  saveData() {
+    if (this.isForSaving) {
+      this.departmentService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
     }
-    else{
-
-    } 
-    this.ClosePopUp();  
   }
 
-
-  getData() : Department {
-    let obj : Department = {
-      code : this.departmentForm.controls['code'].value,
-      description : this.departmentForm.controls['description'].value
+  updateData() {
+    let data = this.config.data.department;
+    data.code = this.departmentForm.controls['code'].value;
+    data.description = this.departmentForm.controls['description'].value;
+    if (this.isForUpdating) {
+      this.departmentService.update(data.id, data).subscribe({
+        next: (result: Department) => {
+          data = result;
+          this.ClosePopUp(result);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('complete');
+        }
+      });
     }
 
-    return obj;
+  }
+
+  getData(): Department {
+    this.department = new Department
+    this.department.code = this.departmentForm.controls['code'].value;
+    this.department.description = this.departmentForm.controls['description'].value;
+    this.department.createdBy = '';
+    this.department.createdDateTime = new Date();
+    return this.department;
   }
 
 }

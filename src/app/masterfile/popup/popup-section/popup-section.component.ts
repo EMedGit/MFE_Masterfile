@@ -39,8 +39,9 @@ export class PopupSectionComponent implements OnInit {
       });
   }
 
-  ClosePopUp(){
-    this.ref.close();
+  ClosePopUp(data: Section){
+    console.log(this.ref);
+    this.ref.close(data);
   }
 
   ngOnDestroy() {
@@ -51,22 +52,36 @@ export class PopupSectionComponent implements OnInit {
 
   saveData(){
     if(this.isForSaving){
-        this.sectionService.insert(this.getData()).subscribe((retval) => { this.section = retval });
-    }
-    else{
-
-    } 
-    this.ClosePopUp();  
+      this.sectionService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
+    }     
   }
 
-
-  getData() : Section {
-    let obj : Section = {
-      code : this.sectionForm.controls['code'].value,
-      description : this.sectionForm.controls['description'].value
+  updateData(){    
+    let data = this.config.data.section;
+    data.code = this.sectionForm.controls['code'].value;
+    data.description = this.sectionForm.controls['description'].value;
+    if(this.isForUpdating){
+      this.sectionService.update(data.id, data).subscribe({
+      next: (result : Section) => {
+        data = result;
+        this.ClosePopUp(result); 
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {        
+        console.log('complete');
+      }
+      });
     }
 
-    return obj;
+  }
+
+  getData() : Section {
+    this.section = new Section
+    this.section.code = this.sectionForm.controls['code'].value;
+    this.section.description = this.sectionForm.controls['description'].value;
+    return this.section;
   }
 
 

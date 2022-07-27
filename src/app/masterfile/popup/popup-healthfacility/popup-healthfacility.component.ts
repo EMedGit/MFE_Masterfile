@@ -27,6 +27,7 @@ export class PopupHealthfacilityComponent implements OnInit {
     this.isForSaving = this.config.data.isForSaving;
     
     this.buildFormGroup();
+    console.log(this.config.data.healthFacility)
     this.healthFacilityForm.patchValue(this.config.data.healthFacility)    
   }
 
@@ -36,12 +37,13 @@ export class PopupHealthfacilityComponent implements OnInit {
       {
         code: [''],
         name: [''],
-        facilityaddress: ['']     
+        facilityAddress: ['']
       });
+
   }
 
   ClosePopUp(data: HealthFacility){
-    this.ref.close();
+    this.ref.close(data);
   }
 
   ngOnDestroy() {
@@ -51,16 +53,13 @@ export class PopupHealthfacilityComponent implements OnInit {
   }
 
   saveData(){
-    if(this.isForSaving){
-        this.healthFacilityService.insert(this.getData()).subscribe( result => { this.ClosePopUp(result); } );
+    if(this.isForSaving) {
+        this.healthFacilityService.insert(this.getData()).subscribe(result => { this.ClosePopUp(result); });
     }
-    else{
-
-    } 
   }
 
   updateData(){    
-    let data = this.config.data.HealthFacility;
+    let data = this.config.data.healthFacility;
     let obj = new HealthFacility();
     obj.code = this.healthFacilityForm.controls['code'].value;
     obj.name = this.healthFacilityForm.controls['name'].value;
@@ -82,16 +81,12 @@ export class PopupHealthfacilityComponent implements OnInit {
 
   }
 
-
   getData() : HealthFacility {
-    let obj : HealthFacility = {
-      id : this.healthFacilityForm.controls['id'].value,
-      code : this.healthFacilityForm.controls['code'].value,
-      name : this.healthFacilityForm.controls['name'].value,
-      facilityaddress : this.healthFacilityForm.controls['facilityaddress'].value
-    }
-
-    return obj;
+    this.healthFacility = new HealthFacility
+    this.healthFacility.code = this.healthFacilityForm.controls['code'].value;
+    this.healthFacility.name = this.healthFacilityForm.controls['name'].value;
+    this.healthFacility.facilityaddress = this.healthFacilityForm.controls['facilityaddress'].value
+    return this.healthFacility;
   }
 
 

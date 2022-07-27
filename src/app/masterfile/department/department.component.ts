@@ -11,11 +11,12 @@ import { PopupDepartmentComponent } from '../popup/popup-department/popup-depart
   providers: [DialogService]
 })
 export class DepartmentComponent implements OnInit {
-
+  searchkey: ""
   ref: DynamicDialogRef;
   department: Department;
   departments: Department[];
   selectedDepartments: Department[];
+  newDepartmentsList: Department[];
 
   constructor(private departmentService : DepartmentService, private dialogService: DialogService) { }
 
@@ -23,26 +24,38 @@ export class DepartmentComponent implements OnInit {
     this.getData();
   }
   getData() {
-    try {
-      this.departmentService
-        .getDepartments('','',0,100)
-        .subscribe((retval : Department[]) => {
-          console.log(retval);
-          this.departments = retval;
-        });
-    }
-    catch (error){
-      console.log
-    }
+    this.departmentService.getDepartments('','',0,100).subscribe({
+      next: (result: Department[]) => {
+        this.departments = result;
+        this.newDepartmentsList = this.departments.filter(x => x.status);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('getdata complete');
+      }
+    })
   }
 
-  filter(value: any) {
-    this.departments.every(a => a.description?.includes(value.key));
+  filter() {
+    //this.departments.every(a => a.description?.includes(value.key));
+    console.log(this.selectedDepartments)
+    let filter: any[] = [];
+    this.newDepartmentsList.forEach(val => {
+      console.log(val)
+      if (val.description.toUpperCase().includes(this.searchkey.toUpperCase()) && val.status) {
+        filter.push(val);
+      }
+
+    });
+    console.log(filter)
+    this.newDepartmentsList = filter;
   }
 
   addDepartmentPopup()
   {
-    this.dialogService.open(PopupDepartmentComponent, {
+    this.ref = this.dialogService.open(PopupDepartmentComponent, {
       width: '1000px',
       height: '450px',
       showHeader: true,
@@ -51,6 +64,12 @@ export class DepartmentComponent implements OnInit {
       data: {
         department: {},
         isForSaving: true
+      }
+    })
+    this.ref.onClose.subscribe((data: Department) => {
+      if (data != undefined) {
+        this.departments.push(data);
+        this.newDepartmentsList = this.departments.filter(x => x.status);
       }
     })
   }
@@ -66,9 +85,44 @@ export class DepartmentComponent implements OnInit {
         isForUpdating: true
       }
     })
+    this.ref.onClose.subscribe((data: Department) => {
+
+      if (data != undefined) {
+        this.departments.forEach(val => {
+          if (val.id == data.id) {
+            val.code = data.code;
+            val.description = data.description;
+            val.status = data.status;
+            val.createdBy = data.createdBy;
+            val.createdDateTime = data.createdDateTime;
+          }
+        });
+        this.newDepartmentsList = this.departments.filter(x => x.status);
+      }
+    })
   }
 
 
+  removeDepartment(department : Department) {
+    this.departmentService.delete(department.id).subscribe({
+      next : (result : boolean) => {
+        result;
+        this.departments.forEach(element => {
+          if (department.id == element.id)
+          {
+            element.status = false;
+          }
+        });
+      },
+      error : (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('complete');
+        this.newDepartmentsList = this.departments.filter(x => x.status);
+      }
+    });
+}
 
 
 }

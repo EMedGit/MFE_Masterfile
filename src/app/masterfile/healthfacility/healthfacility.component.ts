@@ -11,7 +11,7 @@ import { PopupHealthfacilityComponent } from '../popup/popup-healthfacility/popu
   providers: [DialogService]
 })
 export class HealthfacilityComponent implements OnInit {
-
+  searchkey: ""
   ref: DynamicDialogRef;
   healthFacility: HealthFacility;
   healthFacilities: HealthFacility[];
@@ -30,16 +30,29 @@ export class HealthfacilityComponent implements OnInit {
         .subscribe((retval : HealthFacility[]) => {
           console.log(retval);
           this.healthFacilities = retval;
+          this.newHealthFacilityList = this.healthFacilities.filter(x => x.status);
         });
     }
     catch (error){
-      console.log
+      console.log(error);
     }
   }
 
 
   filter(value: any) {
-    this.healthFacilities.every(a => a.name?.includes(value.key));
+    //this.healthFacilities.every(a => a.name?.includes(value.key));
+
+    console.log(this.selectedHealthFacilities)
+    let filter: any[] = [];
+    this.newHealthFacilityList.forEach(val => {
+      console.log(val)
+      if (val.name.toUpperCase().includes(this.searchkey.toUpperCase()) && val.status) {
+        filter.push(val);
+      }
+
+    });
+    console.log(filter)
+    this.newHealthFacilityList = filter;
   }
 
   addHealthFacilityPopup()
@@ -55,6 +68,12 @@ export class HealthfacilityComponent implements OnInit {
         isForSaving: true
       }
     })
+    this.ref.onClose.subscribe((data: HealthFacility) => {
+      if (data != undefined) {
+        this.healthFacilities.push(data);
+        this.newHealthFacilityList = this.healthFacilities.filter(x => x.status);
+      }
+    })
   }
 
   updateHealthFacilityPopup(healthFacility : HealthFacility) {
@@ -66,6 +85,21 @@ export class HealthfacilityComponent implements OnInit {
       data: {
         healthFacility,
         isForUpdating: true
+      }
+    })
+    this.ref.onClose.subscribe((data: HealthFacility) => {
+
+      if (data != undefined) {
+        this.healthFacilities.forEach(val => {
+          if (val.id == data.id) {
+            val.code = data.code;
+            val.name = data.name;
+            val.status = data.status;
+            val.createdBy = data.createdBy;
+            val.createdDateTime = data.createdDateTime;
+          }
+        });
+        this.newHealthFacilityList = this.healthFacilities.filter(x => x.status);
       }
     })
   }

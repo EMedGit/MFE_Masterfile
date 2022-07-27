@@ -1,10 +1,11 @@
-import { Section } from "./section.model";
+export class Department {
+    id : number;
+    code : string;
+    description : string;
+    status : boolean;
+    createdBy:string;
+    createdDateTime: Date;
+    modifiedBy: string;
+    modifiedDateTime: Date;
 
-export interface Department {
-    id? : number;
-    code? : string;
-    description? : string;
-    status? : boolean;
-
-    //sections? : Section[];
 }

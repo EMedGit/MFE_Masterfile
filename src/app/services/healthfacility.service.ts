@@ -24,13 +24,14 @@ export class HealthFacilityService {
         params = params.append('Page', page);
         params = params.append('ItemsPerPage', itemsPerPage);
 
-        return this.http
-        .get<HealthFacility[]>(`${environment.masterfileAPI}/healthFacility`, {params})
-        .pipe(
-            map((result) => {
-            return result;
-            })
-        );
+        // return this.http
+        // .get<HealthFacility[]>(`${environment.masterfileAPI}/healthFacility`, {params})
+        // .pipe(
+        //     map((result) => {
+        //     return result;
+        //     })
+        // );
+        return this.http.get<HealthFacility[]>(`${environment.masterfileAPI}/healthFacility`, { params })
     }
 
     // insert(healthFacilities: HealthFacility) : Observable<boolean> {
