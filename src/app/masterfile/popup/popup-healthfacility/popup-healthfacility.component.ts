@@ -82,7 +82,7 @@ export class PopupHealthfacilityComponent implements OnInit {
   }
 
   getData() : HealthFacility {
-    this.healthFacility = new HealthFacility
+    this.healthFacility = new HealthFacility();
     this.healthFacility.code = this.healthFacilityForm.controls['code'].value;
     this.healthFacility.name = this.healthFacilityForm.controls['name'].value;
     this.healthFacility.facilityaddress = this.healthFacilityForm.controls['facilityaddress'].value
