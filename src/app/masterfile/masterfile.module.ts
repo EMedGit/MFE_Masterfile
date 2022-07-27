@@ -42,6 +42,10 @@ import { DepartmentComponent } from './department/department.component';
 import { PopupDepartmentComponent } from './popup/popup-department/popup-department.component';
 import { SectionComponent } from './section/section.component';
 import { PopupSectionComponent } from './popup/popup-section/popup-section.component';
+import { BrandComponent } from './brand/brand.component';
+import { PopupBrandComponent } from './popup/popup-brand/popup-brand.component';
+import { PatienttypeComponent } from './patienttype/patienttype.component';
+import { PopupPatienttypeComponent } from './popup/popup-patienttype/popup-patienttype.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +71,11 @@ import { PopupSectionComponent } from './popup/popup-section/popup-section.compo
     DepartmentComponent,
     PopupDepartmentComponent,
     SectionComponent,
-    PopupSectionComponent
+    PopupSectionComponent,
+    BrandComponent,
+    PopupBrandComponent,
+    PatienttypeComponent,
+    PopupPatienttypeComponent
   ],
   imports: [
     CommonModule,

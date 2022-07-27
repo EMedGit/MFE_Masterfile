@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddressComponent } from './address/address.component';
 import { BarangayComponent } from './barangay/barangay.component';
+import { BrandComponent } from './brand/brand.component';
 import { CivilstatusComponent } from './civilstatus/civilstatus.component';
 import { DepartmentComponent } from './department/department.component';
 import { HealthfacilityComponent } from './healthfacility/healthfacility.component';
@@ -11,6 +12,7 @@ import { ImmunizationComponent } from './immunization/immunization.component';
 import { MedicineComponent } from './medicine/medicine.component';
 import { MenuComponent } from './menu/menu.component';
 import { MunicipalityComponent } from './municipality/municipality.component';
+import { PatienttypeComponent } from './patienttype/patienttype.component';
 import { ProvinceComponent } from './province/province.component';
 import { RvsComponent } from './rvs/rvs.component';
 import { SectionComponent } from './section/section.component';
@@ -29,7 +31,9 @@ const routes: Routes = [
               { path: 'civilStatus', component: CivilstatusComponent}, 
               { path: 'healthfacility', component: HealthfacilityComponent},
               { path: 'department', component: DepartmentComponent},
-              { path: 'section', component: SectionComponent}
+              { path: 'section', component: SectionComponent},
+              { path: 'brand', component : BrandComponent },
+              { path: 'patientType', component : PatienttypeComponent }
             ] },
 ];
 
