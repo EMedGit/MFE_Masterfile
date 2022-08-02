@@ -1,0 +1,63 @@
+<div class="card">
+    <div class="flex-initial flex align-items-center justify-content-center bg-green-500 font-bold text-white m-2 px-5 py-3 border-round">
+        <label style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: 900;">DISCOUNTS TYPE</label>
+    </div>
+
+    <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left" class="flex">
+            <button pButton pRipple label="NEW" icon="pi pi-plus-circle" class="p-button-success mr-2" (click)="addDiscountsPopup()"></button>
+            <button pButton pRipple label="REMOVE" icon="pi pi-trash" class="p-button-danger" (click)="batchdeleteDiscounts()" [disabled]="!selectedDiscounts || !selectedDiscounts.length" ></button>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Search..." (input)="filter()" [(ngModel)]="searchkey" />
+                </span>
+            </div>
+        </ng-template>
+    </p-toolbar>
+    
+    <p-table #dt [value]="prevDiscountsList" [rows]="5" [paginator]="true" [globalFilterFields]="['description']" 
+        [(selection)]="selectedDiscounts"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 1rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="patientTypeDescription">Patient Type Description<p-sortIcon field="patientTypeDescription"></p-sortIcon></th>
+                <th pSortableColumn="discountschemaPharmacy">Discounts Schema Pharmacy <p-sortIcon field="discountschemaPharmacy"></p-sortIcon></th>
+                <th pSortableColumn="discountschemaLaboratory">Discounts Schema Laboratory <p-sortIcon field="discountschemaLaboratory"></p-sortIcon></th>
+                <th pSortableColumn="discountschemaRadiology">Discounts Schema Radiology <p-sortIcon field="discountschemaRadiology"></p-sortIcon></th>
+                <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-discounts>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="discounts"></p-tableCheckbox>
+                </td>
+                <td>{{discounts.patientTypeDescription}}</td>
+                <td>{{discounts.discountschemaPharmacy}}%</td>
+                <td>{{discounts.discountschemaLaboratory | number: '1.1-5'}}</td>
+                <td>{{discounts.discountschemaRadiology}}</td>
+                <td>
+                    <i class="pi" style="font-size: 2rem"  [ngClass]="{'true-icon pi-check-circle': discounts.status, 'false-icon pi-times-circle': !discounts.status}"></i>
+                </td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" (click)="updateCivilStatusPopUp(discounts)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="removeCivilStatusRecord(discounts)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <!-- <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                In total, there are {{icd10s ? icd10s.length : 0 }} ICD10.
+            </div>
+        </ng-template> -->
+    </p-table>
+</div>

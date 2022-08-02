@@ -1,6 +1,7 @@
 export class PatientType{
     id:number;
-    healthFacilityId:string;
+    healthFacilityId?:number;
+    healthFacilityName?:string;
     description:string;
     createdBy:string;
     createdDateTime: string;

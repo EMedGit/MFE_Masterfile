@@ -28,6 +28,7 @@
                 <th style="width: 1rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
+                <th pSortableColumn="healthFacilityName">Health Facility Name <p-sortIcon field="healthFacilityName"></p-sortIcon></th>
                 <th pSortableColumn="description">Description <p-sortIcon field="description"></p-sortIcon></th>
                 <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
                 <th></th>
@@ -38,8 +39,8 @@
                 <td>
                     <p-tableCheckbox [value]="patientType"></p-tableCheckbox>
                 </td>
+                <td>{{patientType.healthFacilityName}}</td>
                 <td>{{patientType.description}}</td>
-                <!-- <td>{{civilstatus.immunizationTypeId | number}}</td> -->
                 <td>
                     <i class="pi" style="font-size: 2rem"  [ngClass]="{'true-icon pi-check-circle': patientType.status, 'false-icon pi-times-circle': !patientType.status}"></i>
                 </td>

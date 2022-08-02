@@ -30,6 +30,7 @@ export class MenuComponent implements OnInit {
       {name: 'Consultation Type', code: "['icd']", routerLink: "/medicine"},
       {name: 'Department', code: "['department']", routerLink: "/department"},
       {name: 'Diagnostics', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Discounts', code: "[discounts]", routerLink: "/discounts"},
       {name: 'Doctors', code: "['icd']", routerLink: "/address"},
       {name: 'Health Facility', code: "['healthfacility']", routerLink: "/healthfacility"},
       {name: 'ICD10', code: "['icd']", routerLink: "/icd"},

@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -22,7 +23,7 @@ export class PopupBrandComponent implements OnInit {
   isForSaving= false;
   isForUpdating= false;
 
-  constructor(private ref : DynamicDialogRef, private config : DynamicDialogConfig, private brandService : BrandService) { }
+  constructor(private ref : DynamicDialogRef, private config : DynamicDialogConfig, private brandService : BrandService, private datePipe : DatePipe) { }
 
   ngOnInit(): void {
     this.isForUpdating = this.config.data.isForUpdating;
@@ -60,6 +61,9 @@ export class PopupBrandComponent implements OnInit {
     let obj = new Brand();
     obj.code = this.brandForm.controls['code'].value;
     obj.description = this.brandForm.controls['description'].value;
+    obj.modifiedDateTime = this.datePipe.transform(
+      new Date(), 'yyyy-MM-ddTHH:mm:ss'
+    ) as string;
     if(this.isForUpdating){
       console.log('try', obj);
       this.brandService.putBrand(data.id, obj).subscribe({

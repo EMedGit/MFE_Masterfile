@@ -52,8 +52,8 @@ export class PatienttypeComponent implements OnInit {
   addPatientTypePopup(){
     this.ref = this.dialogService.open(PopupPatienttypeComponent, {
       width: '1200px',
-      height: '230px',
-      showHeader: false,
+      height: '380px',
+      showHeader: true,
       closable: true,
       data: {
         isForSaving: true
@@ -69,8 +69,8 @@ export class PatienttypeComponent implements OnInit {
   updatePatientTypePopUp(patienttype : PatientType){
     this.ref = this.dialogService.open(PopupPatienttypeComponent, {
       width: '1200px',
-      height: '230px',
-      showHeader: false,
+      height: '480px',
+      showHeader: true,
       closable: true,
       data: {
         patienttype,
@@ -85,7 +85,6 @@ export class PatienttypeComponent implements OnInit {
               val.status = data.status;
               val.createdBy = data.createdBy;
               val.createdDateTime = data.createdDateTime;
-              console.log(data.createdDateTime, 'testtttt')
             }
           });
           this.prevPatientTypeList = this.patienttypeList.filter(x => x.status);

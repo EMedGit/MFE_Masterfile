@@ -6,6 +6,7 @@ import { BarangayComponent } from './barangay/barangay.component';
 import { BrandComponent } from './brand/brand.component';
 import { CivilstatusComponent } from './civilstatus/civilstatus.component';
 import { DepartmentComponent } from './department/department.component';
+import { DiscountsComponent } from './discounts/discounts.component';
 import { HealthfacilityComponent } from './healthfacility/healthfacility.component';
 import { IcdComponent } from './icd/icd.component';
 import { ImmunizationComponent } from './immunization/immunization.component';
@@ -39,7 +40,8 @@ const routes: Routes = [
               { path: 'patientType', component : PatienttypeComponent },
               { path: 'physicalexaminationdetail', component: PhysicalexaminationdetailComponent},
               { path: 'physicalexaminationdetailtype', component: PhysicalexaminationdetailtypeComponent},
-              { path: 'physicalexaminationtype', component: PhysicalexaminationtypeComponent}
+              { path: 'physicalexaminationtype', component: PhysicalexaminationtypeComponent},
+              { path: 'discounts', component : DiscountsComponent }
             ] },
 ];
 
