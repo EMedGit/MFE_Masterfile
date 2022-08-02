@@ -1,10 +1,10 @@
-<form [formGroup]="departmentForm">
+<form [formGroup]="physicalExaminationTypeForm">
     <div class="card p-fluid">
         <div class="grid mb-0 mt-1">
             <div class="col-6">
-                <h1>DEPARTMENT DETAIL</h1>
+                <h1>PHYSICAL EXAMINATION TYPE</h1>
             </div>            
-        </div>    
+        </div>
         <div class="row">
             <div class="col">
                 <hr>
@@ -12,25 +12,17 @@
             <div class="col">
             </div>
         </div>  
+        
         <div class="grid mb-1">
-            <div class="col-4 p-fluid">
+            <div class="col-12 p-fluid">
                 <span class="p-float-label">
-                    <input type="text" id="code" formControlName="code" pInputText style="font-weight: bold;" >
-                    <label for="code">Code</label>
+                    <input type="text" id="type" formControlName="type" pInputText style="font-weight: bold;">
+                    <label for="type">Type</label>
                 </span>
             </div>
             <div class="col-4 p-fluid" style="align-self: center;" *ngIf="isForUpdating">
                 <i class="pi pi-check-circle" style="font-size: 2rem" pTooltip="Active Record" *ngIf="isActiveStatus"></i>
                 <i class="pi pi-times-circle" style="font-size: 2rem" pTooltip="Inactive Record"  *ngIf="!isActiveStatus"></i>
-            </div>
-        </div>
-        
-        <div class="grid mb-1">
-            <div class="col-12 p-fluid">
-                <span class="p-float-label">
-                    <input type="text" id="description" formControlName="description" pInputText style="font-weight: bold;">
-                    <label for="description">Description</label>
-                </span>
             </div>
         </div>
                 

@@ -6,9 +6,9 @@ export class HealthFacility {
     facilityaddress : string;
     status : boolean;
     createdBy : string;
-    createdDateTime : string;
+    createdDateTime : Date;
     modifiedBy : string;
-    modifiedDateTime : string;
+    modifiedDateTime : Date;
 
 
 

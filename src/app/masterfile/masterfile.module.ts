@@ -46,6 +46,12 @@ import { BrandComponent } from './brand/brand.component';
 import { PopupBrandComponent } from './popup/popup-brand/popup-brand.component';
 import { PatienttypeComponent } from './patienttype/patienttype.component';
 import { PopupPatienttypeComponent } from './popup/popup-patienttype/popup-patienttype.component';
+import { PhysicalexaminationdetailComponent } from './physicalexaminationdetail/physicalexaminationdetail.component';
+import { PhysicalexaminationdetailtypeComponent } from './physicalexaminationdetailtype/physicalexaminationdetailtype.component';
+import { PhysicalexaminationtypeComponent } from './physicalexaminationtype/physicalexaminationtype.component';
+import { PopupPhysicalexaminationdetailComponent } from './popup/popup-physicalexaminationdetail/popup-physicalexaminationdetail.component';
+import { PopupPhysicalexaminationtypeComponent } from './popup/popup-physicalexaminationtype/popup-physicalexaminationtype.component';
+import { PopupPhysicalexaminationdetailtypeComponent } from './popup/popup-physicalexaminationdetailtype/popup-physicalexaminationdetailtype.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +81,13 @@ import { PopupPatienttypeComponent } from './popup/popup-patienttype/popup-patie
     BrandComponent,
     PopupBrandComponent,
     PatienttypeComponent,
-    PopupPatienttypeComponent
+    PopupPatienttypeComponent,
+    PhysicalexaminationdetailComponent,
+    PhysicalexaminationdetailtypeComponent,
+    PhysicalexaminationtypeComponent,
+    PopupPhysicalexaminationdetailComponent,
+    PopupPhysicalexaminationtypeComponent,
+    PopupPhysicalexaminationdetailtypeComponent
   ],
   imports: [
     CommonModule,

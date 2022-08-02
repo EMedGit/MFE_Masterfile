@@ -42,7 +42,10 @@ export class HealthFacilityService {
         return this.http.post<HealthFacility>(url, data, httpOptions);
     } 
     update(id: number, data: HealthFacility): Observable<HealthFacility> {
-        return this.http.put<HealthFacility>(`${environment.masterfileAPI}/healthFacility/${id}`, data, httpOptions);
+        console.log(data);
+        console.log(JSON.stringify(data));
+        const url = `${environment.masterfileAPI}/healthFacility/${id}`;
+        return this.http.put<HealthFacility>(`url`, data, httpOptions);
     }
     delete(id: number): Observable<any> {
         return this.http.delete(`${environment.masterfileAPI}/healthFacility/${id}`);

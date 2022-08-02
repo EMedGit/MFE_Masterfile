@@ -86,7 +86,6 @@ export class DepartmentComponent implements OnInit {
       }
     })
     this.ref.onClose.subscribe((data: Department) => {
-
       if (data != undefined) {
         this.departments.forEach(val => {
           if (val.id == data.id) {
@@ -122,7 +121,7 @@ export class DepartmentComponent implements OnInit {
         this.newDepartmentsList = this.departments.filter(x => x.status);
       }
     });
-}
+  }
 
 
 }

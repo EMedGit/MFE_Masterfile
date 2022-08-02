@@ -4,9 +4,9 @@ export class Section {
     description : string;
     status : boolean;
     createdBy:string;
-    createdDateTime: string;
+    createdDateTime: Date;
     modifiedBy: string;
-    modifiedDateTime: string;
+    modifiedDateTime: Date;
 
     departmentID? : number;
 }
