@@ -78,7 +78,7 @@ export class PopupDepartmentComponent implements OnInit {
   }
 
   getData(): Department {
-    this.department = new Department
+    this.department = new Department();
     this.department.code = this.departmentForm.controls['code'].value;
     this.department.description = this.departmentForm.controls['description'].value;
     this.department.createdBy = '';

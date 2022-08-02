@@ -14,6 +14,9 @@ import { MunicipalityComponent } from './municipality/municipality.component';
 import { ProvinceComponent } from './province/province.component';
 import { RvsComponent } from './rvs/rvs.component';
 import { SectionComponent } from './section/section.component';
+import { PhysicalexaminationdetailComponent } from './physicalexaminationdetail/physicalexaminationdetail.component';
+import { PhysicalexaminationdetailtypeComponent } from './physicalexaminationdetailtype/physicalexaminationdetailtype.component';
+import { PhysicalexaminationtypeComponent } from './physicalexaminationtype/physicalexaminationtype.component';
 
 const routes: Routes = [
   { path: 'rvs', component: RvsComponent },
@@ -29,7 +32,10 @@ const routes: Routes = [
               { path: 'civilStatus', component: CivilstatusComponent}, 
               { path: 'healthfacility', component: HealthfacilityComponent},
               { path: 'department', component: DepartmentComponent},
-              { path: 'section', component: SectionComponent}
+              { path: 'section', component: SectionComponent},
+              { path: 'physicalexaminationdetail', component: PhysicalexaminationdetailComponent},
+              { path: 'physicalexaminationdetailtype', component: PhysicalexaminationdetailtypeComponent},
+              { path: 'physicalexaminationtype', component: PhysicalexaminationtypeComponent}
             ] },
 ];
 

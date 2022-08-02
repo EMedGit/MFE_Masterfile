@@ -42,6 +42,12 @@ import { DepartmentComponent } from './department/department.component';
 import { PopupDepartmentComponent } from './popup/popup-department/popup-department.component';
 import { SectionComponent } from './section/section.component';
 import { PopupSectionComponent } from './popup/popup-section/popup-section.component';
+import { PhysicalexaminationdetailComponent } from './physicalexaminationdetail/physicalexaminationdetail.component';
+import { PhysicalexaminationdetailtypeComponent } from './physicalexaminationdetailtype/physicalexaminationdetailtype.component';
+import { PhysicalexaminationtypeComponent } from './physicalexaminationtype/physicalexaminationtype.component';
+import { PopupPhysicalexaminationdetailComponent } from './popup/popup-physicalexaminationdetail/popup-physicalexaminationdetail.component';
+import { PopupPhysicalexaminationtypeComponent } from './popup/popup-physicalexaminationtype/popup-physicalexaminationtype.component';
+import { PopupPhysicalexaminationdetailtypeComponent } from './popup/popup-physicalexaminationdetailtype/popup-physicalexaminationdetailtype.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +73,13 @@ import { PopupSectionComponent } from './popup/popup-section/popup-section.compo
     DepartmentComponent,
     PopupDepartmentComponent,
     SectionComponent,
-    PopupSectionComponent
+    PopupSectionComponent,
+    PhysicalexaminationdetailComponent,
+    PhysicalexaminationdetailtypeComponent,
+    PhysicalexaminationtypeComponent,
+    PopupPhysicalexaminationdetailComponent,
+    PopupPhysicalexaminationtypeComponent,
+    PopupPhysicalexaminationdetailtypeComponent
   ],
   imports: [
     CommonModule,

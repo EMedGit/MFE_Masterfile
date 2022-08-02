@@ -78,9 +78,11 @@ export class PopupSectionComponent implements OnInit {
   }
 
   getData() : Section {
-    this.section = new Section
+    this.section = new Section();
     this.section.code = this.sectionForm.controls['code'].value;
     this.section.description = this.sectionForm.controls['description'].value;
+    this.section.createdBy = '';
+    this.section.createdDateTime = new Date();
     return this.section;
   }
 
