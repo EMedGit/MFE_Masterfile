@@ -54,6 +54,8 @@ import { PopupPhysicalexaminationtypeComponent } from './popup/popup-physicalexa
 import { PopupPhysicalexaminationdetailtypeComponent } from './popup/popup-physicalexaminationdetailtype/popup-physicalexaminationdetailtype.component';
 import { DiscountsComponent } from './discounts/discounts.component';
 import { PopupDiscountsComponent } from './popup/popup-discounts/popup-discounts.component';
+import { PhicmembercategoryComponent } from './phicmembercategory/phicmembercategory.component';
+import { PopupPhicmembercategoryComponent } from './popup/popup-phicmembercategory/popup-phicmembercategory.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +93,9 @@ import { PopupDiscountsComponent } from './popup/popup-discounts/popup-discounts
     PopupPhysicalexaminationtypeComponent,
     PopupPhysicalexaminationdetailtypeComponent,
     DiscountsComponent,
-    PopupDiscountsComponent
+    PopupDiscountsComponent,
+    PhicmembercategoryComponent,
+    PopupPhicmembercategoryComponent
   ],
   imports: [
     CommonModule,

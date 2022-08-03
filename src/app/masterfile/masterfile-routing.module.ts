@@ -20,6 +20,7 @@ import { SectionComponent } from './section/section.component';
 import { PhysicalexaminationdetailComponent } from './physicalexaminationdetail/physicalexaminationdetail.component';
 import { PhysicalexaminationdetailtypeComponent } from './physicalexaminationdetailtype/physicalexaminationdetailtype.component';
 import { PhysicalexaminationtypeComponent } from './physicalexaminationtype/physicalexaminationtype.component';
+import { PhicmembercategoryComponent } from './phicmembercategory/phicmembercategory.component';
 
 const routes: Routes = [
   { path: 'rvs', component: RvsComponent },
@@ -41,7 +42,8 @@ const routes: Routes = [
               { path: 'physicalexaminationdetail', component: PhysicalexaminationdetailComponent},
               { path: 'physicalexaminationdetailtype', component: PhysicalexaminationdetailtypeComponent},
               { path: 'physicalexaminationtype', component: PhysicalexaminationtypeComponent},
-              { path: 'discounts', component : DiscountsComponent }
+              { path: 'discounts', component : DiscountsComponent },
+              { path: 'phicmembercategory', component : PhicmembercategoryComponent }
             ] },
 ];
 
