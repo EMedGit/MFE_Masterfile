@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Phicmembercategory } from 'src/app/models/phicmembercategory';
+import { Phicmembercategory } from 'src/app/models/phicmembercategory.model';
 import { PhicmembercategoryService } from 'src/app/services/phicmembercategory.service';
 import { PopupPhicmembercategoryComponent } from '../popup/popup-phicmembercategory/popup-phicmembercategory.component';
 

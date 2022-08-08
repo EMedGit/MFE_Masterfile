@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Phicmembercategory } from 'src/app/models/phicmembercategory';
+import { Phicmembercategory } from 'src/app/models/phicmembercategory.model';
 import { PhicmembercategoryService } from 'src/app/services/phicmembercategory.service';
 
 @Component({

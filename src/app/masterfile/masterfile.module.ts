@@ -56,6 +56,10 @@ import { DiscountsComponent } from './discounts/discounts.component';
 import { PopupDiscountsComponent } from './popup/popup-discounts/popup-discounts.component';
 import { PhicmembercategoryComponent } from './phicmembercategory/phicmembercategory.component';
 import { PopupPhicmembercategoryComponent } from './popup/popup-phicmembercategory/popup-phicmembercategory.component';
+import { ConsultationtypeComponent } from './consultationtype/consultationtype.component';
+import { PopupConsultationtypeComponent } from './popup/popup-consultationtype/popup-consultationtype.component';
+import { MedicinecategoryComponent } from './medicinecategory/medicinecategory.component';
+import { PopupMedicinecategoryComponent } from './popup/popup-medicinecategory/popup-medicinecategory.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +99,11 @@ import { PopupPhicmembercategoryComponent } from './popup/popup-phicmembercatego
     DiscountsComponent,
     PopupDiscountsComponent,
     PhicmembercategoryComponent,
-    PopupPhicmembercategoryComponent
+    PopupPhicmembercategoryComponent,
+    ConsultationtypeComponent,
+    PopupConsultationtypeComponent,
+    MedicinecategoryComponent,
+    PopupMedicinecategoryComponent
   ],
   imports: [
     CommonModule,

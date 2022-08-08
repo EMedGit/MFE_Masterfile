@@ -21,6 +21,8 @@ import { PhysicalexaminationdetailComponent } from './physicalexaminationdetail/
 import { PhysicalexaminationdetailtypeComponent } from './physicalexaminationdetailtype/physicalexaminationdetailtype.component';
 import { PhysicalexaminationtypeComponent } from './physicalexaminationtype/physicalexaminationtype.component';
 import { PhicmembercategoryComponent } from './phicmembercategory/phicmembercategory.component';
+import { ConsultationtypeComponent } from './consultationtype/consultationtype.component';
+import { MedicinecategoryComponent } from './medicinecategory/medicinecategory.component';
 
 const routes: Routes = [
   { path: 'rvs', component: RvsComponent },
@@ -43,7 +45,9 @@ const routes: Routes = [
               { path: 'physicalexaminationdetailtype', component: PhysicalexaminationdetailtypeComponent},
               { path: 'physicalexaminationtype', component: PhysicalexaminationtypeComponent},
               { path: 'discounts', component : DiscountsComponent },
-              { path: 'phicmembercategory', component : PhicmembercategoryComponent }
+              { path: 'phicmembercategory', component : PhicmembercategoryComponent },
+              { path: 'consultationtype', component : ConsultationtypeComponent },
+              { path: 'medicinecategory', component : MedicinecategoryComponent }
             ] },
 ];
 

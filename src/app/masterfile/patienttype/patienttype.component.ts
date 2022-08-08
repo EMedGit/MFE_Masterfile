@@ -85,6 +85,7 @@ export class PatienttypeComponent implements OnInit {
               val.status = data.status;
               val.createdBy = data.createdBy;
               val.createdDateTime = data.createdDateTime;
+              val.healthFacilityName = data.healthFacilityName;
             }
           });
           this.prevPatientTypeList = this.patienttypeList.filter(x => x.status);

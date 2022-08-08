@@ -83,8 +83,10 @@ export class PopupPatienttypeComponent implements OnInit {
     {
       let x = this.healthFacilityList.find(x => x.id);
       obj.healthFacilityId = x?.id
+      obj.healthFacilityName = x?.name
     } else {
       obj.healthFacilityId = this.healthfacility.id;
+      obj.healthFacilityName = this.healthfacility.name;
     }
 
     obj.description = this.patienttypeForm.controls['description'].value;
@@ -111,7 +113,6 @@ export class PopupPatienttypeComponent implements OnInit {
   }
   getValue(): PatientType {
     this.patienttype = new PatientType();
-    console.log(this.healthfacility, 'yey')
     if(this.healthfacility == undefined)
     {
       let x = this.healthFacilityList.find(x => x.id); 
