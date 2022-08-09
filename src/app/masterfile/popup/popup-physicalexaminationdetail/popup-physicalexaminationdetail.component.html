@@ -1,7 +1,7 @@
 <form [formGroup]="physicalExaminationDetailForm">
     <div class="card p-fluid">
         <div class="grid mb-0 mt-1">
-            <div class="col-6">
+            <div class="col-12">
                 <h1>PHYSICAL EXAMINATION DETAIL</h1>
             </div>
             
@@ -34,26 +34,25 @@
                 </span>
             </div>
         </div>
-
+        <br>
         <div class="grid mb-1">
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
                     <p-dropdown id="physicalExaminationTypeId" formControlName="physicalExaminationTypeId" 
-                    [options]="petList" optionLabel="type" [(ngModel)]="selectedpet" (onChange)="changePEType()"></p-dropdown>
+                    [options]="petList" optionLabel="type" [(ngModel)]="selectedpet" (onChange)="changePEType()" placeholder=""></p-dropdown>
                     <label for="physicalExaminationTypeId">Physical Examination Type</label>
                 </span>
             </div>
-        </div>
-        
-        <div class="grid mb-1">
+            
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
                     <p-dropdown id="physicalExaminationDetailTypeId" formControlName="physicalExaminationDetailTypeId" 
-                    [options]="pedtList" optionLabel="description" [(ngModel)]="selectedpedt"></p-dropdown>
+                    [options]="pedtList" optionLabel="description" [(ngModel)]="selectedpedt" placeholder=""></p-dropdown>
                     <label for="physicalExaminationDetailTypeId">Physical Examination Detail Type</label>
                 </span>
             </div>
         </div>
+        
                 
         <div class="grid mb-1 mr-1">
             <div class="col-12 relative">

@@ -29,7 +29,6 @@ export class PhysicalexaminationdetailtypeComponent implements OnInit {
       next: (result: PhysicalExaminationDetailType[]) => {
         this.physicalExaminationDetailTypes = result;
         this.newphysicalExaminationDetailTypesList = this.physicalExaminationDetailTypes.filter(x => x.status);
-        console.log(this.newphysicalExaminationDetailTypesList);
       },
       error: (err) => {
         console.log(err);

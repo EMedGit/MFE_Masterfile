@@ -19,6 +19,7 @@ export class PopupHealthfacilityComponent implements OnInit {
   isActiveStatus=  false;
   isForSaving= false;
   isForUpdating= false;
+  
   constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private healthFacilityService : HealthFacilityService) { }
 
   ngOnInit(): void {
@@ -27,7 +28,6 @@ export class PopupHealthfacilityComponent implements OnInit {
     this.isForSaving = this.config.data.isForSaving;
     
     this.buildFormGroup();
-    console.log(this.config.data.healthFacility)
     this.healthFacilityForm.patchValue(this.config.data.healthFacility)    
   }
 

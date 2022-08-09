@@ -6,7 +6,8 @@
     <p-toolbar styleClass="p-mb-4">
         <ng-template pTemplate="left" class="flex">
             <button pButton pRipple label="NEW" icon="pi pi-plus-circle" class="p-button-success mr-2" (click)="addHealthFacilityPopup()"></button>
-            <button pButton pRipple label="REMOVE" icon="pi pi-trash" class="p-button-danger" [disabled]="!selectedHealthFacilities || !selectedHealthFacilities.length" ></button>
+            <button pButton pRipple label="REMOVE" icon="pi pi-trash" class="p-button-danger" [disabled]="!selectedHealthFacilities || 
+            !selectedHealthFacilities.length" ></button>
         </ng-template>
 
         <ng-template pTemplate="right">
@@ -41,12 +42,15 @@
                 <td>{{healthFacility.code}}</td>
                 <td>{{healthFacility.name}}</td>
                 <td>
-                    <i class="pi" style="font-size: 2rem" [ngClass]="{'true-icon pi-check-circle': healthFacility.status, 'false-icon pi-times-circle': ! healthFacility.status}">
+                    <i class="pi" style="font-size: 2rem" [ngClass]="{'true-icon pi-check-circle': healthFacility.status, 
+                    'false-icon pi-times-circle': ! healthFacility.status}">
                     </i>
                 </td>
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" (click)="updateHealthFacilityPopup(healthFacility)"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="removeHealthFacility(healthFacility)"></button>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" 
+                    (click)="updateHealthFacilityPopup(healthFacility)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" 
+                    (click)="removeHealthFacility(healthFacility)"></button>
                 </td>
             </tr>
         </ng-template>

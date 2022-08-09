@@ -1,4 +1,3 @@
-import { getLocaleDateFormat } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PhysicalExaminationType } from 'src/app/models/physicalexaminationtype.model';

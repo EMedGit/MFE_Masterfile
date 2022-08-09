@@ -56,21 +56,21 @@
         <div class="grid mb-1">
             <div class="col-6 p-fluid">
                 <span class="p-float-label">
-                    <p-inputNumber inputId="secondCaseRateAmount" formControlName="secondCaseRateAmount" mode="currency" currency="PHP" locale="en-US">
+                    <p-inputNumber inputId="caseRateAmount2" formControlName="caseRateAmount2" mode="currency" currency="PHP" locale="en-US">
                     </p-inputNumber>
-                    <label for="secondCaseRateAmount">Second Case Rate Amount</label>
+                    <label for="caseRateAmount2">Second Case Rate Amount</label>
                 </span>
             </div>
             <div class="col-3 p-fluid">
                 <span class="p-float-label">
-                    <p-inputNumber inputId="secondCaseRateHospitalFee" formControlName="secondHospitalFee" mode="currency" currency="PHP" locale="en-US">
+                    <p-inputNumber inputId="hospitalFee2" formControlName="hospitalFee2" mode="currency" currency="PHP" locale="en-US">
                     </p-inputNumber>
                     <label for="BP">Hospital Fee</label>
                 </span>
             </div>
             <div class="col-3 p-fluid">
                 <span class="p-float-label">
-                    <p-inputNumber inputId="secondCaseRateHospitalFee" formControlName="secondProfessionalFee" mode="currency" currency="PHP" locale="en-US">
+                    <p-inputNumber inputId="professionalFee2" formControlName="professionalFee2" mode="currency" currency="PHP" locale="en-US">
                     </p-inputNumber>
                     <label for="BP">Professional Fee</label>
                 </span>
@@ -98,10 +98,10 @@
                             <button pButton pRipple type="button" label="CANCEL" class="p-button-secondary" (click)="ngOnDestroy()"></button>
                         </div>
                         <div class="flex align-items-center justify-content-center mr-2">
-                            <button pButton pRipple type="button" icon="pi pi-pencil" *ngIf="isForUpdating" label="UPDATE" class="p-button-info"></button>
+                            <button pButton pRipple type="button" icon="pi pi-pencil" *ngIf="isForUpdating" label="UPDATE" class="p-button-info" (click)="updateData()"></button>
                         </div>
                         <div class="flex align-items-center justify-content-center mr-2">
-                            <button pButton pRipple type="button" icon="pi pi-pencil" *ngIf="isForSaving" label="SAVE" class="p-button-success"></button>
+                            <button pButton pRipple type="button" icon="pi pi-pencil" *ngIf="isForSaving" label="SAVE" class="p-button-success"  (click)="saveData()"></button>
                         </div>
                     </div>
                 </div>

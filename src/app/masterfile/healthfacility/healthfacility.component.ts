@@ -19,23 +19,24 @@ export class HealthfacilityComponent implements OnInit {
   newHealthFacilityList: HealthFacility[];
   
   constructor(private HealthFacilityService : HealthFacilityService,  private dialogService: DialogService) { }
+
   ngOnInit(): void {
     this.getData();
   }
 
-  getData() {
-    try {
-      this.HealthFacilityService
-        .getHealthFacility('','',0,100)
-        .subscribe((retval : HealthFacility[]) => {
-          console.log(retval);
-          this.healthFacilities = retval;
-          this.newHealthFacilityList = this.healthFacilities.filter(x => x.status);
-        });
-    }
-    catch (error){
-      console.log(error);
-    }
+  getData() {    
+    this.HealthFacilityService.getHealthFacility('','',0,100).subscribe({
+      next: (result: HealthFacility[]) => {
+        this.healthFacilities = result;
+        this.newHealthFacilityList = this.healthFacilities.filter(x => x.status);
+        console.log(result);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+      }
+    })
   }
 
 
@@ -59,9 +60,8 @@ export class HealthfacilityComponent implements OnInit {
   {
     this.dialogService.open(PopupHealthfacilityComponent, {
       width: '1000px',
-      height: '450px',
+      height: '500px',
       showHeader: true,
-      header: 'HEALTH FACILITY DETAILS',
       closable: true,
       data: {
         healthFacility: {},
@@ -79,16 +79,14 @@ export class HealthfacilityComponent implements OnInit {
   updateHealthFacilityPopup(healthFacility : HealthFacility) {
     this.dialogService.open(PopupHealthfacilityComponent, {
       width: '1000px',
-      height: '450px',
+      height: '500px',
       showHeader: true,
-      header: 'HEALTH FACILITY DETAILS',
       data: {
         healthFacility,
         isForUpdating: true
       }
     })
     this.ref.onClose.subscribe((data: HealthFacility) => {
-
       if (data != undefined) {
         this.healthFacilities.forEach(val => {
           if (val.id == data.id) {
@@ -105,6 +103,7 @@ export class HealthfacilityComponent implements OnInit {
   }
 
   removeHealthFacility(healthFacility : HealthFacility) {
+    console.log(healthFacility);
       this.HealthFacilityService.delete(healthFacility.id).subscribe({
         next : (result : boolean) => {
           result;

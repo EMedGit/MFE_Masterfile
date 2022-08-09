@@ -1,6 +1,5 @@
-export class RVS {
+export class ICD10 {
     id: number;
-    category: string;
     code: string;
     description: string;
     caseRateAmount: number | null;
@@ -9,8 +8,6 @@ export class RVS {
     caseRateAmount2: number | null;
     hospitalFee2: number | null;
     professionalFee2: number | null;
-    specialProcedure: boolean;
-    procedureType: string;
     allowSingleConfinement: boolean | null;
     noOfDays: number | null;
     createdBy: string;

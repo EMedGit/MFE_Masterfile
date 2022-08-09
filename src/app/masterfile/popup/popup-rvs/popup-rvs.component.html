@@ -3,9 +3,15 @@
         <div class="grid mb-0 mt-1">
             <div class="col-6">
                 <h1>RVS DETAIL</h1>
-            </div>
-            
+            </div>            
         </div>
+        <div class="row">
+            <div class="col">
+                <hr>
+            </div>
+            <div class="col">
+            </div>
+        </div>  
     
         <div class="grid mb-1">
             <div class="col-4 p-fluid">
@@ -17,7 +23,7 @@
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
                     <input type="text" id="category" formControlName="category" pInputText style="font-weight: bold;" >
-                    <label for="category">Case Rate Code</label>
+                    <label for="category">Category</label>
                 </span>
             </div>
             <div class="col-4 p-fluid" style="align-self: center;" *ngIf="isForUpdating">
@@ -38,23 +44,23 @@
         <div class="grid mb-1">
             <div class="col-6 p-fluid">
                 <span class="p-float-label">
-                    <p-inputNumber inputId="firstCaseRateAmount" formControlName="caseRateAmount" mode="currency" currency="PHP" locale="en-US">
+                    <p-inputNumber inputId="caseRateAmount" formControlName="caseRateAmount" mode="currency" currency="PHP" locale="en-US">
                     </p-inputNumber>
-                    <label for="firstCaseRateAmount">First Case Rate Amount</label>
+                    <label for="caseRateAmount">First Case Rate Amount</label>
                 </span>
             </div>
             <div class="col-3 p-fluid">
                 <span class="p-float-label">
-                    <p-inputNumber inputId="firstCaseRateHospitalFee" formControlName="hospitalFee" mode="currency" currency="PHP" locale="en-US">
+                    <p-inputNumber inputId="hospitalFee" formControlName="hospitalFee" mode="currency" currency="PHP" locale="en-US">
                     </p-inputNumber>
-                    <label for="firstCaseRateHospitalFee">Hospital Fee</label>
+                    <label for="hospitalFee">Hospital Fee</label>
                 </span>
             </div>
             <div class="col-3 p-fluid">
                 <span class="p-float-label">
-                    <p-inputNumber inputId="firstCaseRateProfessionalFee" formControlName="professionalFee" mode="currency" currency="PHP" locale="en-US">
+                    <p-inputNumber inputId="professionalFee" formControlName="professionalFee" mode="currency" currency="PHP" locale="en-US">
                     </p-inputNumber>
-                    <label for="BP">Professional Fee</label>
+                    <label for="professionalFee">Professional Fee</label>
                 </span>
             </div>
         </div>
@@ -62,35 +68,36 @@
         <div class="grid mb-1">
             <div class="col-6 p-fluid">
                 <span class="p-float-label">
-                    <p-inputNumber inputId="secondCaseRateAmount" formControlName="secondCaseRateAmount" mode="currency" currency="PHP" locale="en-US">
+                    <p-inputNumber inputId="caseRateAmount2" formControlName="caseRateAmount2" mode="currency" currency="PHP" locale="en-US">
                     </p-inputNumber>
-                    <label for="secondCaseRateAmount">Second Case Rate Amount</label>
+                    <label for="caseRateAmount2">Second Case Rate Amount</label>
                 </span>
             </div>
             <div class="col-3 p-fluid">
                 <span class="p-float-label">
-                    <p-inputNumber inputId="secondCaseRateHospitalFee" formControlName="secondHospitalFee" mode="currency" currency="PHP" locale="en-US">
+                    <p-inputNumber inputId="hospitalFee2" formControlName="hospitalFee2" mode="currency" currency="PHP" locale="en-US">
                     </p-inputNumber>
-                    <label for="BP">Hospital Fee</label>
+                    <label for="hospitalFee2">Hospital Fee</label>
                 </span>
             </div>
             <div class="col-3 p-fluid">
                 <span class="p-float-label">
-                    <p-inputNumber inputId="secondCaseRateHospitalFee" formControlName="secondProfessionalFee" mode="currency" currency="PHP" locale="en-US">
+                    <p-inputNumber inputId="professionalFee2" formControlName="professionalFee2" mode="currency" currency="PHP" locale="en-US">
                     </p-inputNumber>
-                    <label for="BP">Professional Fee</label>
+                    <label for="professionalFee2">Professional Fee</label>
                 </span>
             </div>
         </div>
         
         <div class="grid mb-1">
             <div class="col-3 p-fluid" style="align-self: center;">
-                <p-checkbox [binary]="true" inputId="binary"></p-checkbox>
+                <p-checkbox [binary]="true" inputId="binary" formControlName="specialProcedure"></p-checkbox>
                 <label for="binary"> Special Procedure</label>
             </div>
             <div class="col-3 p-fluid">
                 <span class="p-float-label">
-                    <p-dropdown inputId="procedureType" formControlName="procedureType" [options]="specialProcedures" [(ngModel)]="selectedSpecialProcedure" optionLabel="name"
+                    <p-dropdown inputId="procedureType" formControlName="procedureType" [options]="specialProcedures" 
+                    [(ngModel)]="selectedSpecialProcedure" optionLabel="name" placeholder="Select Procedure Type"
 	                [showClear]="true"></p-dropdown>
                     <label for="procedureType">Procedure Type</label>
                 </span>
@@ -100,12 +107,12 @@
         
         <div class="grid mb-1">
             <div class="col-3 p-fluid" style="align-self: center;">
-                <p-checkbox [binary]="true" inputId="binary"></p-checkbox>
+                <p-checkbox [binary]="true" inputId="binary" formControlName="allowSingleConfinement"></p-checkbox>
                 <label for="binary"> Allow Single Confinement</label>
             </div>
             <div class="col-3 p-fluid">
                 <span class="p-float-label">
-                    <input type="text" id="BP" pInputText>
+                    <input type="text" id="BP" pInputText formControlName="noOfDays">
                     <label for="BP">No. of Days</label>
                 </span>
             </div>
@@ -116,13 +123,13 @@
                 <div class="absolute top-0 right-0">
                     <div class="flex justify-content-end flex-wrap card-container">
                         <div class="flex align-items-center justify-content-center mr-2">
-                            <button pButton pRipple type="button" label="CANCEL" class="p-button-secondary"></button>
+                            <button pButton pRipple type="button" label="CANCEL" class="p-button-secondary" (click)="ngOnDestroy()"></button>
                         </div>
                         <div class="flex align-items-center justify-content-center mr-2">
-                            <button pButton pRipple type="button" icon="pi pi-pencil" *ngIf="isForUpdating" label="UPDATE" class="p-button-info"></button>
+                            <button pButton pRipple type="button" icon="pi pi-pencil" *ngIf="isForUpdating" label="UPDATE" class="p-button-info"  (click)="updateData()"></button>
                         </div>
                         <div class="flex align-items-center justify-content-center mr-2">
-                            <button pButton pRipple type="button" icon="pi pi-pencil" *ngIf="isForSaving" label="SAVE" class="p-button-success"></button>
+                            <button pButton pRipple type="button" icon="pi pi-pencil" *ngIf="isForSaving" label="SAVE" class="p-button-success" (click)="saveData()"></button>
                         </div>
                     </div>
                 </div>

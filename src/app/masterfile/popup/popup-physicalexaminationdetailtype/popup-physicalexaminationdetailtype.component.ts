@@ -33,7 +33,7 @@ export class PopupPhysicalexaminationdetailtypeComponent implements OnInit {
     this.isForSaving = this.config.data.isForSaving;
 
     this.buildFormGroup();
-    this.physicalExaminationDetailTypeForm.patchValue(this.config.data.physicalExaminationDetailType)
+    this.physicalExaminationDetailTypeForm.patchValue(this.config.data.physicalExaminationDetailType);
   }
 
   buildFormGroup(): void {
@@ -57,6 +57,14 @@ export class PopupPhysicalexaminationdetailtypeComponent implements OnInit {
           console.log('getdata complete');
         }
       });
+      
+      
+    if (this.isForUpdating == true)
+    {
+      //let pet = this.petList.filter(x => x.id = this.physicalExaminationDetailType.physicalExaminationTypeId);
+      // let pet = Object.assign(this.peType, this.config.data.physicalExaminationDetailType.physicalExaminationTypeId);
+      // console.log(pet);
+    }
   }
 
   ClosePopUp(data: PhysicalExaminationDetailType) {
@@ -107,7 +115,6 @@ export class PopupPhysicalexaminationdetailtypeComponent implements OnInit {
     this.physicalExaminationDetailType.physicalExaminationTypeId = peType.id;
     this.physicalExaminationDetailType.createdBy = '';
     this.physicalExaminationDetailType.createdDateTime = new Date();
-    console.log(this.physicalExaminationDetailType)
     return this.physicalExaminationDetailType;
   }
 }

@@ -23,20 +23,9 @@ export class HealthFacilityService {
         params = params.append('Name', name);
         params = params.append('Page', page);
         params = params.append('ItemsPerPage', itemsPerPage);
-
-        // return this.http
-        // .get<HealthFacility[]>(`${environment.masterfileAPI}/healthFacility`, {params})
-        // .pipe(
-        //     map((result) => {
-        //     return result;
-        //     })
-        // );
         return this.http.get<HealthFacility[]>(`${environment.masterfileAPI}/healthFacility`, { params })
     }
 
-    // insert(healthFacilities: HealthFacility) : Observable<boolean> {
-    //     return this.http.post<boolean>(`${environment.masterfileAPI}/healthFacility`, healthFacilities, httpOptions);
-    // }
     insert(data: HealthFacility) : Observable<HealthFacility>  {
         const url = `${environment.masterfileAPI}/healthfacility`;
         return this.http.post<HealthFacility>(url, data, httpOptions);
@@ -45,7 +34,7 @@ export class HealthFacilityService {
         console.log(data);
         console.log(JSON.stringify(data));
         const url = `${environment.masterfileAPI}/healthFacility/${id}`;
-        return this.http.put<HealthFacility>(`url`, data, httpOptions);
+        return this.http.put<HealthFacility>(url, data, httpOptions);
     }
     delete(id: number): Observable<any> {
         return this.http.delete(`${environment.masterfileAPI}/healthFacility/${id}`);

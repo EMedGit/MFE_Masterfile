@@ -1,7 +1,7 @@
 <form [formGroup]="physicalExaminationDetailTypeForm">
     <div class="card p-fluid">
         <div class="grid mb-0 mt-1">
-            <div class="col-6">
+            <div class="col-12">
                 <h1>PHYSICAL EXAMINATION DETAIL TYPE</h1>
             </div>            
         </div>        
@@ -16,7 +16,7 @@
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
                     <p-dropdown id="physicalExaminationTypeId" formControlName="physicalExaminationTypeId" 
-                    [options]="petList" optionLabel="type" ></p-dropdown>
+                    [options]="petList" optionLabel="type" placeholder="Select PE Type"></p-dropdown>
                     <label for="physicalExaminationTypeId">Physical Examination Type</label>
                 </span>
             </div>
@@ -28,18 +28,21 @@
                 </span>
             </div>
 
+            <div class="col-4 p-fluid" style="align-self: center;" *ngIf="isForUpdating">
+                <i class="pi pi-check-circle" style="font-size: 2rem" pTooltip="Active Record" *ngIf="isActiveStatus"></i>
+                <i class="pi pi-times-circle" style="font-size: 2rem" pTooltip="Inactive Record"  *ngIf="!isActiveStatus"></i>
+            </div>
+        </div>
+        <br>  
+        <div class="grid mb-1">
             <div class="col-12 p-fluid">
                 <span class="p-float-label">
                     <input type="text" id="description" formControlName="description" pInputText style="font-weight: bold;">
                     <label for="description">Description</label>
                 </span>
             </div>
-            <div class="col-4 p-fluid" style="align-self: center;" *ngIf="isForUpdating">
-                <i class="pi pi-check-circle" style="font-size: 2rem" pTooltip="Active Record" *ngIf="isActiveStatus"></i>
-                <i class="pi pi-times-circle" style="font-size: 2rem" pTooltip="Inactive Record"  *ngIf="!isActiveStatus"></i>
-            </div>
-        </div>
-                
+        </div> 
+        <br>  
         <div class="grid mb-1 mr-1">
             <div class="col-12 relative">
                 <div class="absolute top-0 right-0">
