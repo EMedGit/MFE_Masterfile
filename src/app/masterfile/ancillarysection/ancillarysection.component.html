@@ -1,12 +1,12 @@
 <div class="card">
     <div class="flex-initial flex align-items-center justify-content-center bg-blue-500 font-bold text-white m-2 px-5 py-3 border-round">
-        <label style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: 900;">CONSULTATION TYPE</label>
+        <label style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: 900;">ANCILLARY SECTION</label>
     </div>
 
     <p-toolbar styleClass="p-mb-4">
         <ng-template pTemplate="left" class="flex">
-            <button pButton pRipple label="NEW" icon="pi pi-plus-circle" class="p-button-success mr-2" (click)="addConsultationTypePopup()"></button>
-            <button pButton pRipple label="REMOVE" icon="pi pi-trash" class="p-button-danger" (click)="batchdeleteConsultationType()" [disabled]="!selectedConsultationType || !selectedConsultationType.length" ></button>
+            <button pButton pRipple label="NEW" icon="pi pi-plus-circle" class="p-button-success mr-2" (click)="addAncillarySectionPopup()"></button>
+            <button pButton pRipple label="REMOVE" icon="pi pi-trash" class="p-button-danger" (click)="batchdeleteAncillarySection()" [disabled]="!selectedAncillarySection || !selectedAncillarySection.length" ></button>
         </ng-template>
 
         <ng-template pTemplate="right">
@@ -19,8 +19,8 @@
         </ng-template>
     </p-toolbar>
     
-    <p-table #dt [value]="prevConsultationTypeList" [rows]="5" [paginator]="true" [globalFilterFields]="['code','description']" 
-        [(selection)]="selectedConsultationType"
+    <p-table #dt [value]="prevAncillarySectionList" [rows]="5" [paginator]="true" [globalFilterFields]="['code','description']" 
+        [(selection)]="selectedAncillarySection"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
         
         <ng-template pTemplate="header">
@@ -28,27 +28,25 @@
                 <th style="width: 1rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
-                <th pSortableColumn="healthFacilityCode">Health Facility Code<p-sortIcon field="healthFacilityCode"></p-sortIcon></th>
                 <th pSortableColumn="code">Code<p-sortIcon field="code"></p-sortIcon></th>
                 <th pSortableColumn="description">Description <p-sortIcon field="description"></p-sortIcon></th>
                 <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
                 <th></th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-consultationtype>
+        <ng-template pTemplate="body" let-ancillarysection>
             <tr>
                 <td>
-                    <p-tableCheckbox [value]="consultationtype"></p-tableCheckbox>
+                    <p-tableCheckbox [value]="ancillarysection"></p-tableCheckbox>
                 </td>
-                <td>{{consultationtype.healthFacilityCode}}</td>
-                <td>{{consultationtype.code}}</td>
-                <td>{{consultationtype.description}}</td>
+                <td>{{ancillarysection.code}}</td>
+                <td>{{ancillarysection.description}}</td>
                 <td>
-                    <i class="pi" style="font-size: 2rem"  [ngClass]="{'true-icon pi-check-circle': consultationtype.status, 'false-icon pi-times-circle': !consultationtype.status}"></i>
+                    <i class="pi" style="font-size: 2rem"  [ngClass]="{'true-icon pi-check-circle': ancillarysection.status, 'false-icon pi-times-circle': !ancillarysection.status}"></i>
                 </td>
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" (click)="updateConsultationTypePopUp(consultationtype)"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="removeConsultationTypeRecord(consultationtype)"></button>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" (click)="updateAncillarySectionPopUp(ancillarysection)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="removeAncillarySectionRecord(ancillarysection)"></button>
                 </td>
             </tr>
         </ng-template>

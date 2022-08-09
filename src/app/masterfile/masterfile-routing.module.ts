@@ -23,6 +23,8 @@ import { PhysicalexaminationtypeComponent } from './physicalexaminationtype/phys
 import { PhicmembercategoryComponent } from './phicmembercategory/phicmembercategory.component';
 import { ConsultationtypeComponent } from './consultationtype/consultationtype.component';
 import { MedicinecategoryComponent } from './medicinecategory/medicinecategory.component';
+import { AncillarydepartmentComponent } from './ancillarydepartment/ancillarydepartment.component';
+import { AncillarysectionComponent } from './ancillarysection/ancillarysection.component';
 
 const routes: Routes = [
   { path: 'rvs', component: RvsComponent },
@@ -47,7 +49,9 @@ const routes: Routes = [
               { path: 'discounts', component : DiscountsComponent },
               { path: 'phicmembercategory', component : PhicmembercategoryComponent },
               { path: 'consultationtype', component : ConsultationtypeComponent },
-              { path: 'medicinecategory', component : MedicinecategoryComponent }
+              { path: 'medicinecategory', component : MedicinecategoryComponent },
+              { path: 'ancillarydepartment', component : AncillarydepartmentComponent },
+              { path: 'ancillarysection', component : AncillarysectionComponent }
             ] },
 ];
 

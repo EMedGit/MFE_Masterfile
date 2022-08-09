@@ -20,8 +20,8 @@ export class MenuComponent implements OnInit {
   constructor(private router: Router, private activatedRoute: ActivatedRoute) { 
 
     this.cities = [
-      {name: 'Ancillary Department', code: "['icd']", routerLink: "/medicine"},
-      {name: 'Ancillary Section', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Ancillary Department', code: "[ancillarydepartment]", routerLink: "/ancillarydepartment"},
+      {name: 'Ancillary Section', code: "[ancillarysection]", routerLink: "/ancillarysection"},
       {name: 'Barangay', code: "['barangay']", routerLink: "/barangay"},
       {name: 'Brand', code: "[brand]", routerLink: "/brand"},
       {name: 'Chief Complaint', code: "['icd']", routerLink: "/medicine"},

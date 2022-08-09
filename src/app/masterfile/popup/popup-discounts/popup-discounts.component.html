@@ -39,15 +39,29 @@
             </div>
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
-                    <p-inputNumber inputId="discountschemaLaboratory" formControlName="discountschemaLaboratory" suffix="%">
-                    </p-inputNumber>
+                    <!-- <p-inputNumber inputId="discountschemaLaboratory" formControlName="discountschemaLaboratory" suffix="%">
+                    </p-inputNumber> -->
+                    <input
+                    type="text"
+                    id="discountschemaLaboratory"
+                    formControlName="discountschemaLaboratory"
+                    pInputText
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                    />
                     <label for="discountschemaLaboratory">Laboratory Discount</label>
                 </span>
             </div>
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
-                    <p-inputNumber inputId="discountschemaRadiology" formControlName="discountschemaRadiology" suffix="%">
-                    </p-inputNumber>
+                    <!-- <p-inputNumber inputId="discountschemaRadiology" formControlName="discountschemaRadiology" suffix="%">
+                    </p-inputNumber> -->
+                    <input
+                    type="text"
+                    id="discountschemaRadiology"
+                    formControlName="discountschemaRadiology"
+                    pInputText
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                    />
                     <label for="discountschemaRadiology">Radiology Discount</label>
                 </span>
             </div>

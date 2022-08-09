@@ -60,6 +60,10 @@ import { ConsultationtypeComponent } from './consultationtype/consultationtype.c
 import { PopupConsultationtypeComponent } from './popup/popup-consultationtype/popup-consultationtype.component';
 import { MedicinecategoryComponent } from './medicinecategory/medicinecategory.component';
 import { PopupMedicinecategoryComponent } from './popup/popup-medicinecategory/popup-medicinecategory.component';
+import { AncillarydepartmentComponent } from './ancillarydepartment/ancillarydepartment.component';
+import { AncillarysectionComponent } from './ancillarysection/ancillarysection.component';
+import { PopupAncillarydepartmentComponent } from './popup/popup-ancillarydepartment/popup-ancillarydepartment.component';
+import { PopupAncillarysectionComponent } from './popup/popup-ancillarysection/popup-ancillarysection.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +107,11 @@ import { PopupMedicinecategoryComponent } from './popup/popup-medicinecategory/p
     ConsultationtypeComponent,
     PopupConsultationtypeComponent,
     MedicinecategoryComponent,
-    PopupMedicinecategoryComponent
+    PopupMedicinecategoryComponent,
+    AncillarydepartmentComponent,
+    AncillarysectionComponent,
+    PopupAncillarydepartmentComponent,
+    PopupAncillarysectionComponent
   ],
   imports: [
     CommonModule,
