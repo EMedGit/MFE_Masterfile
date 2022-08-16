@@ -30,7 +30,7 @@ export class ChiefcomplaintComponent implements OnInit {
     this.chiefcomplaintService.getChiefcomplaint().subscribe({
       next: (result: ChiefComplaint[]) => {
         this.chiefcomplaintList = result;
-        this.prevChiefComplaint = this.chiefcomplaintList.filter(x => x.status);
+        this.prevChiefComplaint = this.chiefcomplaintList.filter(x => x.status);``
       },
       error: (err) => {
         console.log(err);

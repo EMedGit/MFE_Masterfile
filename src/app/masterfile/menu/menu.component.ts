@@ -36,7 +36,7 @@ export class MenuComponent implements OnInit {
       {name: 'ICD10', code: "['icd']", routerLink: "/icd"},
       {name: 'Immunization', code: "['immunization']", routerLink: "/immunization"},
       {name: 'Immunization Type', code: "['icd']", routerLink: "/medicine"},
-      {name: 'Laboratory', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Laboratory', code: "laboratory", routerLink: "/laboratory"},
       {name: 'Medicine', code: "['medicine']", routerLink: "/medicine"},
       {name: 'Medicine Category', code: "[medicinecategory]", routerLink: "/medicinecategory"},
       {name: 'Municipality', code: "['municipality']", routerLink: "/municipality"},

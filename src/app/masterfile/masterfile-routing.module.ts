@@ -29,6 +29,7 @@ import { ChiefcomplaintComponent } from './chiefcomplaint/chiefcomplaint.compone
 import { ReferralcategoryComponent } from './referralcategory/referralcategory.component';
 import { ReferralcategorydetailComponent } from './referralcategorydetail/referralcategorydetail.component';
 import { ChiefcomplaintdetailComponent } from './chiefcomplaintdetail/chiefcomplaintdetail.component';
+import { LaboratoryComponent } from './laboratory/laboratory.component';
 
 const routes: Routes = [
   { path: 'rvs', component: RvsComponent },
@@ -59,7 +60,8 @@ const routes: Routes = [
               { path: 'chiefcomplaint', component : ChiefcomplaintComponent },
               { path: 'chiefcomplaintdetail', component : ChiefcomplaintdetailComponent },
               { path: 'referralcategory', component : ReferralcategoryComponent },
-              { path: 'referralcategorydetail', component : ReferralcategorydetailComponent }
+              { path: 'referralcategorydetail', component : ReferralcategorydetailComponent },
+              { path: 'laboratory', component : LaboratoryComponent}
             ] },
 ];
 

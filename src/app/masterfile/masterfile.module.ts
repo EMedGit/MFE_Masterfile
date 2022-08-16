@@ -72,6 +72,8 @@ import { PopupReferralcategorydetailComponent } from './popup/popup-referralcate
 import { PopupReferralcategoryComponent } from './popup/popup-referralcategory/popup-referralcategory.component';
 import { PopupChiefcomplaintComponent } from './popup/popup-chiefcomplaint/popup-chiefcomplaint.component';
 import { PopupChiefcomplaintdetailComponent } from './popup/popup-chiefcomplaintdetail/popup-chiefcomplaintdetail.component';
+import { LaboratoryComponent } from './laboratory/laboratory.component';
+import { PopupLaboratoryComponent } from './popup/popup-laboratory/popup-laboratory.component';
 
 @NgModule({
   declarations: [
@@ -127,7 +129,9 @@ import { PopupChiefcomplaintdetailComponent } from './popup/popup-chiefcomplaint
     PopupReferralcategorydetailComponent,
     PopupReferralcategoryComponent,
     PopupChiefcomplaintComponent,
-    PopupChiefcomplaintdetailComponent
+    PopupChiefcomplaintdetailComponent,
+    LaboratoryComponent,
+    PopupLaboratoryComponent
   ],
   imports: [
     CommonModule,

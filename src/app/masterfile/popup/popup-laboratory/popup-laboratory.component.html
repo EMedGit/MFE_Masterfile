@@ -1,0 +1,118 @@
+
+<form [formGroup]="laboratoryForm">
+    <div class="card p-fluid">
+        <div class="grid mb-0 mt-1">
+            <div class="col-6">
+                <h1>LABORATORY</h1>
+            </div>            
+        </div>
+        <div class="row">
+            <div class="col">
+                <hr>
+            </div>
+            <div class="col">
+            </div>
+        </div>                
+        <div class="grid mb-1">
+            <div class="col-4 p-fluid">
+                <span class="p-float-label">
+                    <input type="text" id="code" formControlName="code" pInputText style="font-weight: bold;" >
+                    <label for="code">Code</label>
+                </span>
+            </div>  
+            <div class="col-8 p-fluid">
+                <span class="p-float-label">
+                    <input type="text" id="description" formControlName="description" pInputText style="font-weight: bold;">
+                    <label for="description">Description</label>
+                </span>
+            </div>
+        </div>      
+        <div class="grid mb-1">
+            <div class="col-3 p-fluid">
+                <span class="p-float-label">
+                    <input
+                    type="text"
+                    id="price"
+                    formControlName="price"
+                    pInputText
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                    />
+                    <label for="price">Price</label>
+                </span>
+            </div>
+            <div class="col-3 p-fluid">
+                <span class="p-float-label">
+                    <input
+                    type="text"
+                    id="highestPrice"
+                    formControlName="highestPrice"
+                    pInputText
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                    />
+                    <label for="highestPrice">Highest Price</label>
+                </span>
+            </div>
+            <div class="col-3 p-fluid">
+                <span class="p-float-label">
+                    <input
+                    type="text"
+                    id="lowestPrice"
+                    formControlName="lowestPrice"
+                    pInputText
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                    />
+                    <label for="lowestPrice">Lowest Price</label>
+                </span>
+            </div>
+            <div class="col-3 p-fluid">
+                <span class="p-float-label">
+                    <input
+                    type="text"
+                    id="priceReferenceIndex"
+                    formControlName="priceReferenceIndex"
+                    pInputText
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                    />
+                    <label for="priceReferenceIndex">Price Reference Index</label>
+                </span>
+            </div>
+        </div>
+        <div class="grid mb-1">
+            <div class="col-4 p-fluid">
+                <span class="p-float-label">
+                    <input type="text" id="diagnosisRemarks" formControlName="diagnosisRemarks" pInputText style="font-weight: bold;" >
+                    <label for="diagnosisRemarks">Diagnosis Remarks</label>
+                </span>
+            </div>  
+            <div class="col-4 p-fluid">
+                <span class="p-float-label">
+                    <input type="text" id="departmentCode" formControlName="departmentCode" pInputText style="font-weight: bold;">
+                    <label for="departmentCode">Department Code</label>
+                </span>
+            </div>
+            <div class="col-4 p-fluid">
+                <span class="p-float-label">
+                    <input type="text" id="specializationCode" formControlName="specializationCode" pInputText style="font-weight: bold;">
+                    <label for="specializationCode">Specialization Code</label>
+                </span>
+            </div>
+        </div>      
+        <div class="grid mb-1 mr-1">
+            <div class="col-12 relative">
+                <div class="absolute top-0 right-0">
+                    <div class="flex justify-content-end flex-wrap card-container">
+                        <div class="flex align-items-center justify-content-center mr-2">
+                            <button pButton pRipple type="button" label="CANCEL" class="p-button-secondary" (click)="ngOnDestroy()"></button>
+                        </div>
+                        <div class="flex align-items-center justify-content-center mr-2">
+                            <button pButton pRipple type="button" icon="pi pi-pencil" *ngIf="isForUpdating" label="UPDATE" class="p-button-info" (click)="updateData()"></button>
+                        </div>
+                        <div class="flex align-items-center justify-content-center mr-2">
+                            <button pButton pRipple type="button" icon="pi pi-pencil" *ngIf="isForSaving" label="SAVE" class="p-button-success" (click)="saveData()"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+</form>
