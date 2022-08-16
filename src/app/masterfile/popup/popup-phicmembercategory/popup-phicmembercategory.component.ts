@@ -58,7 +58,7 @@ export class PopupPhicmembercategoryComponent implements OnInit {
     }
   }
   updateData(){
-    let data = this.config.data.brand;
+    let data = this.config.data.phicmembercategory;
     let obj = new Phicmembercategory();
     obj.code = this.phicmembercategoryForm.controls['code'].value;
     obj.description = this.phicmembercategoryForm.controls['description'].value;
