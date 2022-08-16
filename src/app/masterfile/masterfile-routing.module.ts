@@ -25,6 +25,10 @@ import { ConsultationtypeComponent } from './consultationtype/consultationtype.c
 import { MedicinecategoryComponent } from './medicinecategory/medicinecategory.component';
 import { AncillarydepartmentComponent } from './ancillarydepartment/ancillarydepartment.component';
 import { AncillarysectionComponent } from './ancillarysection/ancillarysection.component';
+import { ChiefcomplaintComponent } from './chiefcomplaint/chiefcomplaint.component';
+import { ReferralcategoryComponent } from './referralcategory/referralcategory.component';
+import { ReferralcategorydetailComponent } from './referralcategorydetail/referralcategorydetail.component';
+import { ChiefcomplaintdetailComponent } from './chiefcomplaintdetail/chiefcomplaintdetail.component';
 
 const routes: Routes = [
   { path: 'rvs', component: RvsComponent },
@@ -51,7 +55,11 @@ const routes: Routes = [
               { path: 'consultationtype', component : ConsultationtypeComponent },
               { path: 'medicinecategory', component : MedicinecategoryComponent },
               { path: 'ancillarydepartment', component : AncillarydepartmentComponent },
-              { path: 'ancillarysection', component : AncillarysectionComponent }
+              { path: 'ancillarysection', component : AncillarysectionComponent },
+              { path: 'chiefcomplaint', component : ChiefcomplaintComponent },
+              { path: 'chiefcomplaintdetail', component : ChiefcomplaintdetailComponent },
+              { path: 'referralcategory', component : ReferralcategoryComponent },
+              { path: 'referralcategorydetail', component : ReferralcategorydetailComponent }
             ] },
 ];
 
