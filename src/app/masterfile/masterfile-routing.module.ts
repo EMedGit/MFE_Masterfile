@@ -25,7 +25,6 @@ import { ConsultationtypeComponent } from './consultationtype/consultationtype.c
 import { MedicinecategoryComponent } from './medicinecategory/medicinecategory.component';
 import { AncillarydepartmentComponent } from './ancillarydepartment/ancillarydepartment.component';
 import { AncillarysectionComponent } from './ancillarysection/ancillarysection.component';
-import { ImmunizationtypeComponent } from './immunizationtype/immunizationtype.component';
 
 const routes: Routes = [
   { path: 'rvs', component: RvsComponent },
@@ -52,8 +51,7 @@ const routes: Routes = [
               { path: 'consultationtype', component : ConsultationtypeComponent },
               { path: 'medicinecategory', component : MedicinecategoryComponent },
               { path: 'ancillarydepartment', component : AncillarydepartmentComponent },
-              { path: 'ancillarysection', component : AncillarysectionComponent },
-              { path: 'immunizationtype', component : ImmunizationtypeComponent}
+              { path: 'ancillarysection', component : AncillarysectionComponent }
             ] },
 ];
 

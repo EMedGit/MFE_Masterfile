@@ -102,7 +102,6 @@ export class PopupAncillarydepartmentComponent implements OnInit {
     }
   }
   getValue(): AncillaryDepartment {
-    let data = this.config.data.ancillarydepartment;
     this.ancillarydepartment = new AncillaryDepartment();
     if(this.healthfacility == undefined)
     {

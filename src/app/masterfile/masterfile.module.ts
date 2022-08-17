@@ -64,6 +64,16 @@ import { AncillarydepartmentComponent } from './ancillarydepartment/ancillarydep
 import { AncillarysectionComponent } from './ancillarysection/ancillarysection.component';
 import { PopupAncillarydepartmentComponent } from './popup/popup-ancillarydepartment/popup-ancillarydepartment.component';
 import { PopupAncillarysectionComponent } from './popup/popup-ancillarysection/popup-ancillarysection.component';
+import { ChiefcomplaintComponent } from './chiefcomplaint/chiefcomplaint.component';
+import { ChiefcomplaintdetailComponent } from './chiefcomplaintdetail/chiefcomplaintdetail.component';
+import { ReferralcategoryComponent } from './referralcategory/referralcategory.component';
+import { ReferralcategorydetailComponent } from './referralcategorydetail/referralcategorydetail.component';
+import { PopupReferralcategorydetailComponent } from './popup/popup-referralcategorydetail/popup-referralcategorydetail.component';
+import { PopupReferralcategoryComponent } from './popup/popup-referralcategory/popup-referralcategory.component';
+import { PopupChiefcomplaintComponent } from './popup/popup-chiefcomplaint/popup-chiefcomplaint.component';
+import { PopupChiefcomplaintdetailComponent } from './popup/popup-chiefcomplaintdetail/popup-chiefcomplaintdetail.component';
+import { LaboratoryComponent } from './laboratory/laboratory.component';
+import { PopupLaboratoryComponent } from './popup/popup-laboratory/popup-laboratory.component';
 import { ImmunizationtypeComponent } from './immunizationtype/immunizationtype.component';
 import { PopupImmunizationtypeComponent } from './popup/popup-immunizationtype/popup-immunizationtype.component';
 
@@ -114,6 +124,16 @@ import { PopupImmunizationtypeComponent } from './popup/popup-immunizationtype/p
     AncillarysectionComponent,
     PopupAncillarydepartmentComponent,
     PopupAncillarysectionComponent,
+    ChiefcomplaintComponent,
+    ChiefcomplaintdetailComponent,
+    ReferralcategoryComponent,
+    ReferralcategorydetailComponent,
+    PopupReferralcategorydetailComponent,
+    PopupReferralcategoryComponent,
+    PopupChiefcomplaintComponent,
+    PopupChiefcomplaintdetailComponent,
+    LaboratoryComponent,
+    PopupLaboratoryComponent,
     ImmunizationtypeComponent,
     PopupImmunizationtypeComponent
   ],
