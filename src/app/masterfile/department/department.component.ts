@@ -11,7 +11,7 @@ import { PopupDepartmentComponent } from '../popup/popup-department/popup-depart
   providers: [DialogService]
 })
 export class DepartmentComponent implements OnInit {
-  searchkey: ""
+  searchkey: "";
   ref: DynamicDialogRef;
   department: Department;
   departments: Department[];
@@ -24,12 +24,12 @@ export class DepartmentComponent implements OnInit {
     this.getData();
   }
   getData() {
-    this.departmentService.getDepartments('','',0,100).subscribe({
+    this.departmentService.getDepartments('','',0,0,100).subscribe({
       next: (result: Department[]) => {
         this.departments = result;
         this.newDepartmentsList = this.departments.filter(x => x.status);
       },
-      error: (err) => {
+      error: (err: any) => {
         console.log(err);
       },
       complete: () => {
@@ -57,9 +57,8 @@ export class DepartmentComponent implements OnInit {
   {
     this.ref = this.dialogService.open(PopupDepartmentComponent, {
       width: '1000px',
-      height: '450px',
+      height: '500px',
       showHeader: true,
-      header: 'DEPARTMENT DETAILS',
       closable: true,
       data: {
         department: {},
@@ -77,9 +76,9 @@ export class DepartmentComponent implements OnInit {
   updateDepartmentPopup(department : Department) {
     this.dialogService.open(PopupDepartmentComponent, {
       width: '1000px',
-      height: '450px',
+      height: '500px',
       showHeader: true,
-      header: 'DEPARTMENT DETAILS',
+      closable: true,
       data: {
         department,
         isForUpdating: true
@@ -100,7 +99,6 @@ export class DepartmentComponent implements OnInit {
       }
     })
   }
-
 
   removeDepartment(department : Department) {
     this.departmentService.delete(department.id).subscribe({

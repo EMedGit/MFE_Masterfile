@@ -16,11 +16,12 @@ export class DepartmentService {
     Department : Department[]
     constructor(private http: HttpClient) { }
 
-    public getDepartments(code: string, description: string, page: number, itemsPerPage: number) : Observable<Department[]> 
+    public getDepartments(code: string, description: string, healthFacilityId: number, page: number, itemsPerPage: number) : Observable<Department[]> 
     {
         let params = new HttpParams();
         params = params.append('Code', code);
         params = params.append('Description', description);
+        params = params.append('HealthFacilityId', healthFacilityId);
         params = params.append('Page', page);
         params = params.append('ItemsPerPage', itemsPerPage);
 
@@ -37,6 +38,8 @@ export class DepartmentService {
     //     return this.http.post<boolean>(`${environment.masterfileAPI}/department`, departments, httpOptions);
     // }    
     insert(data: Department) : Observable<Department>  {
+        console.log(data);
+        console.log(JSON.stringify(data));
         const url = `${environment.masterfileAPI}/department`;
         return this.http.post<Department>(url, data, httpOptions);
     } 

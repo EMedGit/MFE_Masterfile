@@ -2,6 +2,7 @@ export class Department {
     id : number;
     code : string;
     description : string;
+    healthFacilityId: number
     status : boolean;
     createdBy:string;
     createdDateTime: Date;

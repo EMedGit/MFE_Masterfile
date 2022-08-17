@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Immunization } from 'src/app/models/immunization.model';
+import { ImmunizationType } from 'src/app/models/immunizationtype.model';
 import { ImmunizationService } from 'src/app/services/immunization.service';
+import { ImmunizationTypeService } from 'src/app/services/immunizationtype.service';
 
 @Component({
   selector: 'app-popup-immunization',
@@ -16,11 +18,15 @@ export class PopupImmunizationComponent implements OnInit {
 
   immunization: Immunization;
 
-  isActiveStatus=  false;
-  isForSaving= false;
-  isForUpdating= false;
+  isActiveStatus =  false;
+  isForSaving = false;
+  isForUpdating = false;
 
-  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private immunizationService : ImmunizationService) { }
+  itList: ImmunizationType[];
+  selectedIT: ImmunizationType;
+
+  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private immunizationService: ImmunizationService, 
+    private itService: ImmunizationTypeService ) { }
 
   ngOnInit(): void {
     this.isActiveStatus = this.config.data.immunization.status;
@@ -39,10 +45,23 @@ export class PopupImmunizationComponent implements OnInit {
         description: [''],
         immunizationTypeId: null       
       });
+    
+      this.itService.get('','',0,100).subscribe({
+        next: (result: ImmunizationType[]) => {
+          this.itList = result;
+          this.itList = this.itList.filter(x => x.status);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('getdata complete');
+        }
+      });
   }
   
-  ClosePopUp(){
-    this.ref.close();
+  ClosePopUp(data : Immunization){
+    this.ref.close(data);
   }
 
   ngOnDestroy() {
@@ -52,23 +71,46 @@ export class PopupImmunizationComponent implements OnInit {
   }
 
   saveData(){
-    if(this.isForSaving){
-        this.immunizationService.addImmunization(this.getImmunizationData()).subscribe((retval) => { this.immunization = retval });
+    if (this.isForSaving) {
+      this.immunizationService.insert(this.getImmunizationData()).subscribe((retval) => { this.ClosePopUp(retval); });
     }
-    else{
-
-    } 
-    this.ClosePopUp();  
   }
 
   getImmunizationData() : Immunization {
-    //build data
-    let obj : Immunization = {
-      code : this.immunizationForm.controls['code'].value,
-      description : this.immunizationForm.controls['description'].value,
-      immunizationTypeId :this.immunizationForm.controls['immunizationTypeId'].value
-    }
+    let immunizationType = Object.assign(this.selectedIT,this.immunizationForm.controls['immunizationTypeId'].value);
 
-    return obj;
+    this.immunization = new Immunization();
+    this.immunization.code = this.immunizationForm.controls['code'].value;
+    this.immunization.description = this.immunizationForm.controls['description'].value;
+    this.immunization.immunizationTypeId = immunizationType.id;
+    this.immunization.createdBy = '';
+    this.immunization.createdDateTime = new Date();
+    return this.immunization;
+  }
+  
+  updateData() {
+    let immunizationType = Object.assign(this.selectedIT,this.immunizationForm.controls['immunizationTypeId'].value);
+
+    let data = this.config.data.immunization;
+    data.code = this.immunizationForm.controls['code'].value;
+    data.description = this.immunizationForm.controls['description'].value;
+    data.immunizationTypeId = immunizationType.id;
+
+    data.modifiedBy = '';
+    data.modifiedDateTime = new Date();
+    if (this.isForUpdating) {
+      this.immunizationService.update(data.id, data).subscribe({
+        next: (result: Immunization) => {
+          data = result;
+          this.ClosePopUp(result);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('update complete');
+        }
+      });
+    }
   }
 }

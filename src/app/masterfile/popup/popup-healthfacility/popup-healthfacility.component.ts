@@ -54,7 +54,7 @@ export class PopupHealthfacilityComponent implements OnInit {
 
   saveData(){
     if(this.isForSaving) {
-        this.healthFacilityService.insert(this.getData()).subscribe(result => { this.ClosePopUp(result); });
+      this.healthFacilityService.insert(this.getData()).subscribe(result => { this.ClosePopUp(result); });
     }
   }
 
@@ -63,6 +63,8 @@ export class PopupHealthfacilityComponent implements OnInit {
     data.code = this.healthFacilityForm.controls['code'].value;
     data.name = this.healthFacilityForm.controls['name'].value;
     data.facilityaddress = this.healthFacilityForm.controls['facilityAddress'].value;
+    data.modifiedBy = '';
+    data.modifiedDateTime = new Date();
     if(this.isForUpdating){
       this.healthFacilityService.update(data.id, data).subscribe({
       next: (result : HealthFacility) => {
@@ -85,6 +87,8 @@ export class PopupHealthfacilityComponent implements OnInit {
     this.healthFacility.code = this.healthFacilityForm.controls['code'].value;
     this.healthFacility.name = this.healthFacilityForm.controls['name'].value;
     this.healthFacility.facilityaddress = this.healthFacilityForm.controls['facilityAddress'].value
+    this.healthFacility.createdBy = '';
+    this.healthFacility.createdDateTime = new Date();
     return this.healthFacility;
   }
 

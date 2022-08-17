@@ -86,8 +86,14 @@ export class PopupPhysicalexaminationdetailtypeComponent implements OnInit {
 
   
   updateData() {
-    let data = this.config.data.physicalExaminationType;
-    data.type = this.physicalExaminationDetailTypeForm.controls['type'].value;
+    let peType = Object.assign(this.peType,this.physicalExaminationDetailTypeForm.controls['physicalExaminationTypeId'].value);
+
+    let data = this.config.data.physicalExaminationDetailType;
+    data.physicalExaminationTypeId = peType.id;
+    data.code = this.physicalExaminationDetailTypeForm.controls['code'].value;
+    data.description = this.physicalExaminationDetailTypeForm.controls['description'].value;
+    data.modifiedBy = '';
+    data.modifiedDateTime = new Date();
     if (this.isForUpdating) {
       this.pedtService.update(data.id, data).subscribe({
         next: (result: PhysicalExaminationDetailType) => {
@@ -102,12 +108,11 @@ export class PopupPhysicalexaminationdetailtypeComponent implements OnInit {
         }
       });
     }
-
   }
 
   getData(): PhysicalExaminationDetailType {
 
-    let peType = Object.assign(this.peType,this.physicalExaminationDetailTypeForm.controls['physicalExaminationTypeId'].value)
+    let peType = Object.assign(this.peType,this.physicalExaminationDetailTypeForm.controls['physicalExaminationTypeId'].value);
 
     this.physicalExaminationDetailType = new PhysicalExaminationDetailType();
     this.physicalExaminationDetailType.code = this.physicalExaminationDetailTypeForm.controls['code'].value;

@@ -107,6 +107,8 @@ export class PopupRvsComponent implements OnInit {
     data.procedureType = specialProcedure;
     data.allowSingleConfinement = this.rvsForm.controls['allowSingleConfinement'].value;
     data.noOfDays = this.rvsForm.controls['noOfDays'].value;
+    data.modifiedBy = '';
+    data.modifiedDateTime = new Date();
 
     if (this.isForUpdating) {
       this.rvsService.update(data.id, data).subscribe({

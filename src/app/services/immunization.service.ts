@@ -31,7 +31,6 @@ export class ImmunizationService {
     params = params.append('Page', page);
     params = params.append('ItemsPerPage', itemsPerPage);
 
-    //params = params.append('consultationId ', consultationid);
     return this.http
       .get<Immunization[]>(
         `${environment.masterfileAPI}/immunization`,
@@ -44,20 +43,22 @@ export class ImmunizationService {
       );
   }
   
-  public addImmunization(data: Immunization) : Observable<Immunization> 
-  {
-   
-      const url = `${environment.masterfileAPI}/immunization`;
-      return this.http.post<Immunization>(url, data, httpOptions);
+  insert(data: Immunization) : Observable<Immunization>  {
+    console.log(data);
+    console.log(JSON.stringify(data));
+    const url = `${environment.masterfileAPI}/immunization`;
+    return this.http.post<Immunization>(url, data, httpOptions);
+  } 
+  update(id: number, data: Immunization): Observable<any> {
+    console.log(data);
+    console.log(JSON.stringify(data));
+    const url = `${environment.masterfileAPI}/immunization/${id}`;
+    return this.http.put(url, data, httpOptions);
+  }
+  delete(id: number): Observable<any> {
+    return this.http.delete(`${environment.masterfileAPI}/immunization/${id}`);
   }
 
-
-  // updatePatientConsultation(consultationId:number,data: Consultation): Observable<any> {
-  //   console.log(data);
-  //   console.log(JSON.stringify(data));
-  //   const url = `${environment.rhuAPI}/consultation/${consultationId}`;
-  //   return this.http.put(url, data, httpOptions);
-  // }
 }
 
 //https://masterfile-development.azurewebsites.net/api/v1/immunization?Code=aa&Description=aaa&ImmunizationTypeId=2&Page=1&ItemsPerPage=100

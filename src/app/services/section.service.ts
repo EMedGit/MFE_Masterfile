@@ -12,14 +12,15 @@ const httpOptions = {
 })
   
 export class SectionService {
-    Department : Section[]
+    Section : Section[]
     constructor(private http: HttpClient) { }
 
-    public getSections(code: string, description: string, page: number, itemsPerPage: number) : Observable<Section[]> 
+    public getSections(code: string, description: string, departmentId: number, page: number, itemsPerPage: number) : Observable<Section[]> 
     {
         let params = new HttpParams();
         params = params.append('Code', code);
         params = params.append('Description', description);
+        params = params.append('DepartmentID', departmentId);
         params = params.append('Page', page);
         params = params.append('ItemsPerPage', itemsPerPage);
 

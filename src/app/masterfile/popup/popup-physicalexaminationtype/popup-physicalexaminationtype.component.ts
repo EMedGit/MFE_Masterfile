@@ -40,7 +40,6 @@ export class PopupPhysicalexaminationtypeComponent implements OnInit {
   }
 
   ClosePopUp(data: PhysicalExaminationType) {
-    console.log(this.ref);
     this.ref.close(data);
   }
 
@@ -52,7 +51,6 @@ export class PopupPhysicalexaminationtypeComponent implements OnInit {
 
   saveData() {
     if (this.isForSaving) {
-      console.log(this.getData());
       this.petService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
     }
   }
@@ -60,6 +58,8 @@ export class PopupPhysicalexaminationtypeComponent implements OnInit {
   updateData() {
     let data = this.config.data.physicalExaminationType;
     data.type = this.physicalExaminationTypeForm.controls['type'].value;
+    data.modifiedBy = '';
+    data.modifiedDateTime = new Date();
     if (this.isForUpdating) {
       this.petService.update(data.id, data).subscribe({
         next: (result: PhysicalExaminationType) => {

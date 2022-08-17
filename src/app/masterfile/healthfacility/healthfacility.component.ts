@@ -41,8 +41,6 @@ export class HealthfacilityComponent implements OnInit {
 
 
   filter(value: any) {
-    //this.healthFacilities.every(a => a.name?.includes(value.key));
-
     console.log(this.selectedHealthFacilities)
     let filter: any[] = [];
     this.newHealthFacilityList.forEach(val => {

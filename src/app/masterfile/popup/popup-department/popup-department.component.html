@@ -19,6 +19,14 @@
                     <label for="code">Code</label>
                 </span>
             </div>
+            
+            <div class="col-4 p-fluid">
+                <span class="p-float-label">
+                    <p-dropdown id="healthFacilityId" formControlName="healthFacilityId" 
+                    [options]="hfList" optionLabel="name" [(ngModel)]="selectedHF" placeholder="Select Health Facility"></p-dropdown>
+                    <label for="healthFacilityId">Health Facility</label>
+                </span>
+            </div>
             <div class="col-4 p-fluid" style="align-self: center;" *ngIf="isForUpdating">
                 <i class="pi pi-check-circle" style="font-size: 2rem" pTooltip="Active Record" *ngIf="isActiveStatus"></i>
                 <i class="pi pi-times-circle" style="font-size: 2rem" pTooltip="Inactive Record"  *ngIf="!isActiveStatus"></i>

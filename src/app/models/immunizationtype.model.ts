@@ -1,8 +1,7 @@
-export class Immunization {
+export class ImmunizationType {
     id: number;
     code: string;
     description: string;
-    immunizationTypeId: number;
     status: boolean;
     createdBy: string;
     createdDateTime: Date;

@@ -25,7 +25,22 @@
                 <i class="pi pi-times-circle" style="font-size: 2rem" pTooltip="Inactive Record"  *ngIf="!isActiveStatus"></i>
             </div>
         </div>
-        
+        <div class="grid mb-1">            
+            <div class="col-4 p-fluid">
+                <span class="p-float-label">
+                    <p-dropdown id="healthFacilityId" formControlName="healthFacilityId" 
+                    [options]="hfList" optionLabel="name" [(ngModel)]="selectedHF" placeholder="Select Health Facility" (onChange)="changeHF()"></p-dropdown>
+                    <label for="healthFacilityId">Health Facility</label>
+                </span>
+            </div>
+            <div class="col-4 p-fluid">
+                <span class="p-float-label">
+                    <p-dropdown id="departmentId" formControlName="departmentId" 
+                    [options]="departmentList" optionLabel="description" [(ngModel)]="selectedDepartment" placeholder="Select Department"></p-dropdown>
+                    <label for="departmentId">Department</label>
+                </span>
+            </div>
+        </div>
         <div class="grid mb-1">
             <div class="col-12 p-fluid">
                 <span class="p-float-label">

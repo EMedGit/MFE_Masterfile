@@ -26,7 +26,7 @@ export class SectionComponent implements OnInit {
   getData() {
     try {
       this.SectionService
-        .getSections('','',0,100)
+        .getSections('','',0,0,100)
         .subscribe((retval : Section[]) => {
           console.log(retval);          
           this.sections = retval;
@@ -59,9 +59,8 @@ export class SectionComponent implements OnInit {
   {
     this.dialogService.open(PopupSectionComponent, {
       width: '1000px',
-      height: '450px',
+      height: '600px',
       showHeader: true,
-      header: 'SECTION DETAILS',
       closable: true,
       data: {
         section: {},
@@ -79,9 +78,9 @@ export class SectionComponent implements OnInit {
   updateSectionPopup(section : Section) {
     this.dialogService.open(PopupSectionComponent, {
       width: '1000px',
-      height: '450px',
+      height: '600px',
       showHeader: true,
-      header: 'SECTION DETAILS',
+      closable: true,
       data: {
         section,
         isForUpdating: true

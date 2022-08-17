@@ -23,7 +23,13 @@ export class HealthFacilityService {
         params = params.append('Name', name);
         params = params.append('Page', page);
         params = params.append('ItemsPerPage', itemsPerPage);
-        return this.http.get<HealthFacility[]>(`${environment.masterfileAPI}/healthFacility`, { params })
+        return this.http
+        .get<HealthFacility[]>(`${environment.masterfileAPI}/healthFacility`, {params})
+        .pipe(
+            map((result) => {
+            return result;
+            })
+        );
     }
 
     insert(data: HealthFacility) : Observable<HealthFacility>  {

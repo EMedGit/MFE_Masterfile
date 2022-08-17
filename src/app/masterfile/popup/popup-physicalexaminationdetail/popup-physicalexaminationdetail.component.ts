@@ -91,6 +91,8 @@ export class PopupPhysicalexaminationdetailComponent implements OnInit {
     data.description = this.physicalExaminationDetailForm.controls['description'].value;
     data.physicalExaminationTypeId = this.selectedpet.id;
     data.physicalExaminationDetailTypeId = this.selectedpedt.id;
+    data.modifiedBy = '';
+    data.modifiedDateTime = new Date();
     if (this.isForUpdating) {
       this.pedService.update(data.id, data).subscribe({
         next: (result: PhysicalExaminationDetail) => {

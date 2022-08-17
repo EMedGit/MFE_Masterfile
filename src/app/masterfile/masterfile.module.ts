@@ -64,6 +64,8 @@ import { AncillarydepartmentComponent } from './ancillarydepartment/ancillarydep
 import { AncillarysectionComponent } from './ancillarysection/ancillarysection.component';
 import { PopupAncillarydepartmentComponent } from './popup/popup-ancillarydepartment/popup-ancillarydepartment.component';
 import { PopupAncillarysectionComponent } from './popup/popup-ancillarysection/popup-ancillarysection.component';
+import { ImmunizationtypeComponent } from './immunizationtype/immunizationtype.component';
+import { PopupImmunizationtypeComponent } from './popup/popup-immunizationtype/popup-immunizationtype.component';
 
 @NgModule({
   declarations: [
@@ -111,7 +113,9 @@ import { PopupAncillarysectionComponent } from './popup/popup-ancillarysection/p
     AncillarydepartmentComponent,
     AncillarysectionComponent,
     PopupAncillarydepartmentComponent,
-    PopupAncillarysectionComponent
+    PopupAncillarysectionComponent,
+    ImmunizationtypeComponent,
+    PopupImmunizationtypeComponent
   ],
   imports: [
     CommonModule,
