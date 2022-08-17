@@ -20,7 +20,7 @@
         </ng-template>
     </p-toolbar>
     
-    <p-table #dt [value]="medicines" [rows]="5" [paginator]="true" [globalFilterFields]="['code','description']" 
+    <p-table #dt [value]="medicineList" [rows]="5" [paginator]="true" [globalFilterFields]="['code','description']" 
     [(selection)]="selectedMedicineList"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
         
