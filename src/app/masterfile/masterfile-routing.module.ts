@@ -27,6 +27,10 @@ import { AncillarydepartmentComponent } from './ancillarydepartment/ancillarydep
 import { AncillarysectionComponent } from './ancillarysection/ancillarysection.component';
 import { ImmunizationtypeComponent } from './immunizationtype/immunizationtype.component';
 import { LaboratoryComponent } from './laboratory/laboratory.component';
+import { ChiefcomplaintComponent } from './chiefcomplaint/chiefcomplaint.component';
+import { ChiefcomplaintdetailComponent } from './chiefcomplaintdetail/chiefcomplaintdetail.component';
+import { ReferralcategoryComponent } from './referralcategory/referralcategory.component';
+import { ReferralcategorydetailComponent } from './referralcategorydetail/referralcategorydetail.component';
 
 const routes: Routes = [
   { path: 'rvs', component: RvsComponent },
@@ -55,6 +59,10 @@ const routes: Routes = [
               { path: 'ancillarydepartment', component : AncillarydepartmentComponent },
               { path: 'ancillarysection', component : AncillarysectionComponent },
               { path: 'immunizationtype', component : ImmunizationtypeComponent},
+              { path: 'chiefcomplaint', component : ChiefcomplaintComponent },
+              { path: 'chiefcomplaintdetail', component : ChiefcomplaintdetailComponent },
+              { path: 'referralcategory', component : ReferralcategoryComponent },
+              { path: 'referralcategorydetail', component : ReferralcategorydetailComponent },
               { path: 'laboratory', component : LaboratoryComponent}              
             ] },
 ];
