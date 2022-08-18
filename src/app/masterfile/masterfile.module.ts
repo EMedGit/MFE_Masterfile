@@ -76,6 +76,10 @@ import { LaboratoryComponent } from './laboratory/laboratory.component';
 import { PopupLaboratoryComponent } from './popup/popup-laboratory/popup-laboratory.component';
 import { ImmunizationtypeComponent } from './immunizationtype/immunizationtype.component';
 import { PopupImmunizationtypeComponent } from './popup/popup-immunizationtype/popup-immunizationtype.component';
+import { PharmacyComponent } from './pharmacy/pharmacy.component';
+import { PopupPharmacyComponent } from './popup/popup-pharmacy/popup-pharmacy.component';
+import { DiagnosticcenterComponent } from './diagnosticcenter/diagnosticcenter.component';
+import { PopupDiagnosticcenterComponent } from './popup/popup-diagnosticcenter/popup-diagnosticcenter.component';
 
 @NgModule({
   declarations: [
@@ -135,7 +139,11 @@ import { PopupImmunizationtypeComponent } from './popup/popup-immunizationtype/p
     LaboratoryComponent,
     PopupLaboratoryComponent,
     ImmunizationtypeComponent,
-    PopupImmunizationtypeComponent
+    PopupImmunizationtypeComponent,
+    PharmacyComponent,
+    PopupPharmacyComponent,
+    DiagnosticcenterComponent,
+    PopupDiagnosticcenterComponent
   ],
   imports: [
     CommonModule,

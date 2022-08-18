@@ -31,6 +31,8 @@ import { ChiefcomplaintComponent } from './chiefcomplaint/chiefcomplaint.compone
 import { ChiefcomplaintdetailComponent } from './chiefcomplaintdetail/chiefcomplaintdetail.component';
 import { ReferralcategoryComponent } from './referralcategory/referralcategory.component';
 import { ReferralcategorydetailComponent } from './referralcategorydetail/referralcategorydetail.component';
+import { DiagnosticcenterComponent } from './diagnosticcenter/diagnosticcenter.component';
+import { PharmacyComponent } from './pharmacy/pharmacy.component';
 
 const routes: Routes = [
   { path: 'rvs', component: RvsComponent },
@@ -63,7 +65,9 @@ const routes: Routes = [
               { path: 'chiefcomplaintdetail', component : ChiefcomplaintdetailComponent },
               { path: 'referralcategory', component : ReferralcategoryComponent },
               { path: 'referralcategorydetail', component : ReferralcategorydetailComponent },
-              { path: 'laboratory', component : LaboratoryComponent}              
+              { path: 'laboratory', component : LaboratoryComponent},
+              { path: 'diagnosticCenter', component : DiagnosticcenterComponent },
+              { path: 'pharmacy', component : PharmacyComponent }          
             ] },
 ];
 
