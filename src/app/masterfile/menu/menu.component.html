@@ -8,14 +8,14 @@
                     <label>MASTERFILE</label>
                 </div>
                 
-                <p-listbox [options]="cities" [(ngModel)]="selectedCity" [metaKeySelection]="false" (click)="selectedCitiy(selectedCity)"
+                <p-listbox [options]="masterfiles" [(ngModel)]="selectedMasterfile" [metaKeySelection]="false" (click)="selectedMastefiles(selectedMasterfile)"
                         [filter]="true" optionLabel="name" [listStyle]="{'max-height':'750px'}" [style]="{'width':'20rem'}" style="height: 800px;">
-                <ng-template let-country pTemplate="item">
-                <div class="country-item">
+                <ng-template let-masterfile pTemplate="item">
+                <div class="masterfile-item">
                     <div>
                        
                         <a class="p-link">
-                            <span>{{country.name}}</span>
+                            <span>{{masterfile.name}}</span>
                         </a>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
         <div class="col-12 md:col-8 lg:col-10" style="background-color: rgb(229, 243, 241);">
             <router-outlet>
             </router-outlet>
-            
+            <p-toast [style]="{'white-space': 'pre-line'}"></p-toast>
         </div>
 
     </div>

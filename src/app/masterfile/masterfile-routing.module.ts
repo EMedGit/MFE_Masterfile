@@ -31,6 +31,9 @@ import { ChiefcomplaintComponent } from './chiefcomplaint/chiefcomplaint.compone
 import { ChiefcomplaintdetailComponent } from './chiefcomplaintdetail/chiefcomplaintdetail.component';
 import { ReferralcategoryComponent } from './referralcategory/referralcategory.component';
 import { ReferralcategorydetailComponent } from './referralcategorydetail/referralcategorydetail.component';
+import { DiagnosticcenterComponent } from './diagnosticcenter/diagnosticcenter.component';
+import { PharmacyComponent } from './pharmacy/pharmacy.component';
+import { UsersComponent } from './users/users.component';
 import { ZscoreComponent } from './zscore/zscore.component';
 
 const routes: Routes = [
@@ -65,6 +68,9 @@ const routes: Routes = [
               { path: 'referralcategory', component : ReferralcategoryComponent },
               { path: 'referralcategorydetail', component : ReferralcategorydetailComponent },
               { path: 'laboratory', component : LaboratoryComponent},
+              { path: 'diagnosticCenter', component : DiagnosticcenterComponent },
+              { path: 'pharmacy', component : PharmacyComponent },          
+              { path: 'users', component : UsersComponent },              ,
               { path: 'zscore', component: ZscoreComponent}
             ] },
 ];

@@ -76,9 +76,22 @@ import { LaboratoryComponent } from './laboratory/laboratory.component';
 import { PopupLaboratoryComponent } from './popup/popup-laboratory/popup-laboratory.component';
 import { ImmunizationtypeComponent } from './immunizationtype/immunizationtype.component';
 import { PopupImmunizationtypeComponent } from './popup/popup-immunizationtype/popup-immunizationtype.component';
+import { PharmacyComponent } from './pharmacy/pharmacy.component';
+import { PopupPharmacyComponent } from './popup/popup-pharmacy/popup-pharmacy.component';
+import { DiagnosticcenterComponent } from './diagnosticcenter/diagnosticcenter.component';
+import { PopupDiagnosticcenterComponent } from './popup/popup-diagnosticcenter/popup-diagnosticcenter.component';
 import { ZscoreComponent } from './zscore/zscore.component';
 import { PopupZscoreComponent } from './popup/popup-zscore/popup-zscore.component';
 
+import { UsersComponent } from './users/users.component';
+import {ContextMenuModule} from 'primeng/contextmenu';
+import { PopupUserComponent } from './popup/popup-user/popup-user.component';
+import {CalendarModule} from 'primeng/calendar';
+import { ToastModule } from 'primeng/toast';
+import { ToastService } from '../services/toast.service';
+import { MessageService } from 'primeng/api';
+import {InputMaskModule} from 'primeng/inputmask';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 @NgModule({
   declarations: [
     RvsComponent,
@@ -138,6 +151,12 @@ import { PopupZscoreComponent } from './popup/popup-zscore/popup-zscore.componen
     PopupLaboratoryComponent,
     ImmunizationtypeComponent,
     PopupImmunizationtypeComponent,
+    PharmacyComponent,
+    PopupPharmacyComponent,
+    DiagnosticcenterComponent,
+    PopupDiagnosticcenterComponent,
+    UsersComponent,
+    PopupUserComponent,
     ZscoreComponent,
     PopupZscoreComponent
   ],
@@ -160,7 +179,15 @@ import { PopupZscoreComponent } from './popup/popup-zscore/popup-zscore.componen
     ReactiveFormsModule,
     MessageModule,
     TooltipModule,
-    DropdownModule
-  ]
+    DropdownModule,
+    ContextMenuModule,
+    CalendarModule,
+    ToastModule,
+    FormsModule,
+    ReactiveFormsModule,
+    InputMaskModule,
+    ConfirmDialogModule
+  ],
+  providers:[ToastService,MessageService]
 })
 export class MasterfileModule { }

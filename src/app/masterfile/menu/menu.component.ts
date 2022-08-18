@@ -12,14 +12,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
 
-  cities: Masterfile[] = [];
-  selectedCity: Masterfile;
+  masterfiles: Masterfile[] = [];
+  selectedMasterfile: Masterfile;
   countries: any[];
   selectedCountries: any[];
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) { 
 
-    this.cities = [
+    this.masterfiles = [
       {name: 'Ancillary Department', code: "[ancillarydepartment]", routerLink: "/ancillarydepartment"},
       {name: 'Ancillary Section', code: "[ancillarysection]", routerLink: "/ancillarysection"},
       {name: 'Barangay', code: "['barangay']", routerLink: "/barangay"},
@@ -29,7 +29,7 @@ export class MenuComponent implements OnInit {
       {name: 'Civil Status', code: "[civilStatus]", routerLink: "/civilStatus" },
       {name: 'Consultation Type', code: "consultationtype", routerLink: "/consultationtype"},
       {name: 'Department', code: "['department']", routerLink: "/department"},
-      {name: 'Diagnostics', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Diagnostics', code: "['diagnosticCenter']", routerLink: "/diagnosticCenter"},
       {name: 'Discounts', code: "[discounts]", routerLink: "/discounts"},
       {name: 'Doctors', code: "['icd']", routerLink: "/address"},
       {name: 'Health Facility', code: "['healthfacility']", routerLink: "/healthfacility"},
@@ -40,7 +40,7 @@ export class MenuComponent implements OnInit {
       {name: 'Medicine', code: "['medicine']", routerLink: "/medicine"},
       {name: 'Medicine Category', code: "[medicinecategory]", routerLink: "/medicinecategory"},
       {name: 'Municipality', code: "['municipality']", routerLink: "/municipality"},
-      {name: 'Pharmacy', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Pharmacy', code: "['pharmacy']", routerLink: "/pharmacy"},
       {name: 'Patient Type', code: "[patientType]", routerLink: "/patientType"},
       {name: 'PE Sketch', code: "['icd']", routerLink: "/medicine"},
       {name: 'PHIC Member Category', code: "[phicmembercategory]", routerLink: "/phicmembercategory"},
@@ -54,7 +54,7 @@ export class MenuComponent implements OnInit {
       {name: 'Region', code: "['icd']", routerLink: "/address"},
       {name: 'RVS', code: "['icd']", routerLink: "/rvs"},
       {name: 'Section', code: "['section']", routerLink: "/section"},
-      {name: 'Users', code: "['icd']", routerLink: "/icd"},
+      {name: 'Users', code: "['users']", routerLink: "/users"},
       {name: 'Z-Score', code: "['zscore']", routerLink: "/zscore"}
     ]
 
@@ -75,7 +75,7 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  selectedCitiy(event: any): void {
+  selectedMastefiles(event: any): void {
     let toRoute = 'masterfile/menu' + event.routerLink;
     this.router.navigate([toRoute]);
   }
