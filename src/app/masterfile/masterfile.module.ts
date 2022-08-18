@@ -81,6 +81,15 @@ import { PopupPharmacyComponent } from './popup/popup-pharmacy/popup-pharmacy.co
 import { DiagnosticcenterComponent } from './diagnosticcenter/diagnosticcenter.component';
 import { PopupDiagnosticcenterComponent } from './popup/popup-diagnosticcenter/popup-diagnosticcenter.component';
 
+import { UsersComponent } from './users/users.component';
+import {ContextMenuModule} from 'primeng/contextmenu';
+import { PopupUserComponent } from './popup/popup-user/popup-user.component';
+import {CalendarModule} from 'primeng/calendar';
+import { ToastModule } from 'primeng/toast';
+import { ToastService } from '../services/toast.service';
+import { MessageService } from 'primeng/api';
+import {InputMaskModule} from 'primeng/inputmask';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 @NgModule({
   declarations: [
     RvsComponent,
@@ -143,7 +152,9 @@ import { PopupDiagnosticcenterComponent } from './popup/popup-diagnosticcenter/p
     PharmacyComponent,
     PopupPharmacyComponent,
     DiagnosticcenterComponent,
-    PopupDiagnosticcenterComponent
+    PopupDiagnosticcenterComponent,
+    UsersComponent,
+    PopupUserComponent
   ],
   imports: [
     CommonModule,
@@ -164,7 +175,15 @@ import { PopupDiagnosticcenterComponent } from './popup/popup-diagnosticcenter/p
     ReactiveFormsModule,
     MessageModule,
     TooltipModule,
-    DropdownModule
-  ]
+    DropdownModule,
+    ContextMenuModule,
+    CalendarModule,
+    ToastModule,
+    FormsModule,
+    ReactiveFormsModule,
+    InputMaskModule,
+    ConfirmDialogModule
+  ],
+  providers:[ToastService,MessageService]
 })
 export class MasterfileModule { }

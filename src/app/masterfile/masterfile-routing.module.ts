@@ -33,6 +33,7 @@ import { ReferralcategoryComponent } from './referralcategory/referralcategory.c
 import { ReferralcategorydetailComponent } from './referralcategorydetail/referralcategorydetail.component';
 import { DiagnosticcenterComponent } from './diagnosticcenter/diagnosticcenter.component';
 import { PharmacyComponent } from './pharmacy/pharmacy.component';
+import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
   { path: 'rvs', component: RvsComponent },
@@ -67,7 +68,8 @@ const routes: Routes = [
               { path: 'referralcategorydetail', component : ReferralcategorydetailComponent },
               { path: 'laboratory', component : LaboratoryComponent},
               { path: 'diagnosticCenter', component : DiagnosticcenterComponent },
-              { path: 'pharmacy', component : PharmacyComponent }          
+              { path: 'pharmacy', component : PharmacyComponent },          
+              { path: 'users', component : UsersComponent }
             ] },
 ];
 

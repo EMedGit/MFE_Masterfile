@@ -1,0 +1,312 @@
+<form [formGroup]="usersForm" (ngSubmit)="saveData()">
+  <div class="card p-fluid">
+    <div class="grid mb-0 mt-1">
+      <div class="col-12">
+        <h1>USER DETAIL</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <hr />
+      </div>
+      <div class="col"></div>
+    </div>
+    <div class="col-12">
+      <h3>Personal Information</h3>
+    </div>
+    <div class="grid mb-1">
+      <div class="col-12 md:col-3 p-fluid">
+        <span class="p-float-label">
+          <!-- <input type="text" id="prefix" formControlName="prefix" pInputText style="font-weight: bold;" > -->
+          <p-dropdown
+            [options]="prefixlist"
+            optionLabel="description"
+            formControlName="prefix"
+            id="prefix"
+          >
+          </p-dropdown>
+          <label for="prefix"
+            >Prefix Name<span style="color: red; font-weight: 1000"
+              >*</span
+            ></label
+          >
+        </span>
+    
+      </div>
+      <div class="col-12 md:col-3 p-fluid">
+        <span class="p-float-label">
+          <input
+            type="text"
+            id="lastName"
+            formControlName="lastName"
+            pInputText
+            style="font-weight: bold"
+          />
+          <label for="lastName"
+            >Last Name<span style="color: red; font-weight: 1000"
+              >*</span
+            ></label
+          >
+        </span>
+      </div>
+      <div class="col-12 md:col-3 p-fluid">
+        <span class="p-float-label">
+          <input
+            type="text"
+            id="firstName"
+            formControlName="firstName"
+            pInputText
+            style="font-weight: bold"
+          />
+          <label for="firstName"
+            >First Name<span style="color: red; font-weight: 1000"
+              >*</span
+            ></label
+          >
+        </span>
+      </div>
+      <div class="col-12 md:col-3 p-fluid">
+        <span class="p-float-label">
+          <input
+            type="text"
+            id="middleName"
+            formControlName="middleName"
+            pInputText
+            style="font-weight: bold"
+          />
+          <label for="middleName">Middle Name</label>
+        </span>
+      </div>
+      <div class="col-12 md:col-3 p-fluid">
+        <span class="p-float-label">
+          <input
+            type="text"
+            id="extensionName"
+            formControlName="extensionName"
+            pInputText
+            style="font-weight: bold"
+          />
+          <label for="extensionName">Suffix Name</label>
+        </span>
+      </div>
+      <div class="col-12 md:col-3 p-fluid">
+        <span class="p-float-label">
+          <p-calendar
+            inputId="dateOfBirth"
+            [showIcon]="true"
+            dataType="string"
+            formControlName="dateOfBirth"
+          ></p-calendar>
+          <label for="dateOfBirth"
+            >Date of Birth<span style="color: red; font-weight: 1000"
+              >*</span
+            ></label
+          >
+        </span>
+      </div>
+
+      <div class="col-12 md:col-3 p-fluid">
+        <span class="p-float-label">
+          <input
+            type="text"
+            id="email"
+            formControlName="email"
+            pInputText
+            style="font-weight: bold"
+          />
+          <label for="email"
+            >Email Address<span style="color: red; font-weight: 1000"
+              >*</span
+            ></label
+          >
+        </span>
+      </div>
+      <div class="col-12 md:col-3 p-fluid">
+        <span class="p-float-label">
+          <!-- <input
+            type="text"
+            id="mobileNo"
+            formControlName="mobileNo"
+            pInputText
+            style="font-weight: bold"
+          /> -->
+          <p-inputMask mask="(999) 999-9999" formControlName="mobileNo"></p-inputMask>
+          <label for="mobileNo"
+            >Contact No.<span style="color: red; font-weight: 1000"
+              >*</span
+            ></label
+          >
+        </span>
+      </div>
+    </div>
+    <div class="col-12">
+      <h3>Other Information</h3>
+    </div>
+    <div class="grid mb-1">
+      <div class="col-12 md:col-3 p-fluid">
+        <span class="p-float-label">
+          <!-- <input type="text" id="userTypeId" formControlName="userTypeId" pInputText style="font-weight: bold;" > -->
+          <p-dropdown
+            [options]="usertypelist"
+            optionLabel="description"
+            formControlName="userTypeId"
+            id="userTypeId"
+          >
+          </p-dropdown>
+          <label for="userTypeId"
+            >User Type<span style="color: red; font-weight: 1000"
+              >*</span
+            ></label
+          >
+        </span>
+      </div>
+      <div class="col-12 md:col-3 p-fluid">
+        <span class="p-float-label">
+          <input
+            type="text"
+            id="position"
+            formControlName="position"
+            pInputText
+            style="font-weight: bold"
+          />
+          <label for="position"
+            >Position<span style="color: red; font-weight: 1000">*</span></label
+          >
+        </span>
+      </div>
+      <div class="col-12 md:col-3 p-fluid">
+        <span class="p-float-label">
+          <input
+            type="text"
+            id="license"
+            formControlName="license"
+            pInputText
+            style="font-weight: bold"
+          />
+          <label for="license">License No</label>
+        </span>
+      </div>
+      <div class="col-12 md:col-3 p-fluid">
+        <span class="p-float-label">
+          <input
+            type="text"
+            id="s2License"
+            formControlName="s2License"
+            pInputText
+            style="font-weight: bold"
+          />
+          <label for="s2License">S2License No</label>
+        </span>
+      </div>
+    </div>
+    <div class="col-12">
+      <h3>User Information</h3>
+    </div>
+    <div class="grid mb-1">
+      <div class="col-12 md:col-3 p-fluid">
+        <span class="p-float-label">
+          <input
+            type="text"
+            id="userName"
+            formControlName="userName"
+            pInputText
+            style="font-weight: bold"
+          />
+          <label for="userName"
+            >Username<span style="color: red; font-weight: 1000">*</span></label
+          >
+        </span>
+      </div>
+      <div class="col-12 md:col-3 p-fluid">
+        <span class="p-float-label">
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            pInputText
+            style="font-weight: bold"
+          />
+          <label for="password"
+            >Password<span style="color: red; font-weight: 1000">*</span></label
+          >
+        </span>
+      </div>
+      <div class="col-12 md:col-3 p-fluid">
+        <span class="p-float-label">
+          <input
+            type="password"
+            id="confirmPassword"
+            formControlName="confirmPassword"
+            pInputText
+            style="font-weight: bold"
+          />
+          <label for="confirmPassword"
+            >Confirm Password<span style="color: red; font-weight: 1000"
+              >*</span
+            ></label
+          >
+        </span>
+      </div>
+
+      <!-- <div
+        class="col-12 md:col-3 p-fluid"
+        style="align-self: center"
+        *ngIf="isForUpdating"
+      >
+        <i
+          class="pi pi-check-circle"
+          style="font-size: 2rem"
+          pTooltip="Active Record"
+          *ngIf="isActiveStatus"
+        ></i>
+        <i
+          class="pi pi-times-circle"
+          style="font-size: 2rem"
+          pTooltip="Inactive Record"
+          *ngIf="!isActiveStatus"
+        ></i>
+      </div> -->
+    </div>
+    <div class="grid mb-1 mr-1">
+      <div class="col-12 relative">
+        <div class="absolute top-0 right-0">
+          <div class="flex justify-content-end flex-wrap card-container">
+            <div class="flex align-items-center justify-content-center mr-2">
+              <button
+                pButton
+                pRipple
+                type="button"
+                label="CANCEL"
+                class="p-button-secondary"
+                (click)="ngOnDestroy()"
+              ></button>
+            </div>
+            <div class="flex align-items-center justify-content-center mr-2">
+              <button
+                pButton
+                pRipple
+                type="button"
+                icon="pi pi-pencil"
+                *ngIf="isForUpdating"
+                label="UPDATE"
+                class="p-button-info"
+                (click)="updateData()"
+              ></button>
+            </div>
+            <div class="flex align-items-center justify-content-center mr-2">
+              <button
+                pButton
+                pRipple
+                type="submit"
+                icon="pi pi-pencil"
+                *ngIf="isForSaving"
+                label="SAVE"
+                class="p-button-success"
+              ></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

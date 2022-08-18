@@ -54,7 +54,7 @@ export class MenuComponent implements OnInit {
       {name: 'Region', code: "['icd']", routerLink: "/address"},
       {name: 'RVS', code: "['icd']", routerLink: "/rvs"},
       {name: 'Section', code: "['section']", routerLink: "/section"},
-      {name: 'Users', code: "['icd']", routerLink: "/icd"}
+      {name: 'Users', code: "['users']", routerLink: "/users"}
     ]
 
     this.countries = [
