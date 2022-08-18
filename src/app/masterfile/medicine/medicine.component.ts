@@ -36,7 +36,7 @@ export class MedicineComponent implements OnInit {
       complete: () => {
         console.log('getdata complete');
       }
-    })
+    });
   }
   
   filter() {
@@ -45,8 +45,7 @@ export class MedicineComponent implements OnInit {
     this.newMedicineList.forEach(val => {
       console.log(val)
       if (val.code.toUpperCase().includes(this.searchkey.toUpperCase()) && val.status) {
-        filter.push(val);
-      }
+        filter.push(val);      }
 
     });
     console.log(filter)
@@ -96,7 +95,7 @@ export class MedicineComponent implements OnInit {
     })
   }
 
-  removeDepartment(medicine : Medicine) {
+  removeItem(medicine : Medicine) {
     this.medicineService.delete(medicine.id).subscribe({
       next : (result : boolean) => {
         result;

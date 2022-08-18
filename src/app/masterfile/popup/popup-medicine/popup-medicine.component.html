@@ -1,9 +1,92 @@
-<form>
+<form [formGroup]="medicineForm">
     <div class="card p-fluid">
         <div class="grid mb-0 mt-1">
             <div class="col-6">
                 <h1>MEDICINE DETAIL</h1>
             </div>            
+        </div>
+        <div class="row">
+            <div class="col">
+                <hr>
+            </div>
+            <div class="col">
+            </div>
+        </div>    
+        
+        <div class="grid mb-1">
+            <div class="col-4 p-fluid">
+                <span class="p-float-label">
+                    <input type="text" id="code" formControlName="code" pInputText style="font-weight: bold;" >
+                    <label for="code">Code</label>
+                </span>
+            </div>
+            <div class="col-4 p-fluid" style="align-self: center;" *ngIf="isForUpdating">
+                <i class="pi pi-check-circle" style="font-size: 2rem" pTooltip="Active Record" *ngIf="isActiveStatus"></i>
+                <i class="pi pi-times-circle" style="font-size: 2rem" pTooltip="Inactive Record"  *ngIf="!isActiveStatus"></i>
+            </div>
+        </div>
+        <div class="grid mb-1">
+            <div class="col-12 p-fluid">
+                <span class="p-float-label">
+                    <input type="text" id="description" formControlName="description" pInputText style="font-weight: bold;">
+                    <label for="description">Description</label>
+                </span>
+            </div>
+        </div>
+        <div class="grid mb-1">
+            <div class="col-12 p-fluid">
+                <span class="p-float-label">
+                    <input type="text" id="genericName" formControlName="genericName" pInputText style="font-weight: bold;">
+                    <label for="genericName">Generic Name</label>
+                </span>
+            </div>
+        </div>
+        <div class="grid mb-1">
+            <div class="col-3 p-fluid">
+                <span class="p-float-label">
+                    <p-inputNumber inputid="cost" formControlName="cost" pInputText style="font-weight: bold;"
+                    mode="currency" currency="PHP" locale="en-US" > </p-inputNumber>
+                    <label for="cost" style="align-self: center;"> Cost</label>
+                </span>
+            </div>  
+            <div class="col-3 p-fluid" >
+                <span class="p-float-label">
+                    <p-inputNumber inputid="price" formControlName="price" pInputText style="font-weight: bold;"
+                    mode="currency" currency="PHP" locale="en-US"> </p-inputNumber>
+                    <label for="price" style="align-self: center;"> Price</label>
+                </span>
+            </div>  
+            <div class="col-3 p-fluid">
+                <span class="p-float-label">
+                    <p-dropdown id="categoryId" formControlName="categoryId" 
+                    [options]="mcList" optionLabel="description" placeholder=" " [(ngModel)]="selectedMC"></p-dropdown>
+                    <label for="categoryId">Category</label>
+                </span>
+            </div>
+            <div class="col-3 p-fluid" style="align-self: center;">
+                <span>
+                    <p-checkbox formControlName="activeInActiveStatus" inputId="binary1" [binary]="true"></p-checkbox>
+                    <label for="binary1"> Active</label>
+                </span>
+                <br>
+            </div>  
+        </div>
+        <div class="grid mb-1 mr-1">
+            <div class="col-12 relative">
+                <div class="absolute top-0 right-0">
+                    <div class="flex justify-content-end flex-wrap card-container">
+                        <div class="flex align-items-center justify-content-center mr-2">
+                            <button pButton pRipple type="button" label="CANCEL" class="p-button-secondary" (click)="ngOnDestroy()"></button>
+                        </div>
+                        <div class="flex align-items-center justify-content-center mr-2">
+                            <button pButton pRipple type="button" icon="pi pi-pencil" *ngIf="isForUpdating" label="UPDATE" class="p-button-info"  (click)="updateData()"></button>
+                        </div>
+                        <div class="flex align-items-center justify-content-center mr-2">
+                            <button pButton pRipple type="button" icon="pi pi-pencil" *ngIf="isForSaving" label="SAVE" class="p-button-success" (click)="saveData()"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </form>

@@ -25,7 +25,6 @@
                 <i class="pi pi-times-circle" style="font-size: 2rem" pTooltip="Inactive Record"  *ngIf="!isActiveStatus"></i>
             </div>
         </div>
-        <br>
         <div class="grid mb-1">
             <div class="col-12 p-fluid">
                 <span class="p-float-label">
@@ -34,12 +33,11 @@
                 </span>
             </div>
         </div>
-        <br>
         <div class="grid mb-1">
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
                     <p-dropdown id="physicalExaminationTypeId" formControlName="physicalExaminationTypeId" 
-                    [options]="petList" optionLabel="type" [(ngModel)]="selectedpet" (onChange)="changePEType()" placeholder=""></p-dropdown>
+                    [options]="petList" optionLabel="type" [(ngModel)]="selectedpet" (onChange)="changePEType()" placeholder=" "></p-dropdown>
                     <label for="physicalExaminationTypeId">Physical Examination Type</label>
                 </span>
             </div>
@@ -47,7 +45,7 @@
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
                     <p-dropdown id="physicalExaminationDetailTypeId" formControlName="physicalExaminationDetailTypeId" 
-                    [options]="pedtList" optionLabel="description" [(ngModel)]="selectedpedt" placeholder=""></p-dropdown>
+                    [options]="pedtList" optionLabel="description" [(ngModel)]="selectedpedt" placeholder=" "></p-dropdown>
                     <label for="physicalExaminationDetailTypeId">Physical Examination Detail Type</label>
                 </span>
             </div>

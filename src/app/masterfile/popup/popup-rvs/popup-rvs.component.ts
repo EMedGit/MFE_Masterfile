@@ -51,16 +51,16 @@ export class PopupRvsComponent implements OnInit {
         code: [''],
         category: [''],
         description: [''],
-        caseRateAmount: [''],
-        hospitalFee: [''],
-        professionalFee: [''],
-        caseRateAmount2: [''],
-        hospitalFee2: [''],
-        professionalFee2: [''],
+        caseRateAmount: null,
+        hospitalFee: null,
+        professionalFee: null,
+        caseRateAmount2: null,
+        hospitalFee2: null,
+        professionalFee2: null,
         allowSingleConfinement: [''],
-        noOfDays: [''],
+        noOfDays: null,
         specialProcedure: [''],
-        procedureType: ['']
+        procedureType: null,
       });
   }
 
