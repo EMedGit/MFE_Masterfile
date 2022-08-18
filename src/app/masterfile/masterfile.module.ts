@@ -76,6 +76,8 @@ import { LaboratoryComponent } from './laboratory/laboratory.component';
 import { PopupLaboratoryComponent } from './popup/popup-laboratory/popup-laboratory.component';
 import { ImmunizationtypeComponent } from './immunizationtype/immunizationtype.component';
 import { PopupImmunizationtypeComponent } from './popup/popup-immunizationtype/popup-immunizationtype.component';
+import { ZscoreComponent } from './zscore/zscore.component';
+import { PopupZscoreComponent } from './popup/popup-zscore/popup-zscore.component';
 
 @NgModule({
   declarations: [
@@ -135,7 +137,9 @@ import { PopupImmunizationtypeComponent } from './popup/popup-immunizationtype/p
     LaboratoryComponent,
     PopupLaboratoryComponent,
     ImmunizationtypeComponent,
-    PopupImmunizationtypeComponent
+    PopupImmunizationtypeComponent,
+    ZscoreComponent,
+    PopupZscoreComponent
   ],
   imports: [
     CommonModule,

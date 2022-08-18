@@ -42,7 +42,8 @@
                     <p-tableCheckbox [value]="icd10"></p-tableCheckbox>
                 </td>
                 <td>{{icd10.code}}</td>
-                <td>{{icd10.description}}</td>
+                <td pTooltip="{{icd10.description.length > 90 ? icd10.description : ''}}">{{(icd10.description.length > 50 ) 
+                    ? (icd10.description | slice:0:50)+'...': (icd10.description) }}</td>
                 <td>{{icd10.caseRateAmount | currency:'PHP'}}</td>
                 <td>{{icd10.hospitalFee | currency:'PHP'}}</td>
                 <td>{{icd10.professionalFee | currency:'PHP'}}</td>

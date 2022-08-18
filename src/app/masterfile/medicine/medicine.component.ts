@@ -25,7 +25,7 @@ export class MedicineComponent implements OnInit {
     this.getData();
   }
   getData() {
-    this.medicineService.getList('','',0,100).subscribe({
+    this.medicineService.getList('','',0,9999999).subscribe({
       next: (result: Medicine[]) => {
         this.medicineList = result;
         this.newMedicineList = this.medicineList.filter(x => x.status);

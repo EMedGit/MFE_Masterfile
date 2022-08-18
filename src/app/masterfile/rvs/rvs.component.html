@@ -43,7 +43,8 @@
                     <p-tableCheckbox [value]="rvs"></p-tableCheckbox>
                 </td>
                 <td>{{rvs.code}}</td>
-                <td pTooltip="{{rvs.description.length > 90 ? rvs.description : ''}}">{{(rvs.description.length > 90 ) ? (rvs.description | slice:0:90)+'...': (rvs.description) }}</td>
+                <td pTooltip="{{rvs.description.length > 90 ? rvs.description : ''}}">{{(rvs.description.length > 50 ) 
+                    ? (rvs.description | slice:0:50)+'...': (rvs.description) }}</td>
                 <td>{{rvs.caseRateAmount | currency:'PHP'}}</td>
                 <td>{{rvs.hospitalFee | currency:'PHP'}}</td>
                 <td>{{rvs.professionalFee | currency:'PHP'}}</td>
