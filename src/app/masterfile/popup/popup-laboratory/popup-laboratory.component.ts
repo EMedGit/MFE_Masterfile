@@ -78,6 +78,7 @@ export class PopupLaboratoryComponent implements OnInit {
     obj.diagnosisRemarks = this.laboratoryForm.controls['diagnosisRemarks'].value;
     obj.departmentCode = this.laboratoryForm.controls['departmentCode'].value;
     obj.specializationCode = this.laboratoryForm.controls['specializationCode'].value;
+    obj.modifiedBy = 'Fox';
     obj.modifiedDateTime = this.datePipe.transform(
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
     ) as string;
@@ -99,6 +100,7 @@ export class PopupLaboratoryComponent implements OnInit {
 
   getValue(): Laboratory {
     this.laboratory = new Laboratory();  
+    this.laboratory.createdBy = 'admin';
     this.laboratory.code = this.laboratoryForm.controls['code'].value;
     this.laboratory.description = this.laboratoryForm.controls['description'].value;
     this.laboratory.price = this.laboratoryForm.controls['price'].value;
@@ -107,6 +109,7 @@ export class PopupLaboratoryComponent implements OnInit {
     this.laboratory.priceReferenceIndex = this.laboratoryForm.controls['priceReferenceIndex'].value;
     this.laboratory.diagnosisRemarks = this.laboratoryForm.controls['diagnosisRemarks'].value;
     this.laboratory.departmentCode = this.laboratoryForm.controls['departmentCode'].value;
+    this.laboratory.specializationCode = this.laboratoryForm.controls['specializationCode'].value;
     return this.laboratory;
   }
 }

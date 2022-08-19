@@ -82,7 +82,6 @@ import { DiagnosticcenterComponent } from './diagnosticcenter/diagnosticcenter.c
 import { PopupDiagnosticcenterComponent } from './popup/popup-diagnosticcenter/popup-diagnosticcenter.component';
 import { ZscoreComponent } from './zscore/zscore.component';
 import { PopupZscoreComponent } from './popup/popup-zscore/popup-zscore.component';
-
 import { UsersComponent } from './users/users.component';
 import {ContextMenuModule} from 'primeng/contextmenu';
 import { PopupUserComponent } from './popup/popup-user/popup-user.component';
@@ -92,6 +91,8 @@ import { ToastService } from '../services/toast.service';
 import { MessageService } from 'primeng/api';
 import {InputMaskModule} from 'primeng/inputmask';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { RadiologyComponent } from './radiology/radiology.component';
+import { PopupRadiologyComponent } from './popup/popup-radiology/popup-radiology.component';
 @NgModule({
   declarations: [
     RvsComponent,
@@ -158,7 +159,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     UsersComponent,
     PopupUserComponent,
     ZscoreComponent,
-    PopupZscoreComponent
+    PopupZscoreComponent,
+    RadiologyComponent,
+    PopupRadiologyComponent
   ],
   imports: [
     CommonModule,

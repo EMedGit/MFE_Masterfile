@@ -35,6 +35,7 @@ import { DiagnosticcenterComponent } from './diagnosticcenter/diagnosticcenter.c
 import { PharmacyComponent } from './pharmacy/pharmacy.component';
 import { UsersComponent } from './users/users.component';
 import { ZscoreComponent } from './zscore/zscore.component';
+import { RadiologyComponent } from './radiology/radiology.component';
 
 const routes: Routes = [
   { path: 'rvs', component: RvsComponent },
@@ -69,9 +70,10 @@ const routes: Routes = [
               { path: 'referralcategorydetail', component : ReferralcategorydetailComponent },
               { path: 'laboratory', component : LaboratoryComponent},
               { path: 'diagnosticCenter', component : DiagnosticcenterComponent },
-              { path: 'pharmacy', component : PharmacyComponent },          
-              { path: 'users', component : UsersComponent },              ,
-              { path: 'zscore', component: ZscoreComponent}
+              { path: 'users', component : UsersComponent },              
+              { path: 'zscore', component: ZscoreComponent},
+              { path: 'pharmacy', component : PharmacyComponent },
+              { path: 'radiology', component : RadiologyComponent }        
             ] },
 ];
 

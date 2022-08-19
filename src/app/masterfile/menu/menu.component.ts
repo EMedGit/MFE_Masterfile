@@ -48,7 +48,7 @@ export class MenuComponent implements OnInit {
       {name: 'Physical Examination Detail Type', code: "['physicalexaminationdetailtype']", routerLink: "/physicalexaminationdetailtype"},
       {name: 'Physical Examination Type', code: "['physicalexaminationtype']", routerLink: "/physicalexaminationtype"},
       {name: 'Province', code: "['province']", routerLink: "/province"},
-      {name: 'Radiology', code: "['icd']", routerLink: "/medicine"},
+      {name: 'Radiology', code: "['radiology']", routerLink: "/radiology"},
       {name: 'Referral Category', code: "[referralcategory]", routerLink: "/referralcategory"},
       {name: 'Referral Category Detail', code: "[referralcategorydetail]", routerLink: "/referralcategorydetail"},
       {name: 'Region', code: "['icd']", routerLink: "/address"},
