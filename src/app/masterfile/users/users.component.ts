@@ -6,6 +6,8 @@ import { Users } from 'src/app/models/user.model';
 import { ToastService } from 'src/app/services/toast.service';
 import { UsersService } from 'src/app/services/users.service';
 import { PopupUserComponent } from '../popup/popup-user/popup-user.component';
+import { PopupUserhealthfacilityComponent } from '../popup/popup-userhealthfacility/popup-userhealthfacility.component';
+import { PopupUserpermissionsComponent } from '../popup/popup-userpermissions/popup-userpermissions.component';
 
 @Component({
   selector: 'app-users',
@@ -19,7 +21,7 @@ export class UsersComponent implements OnInit {
   users: Users;
   prevUsersList: Users[];
   usersList: Users[] = [];
-  selectedUsers: Users[];
+  selectedUsers: Users;
   items: MenuItem[];
   constructor(
     private usersService: UsersService,
@@ -49,12 +51,12 @@ export class UsersComponent implements OnInit {
       {
         label: 'Add Permission',
         icon: 'pi pi-fw pi-user-plus',
-        command: () => console.log(this.selectedUsers),
+        command: () => {this.addUsersPermissions(this.selectedUsers)}
       },
       {
         label: 'Add Health Facility',
         icon: 'pi pi-fw pi-building',
-        command: () => console.log(this.selectedUsers),
+        command: () => {this.addUsersHealthFacility(this.selectedUsers)}
       },
     ];
   }
@@ -90,6 +92,7 @@ export class UsersComponent implements OnInit {
       }
     });
   }
+  
   updateUsersPopUp(users: Users) {
     this.ref = this.dialogService.open(PopupUserComponent, {
       width: '1200px',
@@ -135,6 +138,46 @@ export class UsersComponent implements OnInit {
          }
        })
     }});
+  }
+
+  addUsersPermissions(users: Users) {
+    this.ref = this.dialogService.open(PopupUserpermissionsComponent, {
+      width: '1200px',
+      height: '750px',
+      showHeader: true,
+      closable: true,
+      data: {
+        users,
+        isForSaving: true,
+      },
+    });
+    this.ref.onClose.subscribe((data: Users) => {
+      console.log(data);
+      if (data != undefined) {
+        this.usersList.push(data);
+        this.prevUsersList = this.usersList.filter((x) => x.isActive);
+      }
+    });
+  }
+
+  addUsersHealthFacility(users: Users) {
+    this.ref = this.dialogService.open(PopupUserhealthfacilityComponent, {
+      width: '1200px',
+      height: '750px',
+      showHeader: true,
+      closable: true,
+      data: {
+        users,
+        isForSaving: true,
+      },
+    });
+    this.ref.onClose.subscribe((data: Users) => {
+      console.log(data);
+      if (data != undefined) {
+        this.usersList.push(data);
+        this.prevUsersList = this.usersList.filter((x) => x.isActive);
+      }
+    });
   }
   batchdeleteUsers() {
     // if (this.selectedUsers.length > 0) {

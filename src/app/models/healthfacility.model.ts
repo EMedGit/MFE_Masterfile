@@ -9,8 +9,4 @@ export class HealthFacility {
     createdDateTime : Date;
     modifiedBy : string;
     modifiedDateTime : Date;
-
-
-
-
 }
