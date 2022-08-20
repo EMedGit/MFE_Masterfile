@@ -62,15 +62,15 @@
             <td>{{ userhealthfacility.sectionName }}</td>
            
             <td>
-                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" pTooltip="Edit"></button>
-                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"  pTooltip="Remove Tagging"></button>
+                <!-- <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" (click)="updateData(userhealthfacility)" pTooltip="Edit"></button> -->
+                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="removeData(userhealthfacility)"  pTooltip="Remove Tagging"></button>
             </td>
           </tr>
         </ng-template>
       </p-table>
     </div>
     <div class="col-3">
-      <div class="grid" [formGroup]="usersHealthFacilityForm">
+      <div class="grid" [formGroup]="usersHealthFacilityForm" >
         <div class="col-12">
           <div class="p-fluid">
             <h3>USER HEALTH FACILITY</h3>
@@ -115,7 +115,7 @@
           </div>
           <div class="p-fluid">
             <div class="p-0 mb-2">
-              <button class="button-orange">
+              <button class="button-orange"  type="submit" (click)="saveData()">
                 <span> Add User Health Facility </span>
               </button>
             </div>
@@ -126,3 +126,4 @@
   </div>
 
 </div>
+<p-confirmDialog [style]="{ width: '50%' }"></p-confirmDialog>

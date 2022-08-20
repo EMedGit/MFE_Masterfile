@@ -78,4 +78,8 @@ export class UsersService {
         })
       );
   }
+  registerUserHealthFacility(data : UserHealthFacility[]): Observable<UserHealthFacility[]> {
+    const url = `${environment.authAPI}/identity/userhealthfacility`;
+    return this.http.post<UserHealthFacility[]>(url, data, httpOptions);
+  }
 }
