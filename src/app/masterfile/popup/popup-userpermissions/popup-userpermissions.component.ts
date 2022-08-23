@@ -18,6 +18,7 @@ export class PopupUserpermissionsComponent implements OnInit {
   selectedUserpermissions: Claim[];
   prevuserpermissions: Claim[];
   userpermissions: Claim[] = [];
+  listpermissions: Claim[] = [];
   userclaims: UserClaim = new UserClaim();
   checkstate: boolean = false;
   isForSaving = false;
@@ -46,9 +47,7 @@ export class PopupUserpermissionsComponent implements OnInit {
   filter() {
     let filter: any[] = [];
     this.userpermissions.forEach((val) => {
-      if (
-        val.type.toUpperCase().includes(this.searchkey.toUpperCase())
-      ) {
+      if (val.type.toUpperCase().includes(this.searchkey.toUpperCase())) {
         filter.push(val);
       }
     });
@@ -102,15 +101,23 @@ export class PopupUserpermissionsComponent implements OnInit {
     this.isForSaving = this.config.data.isForSaving;
     let list = this.usersService
       .getUserClaims(this.config.data.users.id)
-      .subscribe((retVal) => {
-        retVal.forEach((val) => {
-          let claim = new Claim();
-          let stringvalue = val.value as unknown;
-          claim.type = val.type;
-          claim.checkboxvalue = stringvalue == '1' ? true : false;
-          this.userpermissions.push(claim);
-        });
-        this.prevuserpermissions = this.userpermissions;
+      .subscribe({
+        next: (retVal) => {
+          this.listpermissions = retVal;
+        },
+        error: (err) => {
+          console.log(err.error);
+        },
+        complete:()=>{
+          this.listpermissions.forEach((val) => {
+            let claim = new Claim();
+            let stringvalue = val.value as unknown;
+            claim.type = val.type;
+            claim.checkboxvalue = stringvalue == '1' ? true : false;
+            this.userpermissions.push(claim);
+          });
+          this.prevuserpermissions = this.userpermissions;
+        }
       });
   }
   selectRow() {
