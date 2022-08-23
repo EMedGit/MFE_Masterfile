@@ -21,8 +21,8 @@ export class SectionService {
         params = params.append('Code', code);
         params = params.append('Description', description);
         params = params.append('DepartmentID', departmentId);
-        params = params.append('Page', page);
-        params = params.append('ItemsPerPage', itemsPerPage);
+        params = params.append('Page', 0);
+        params = params.append('ItemsPerPage', 99999999);
 
         return this.http
         .get<Section[]>(`${environment.masterfileAPI}/section`, {params})

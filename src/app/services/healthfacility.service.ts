@@ -21,8 +21,8 @@ export class HealthFacilityService {
         let params = new HttpParams();
         params = params.append('Code', code);
         params = params.append('Name', name);
-        params = params.append('Page', page);
-        params = params.append('ItemsPerPage', itemsPerPage);
+        params = params.append('Page', 0);
+        params = params.append('ItemsPerPage', 999999);
         return this.http
         .get<HealthFacility[]>(`${environment.masterfileAPI}/healthFacility`, {params})
         .pipe(

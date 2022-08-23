@@ -95,6 +95,9 @@ import { RadiologyComponent } from './radiology/radiology.component';
 import { PopupRadiologyComponent } from './popup/popup-radiology/popup-radiology.component';
 import { PhysicalexaminationsketchComponent } from './physicalexaminationsketch/physicalexaminationsketch.component';
 import { PopupPhysicalexaminationsketchComponent } from './popup/popup-physicalexaminationsketch/popup-physicalexaminationsketch.component';
+import { PopupUserpermissionsComponent } from './popup/popup-userpermissions/popup-userpermissions.component';
+import { PopupUserhealthfacilityComponent } from './popup/popup-userhealthfacility/popup-userhealthfacility.component';
+import {TriStateCheckboxModule} from 'primeng/tristatecheckbox';
 @NgModule({
   declarations: [
     RvsComponent,
@@ -164,6 +167,8 @@ import { PopupPhysicalexaminationsketchComponent } from './popup/popup-physicale
     PopupZscoreComponent,
     RadiologyComponent,
     PopupRadiologyComponent,
+    PopupUserpermissionsComponent,
+    PopupUserhealthfacilityComponent,
     PhysicalexaminationsketchComponent,
     PopupPhysicalexaminationsketchComponent
   ],
@@ -193,7 +198,8 @@ import { PopupPhysicalexaminationsketchComponent } from './popup/popup-physicale
     FormsModule,
     ReactiveFormsModule,
     InputMaskModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    TriStateCheckboxModule,
   ],
   providers:[ToastService,MessageService]
 })

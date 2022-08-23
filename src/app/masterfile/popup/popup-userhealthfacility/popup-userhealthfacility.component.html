@@ -1,0 +1,129 @@
+<div class="card p-fluid">
+  <div class="grid mb-0 mt-1">
+    <div class="col-12">
+      <h1>USER HEALTHFACILITY ({{ this.config.data.users.fullName }})</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <hr />
+    </div>
+    <div class="col"></div>
+  </div>
+  <div class="grid mb-1 mr-1">
+    <div class="col-9">
+        <p-toolbar styleClass="p-mb-4">
+            <ng-template pTemplate="left" class="flex">
+              <h3>Health Facilty</h3>
+            </ng-template>
+            <ng-template pTemplate="right">
+              <div class="p-d-flex p-ai-center p-jc-between">
+                <span class="p-input-icon-left">
+                  <i class="pi pi-search"></i>
+                  <input
+                    pInputText
+                    type="text"
+                    placeholder="Search..."
+            
+                  />
+                </span>
+              </div>
+            </ng-template>
+          </p-toolbar>
+      <p-table
+        #dt
+        [value]="prevuserhealthfacility"
+        [rows]="5"
+        [paginator]="true"
+        [rowsPerPageOptions]="[5, 10, 25, 50]"
+        [globalFilterFields]="['type']"
+        [(selection)]="selectedUserHealthFacility"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [showCurrentPageReport]="true"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="healthFacilityName">
+              Health Facility<p-sortIcon field="healthFacilityName"></p-sortIcon>
+            </th>
+            <th pSortableColumn="departmentName">
+              Department<p-sortIcon field="departmentName"></p-sortIcon>
+            </th>
+            <th pSortableColumn="sectionName">
+              Section<p-sortIcon field="sectionName"></p-sortIcon>
+            </th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-userhealthfacility>
+          <tr>
+            <td>{{ userhealthfacility.healthFacilityName }}</td>
+            <td>{{ userhealthfacility.departmentName }}</td>
+            <td>{{ userhealthfacility.sectionName }}</td>
+           
+            <td>
+                <!-- <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" (click)="updateData(userhealthfacility)" pTooltip="Edit"></button> -->
+                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="removeData(userhealthfacility)"  pTooltip="Remove Tagging"></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <div class="col-3">
+      <div class="grid" [formGroup]="usersHealthFacilityForm" >
+        <div class="col-12">
+          <div class="p-fluid">
+            <h3>USER HEALTH FACILITY</h3>
+            <div class="field pt-2">
+              <span class="p-float-label">
+                <p-dropdown
+                  [options]="heathfacilitylist"
+                  optionLabel="name"
+                  id="HealthFacility"
+                  formControlName="healthFacilityName"
+                  (onChange)="selectHealthFacility($event)"
+                >
+                </p-dropdown>
+                <label for="HealthFacility">Health Facility</label>
+              </span>
+            </div>
+            <div class="field">
+              <span class="p-float-label">
+                <p-dropdown
+                  [options]="prevdepartmentlist"
+                  optionLabel="description"
+                  id="Department"
+                  formControlName="departmentName"
+                  (onChange)="selectDepartment($event)"
+                >
+                </p-dropdown>
+                <label for="Department">Department</label>
+              </span>
+            </div>
+            <div class="field">
+              <span class="p-float-label">
+                <p-dropdown
+                  [options]="prevsectionlist"
+                  optionLabel="description"
+                  id="Section"
+                  formControlName="sectionName"
+                >
+                </p-dropdown>
+                <label for="Section">Section</label>
+              </span>
+            </div>
+          </div>
+          <div class="p-fluid">
+            <div class="p-0 mb-2">
+              <button class="button-orange"  type="submit" (click)="saveData()">
+                <span> Add User Health Facility </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<p-confirmDialog [style]="{ width: '50%' }"></p-confirmDialog>
