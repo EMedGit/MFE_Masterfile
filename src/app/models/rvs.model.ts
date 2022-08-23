@@ -17,5 +17,5 @@ export class RVS {
     createdDateTime: Date;
     modifiedBy: string;
     modifiedDateTime: Date | null;
-    status: boolean | null;
+    status: boolean;
 }

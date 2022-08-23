@@ -25,14 +25,15 @@ export class PopupSectionComponent implements OnInit {
   isForUpdating= false;
 
   hfList: HealthFacility[];
+  ddHFList: HealthFacility[];
   selectedHF: HealthFacility;
 
   departmentList: Department[];
+  ddDepartmentList: Department[];
   selectedDepartment: Department;
   
   constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private sectionService : SectionService, 
-    private departmentService: DepartmentService, 
-    private hfService: HealthFacilityService) { }
+    private departmentService: DepartmentService, private hfService: HealthFacilityService) { }
 
   ngOnInit(): void {
     this.isActiveStatus = this.config.data.section.status;
@@ -53,19 +54,19 @@ export class PopupSectionComponent implements OnInit {
         healthFacilityId: [''],
       });
       
-      this.hfService.getHealthFacility('','',0,100).subscribe({
-        next: (result: HealthFacility[]) => {
-          this.hfList = result;
-          this.hfList = this.hfList.filter(x => x.status);
-        },
-        error: (err) => {
-          console.log(err);
-        },
-        complete: () => {
-          console.log('dropdown hf complete');
-          console.log(this.hfList);
-        }
-      });
+    this.hfService.getHealthFacility('','',0,100).subscribe({
+      next: (result: HealthFacility[]) => {
+        this.hfList = result;
+         this.ddHFList = this.hfList.filter(x => x.status);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('dropdown hf complete');
+        console.log(this.hfList);
+      }
+    });
       
     this.departmentService.getDepartments('','',0,0,100).subscribe({
       next: (result: Department[]) => {
@@ -143,8 +144,9 @@ export class PopupSectionComponent implements OnInit {
   }
 
   changeHF() {
-    this.departmentList = this.departmentList.filter(x => x.status && x.healthFacilityId == this.selectedHF.id);
-    console.log(this.departmentList);
+    console.log(this.selectedHF.id);
+    this.ddDepartmentList = this.departmentList.filter(x => x.status && x.healthFacilityId == this.selectedHF.id);
+    console.log(this.ddDepartmentList);
   }
 
 }

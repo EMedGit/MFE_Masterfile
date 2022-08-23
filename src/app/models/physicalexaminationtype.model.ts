@@ -4,6 +4,6 @@ export class PhysicalExaminationType {
     createdBy: string;
     createdDateTime: Date;
     modifiedBy: string;
-    modifiedDateTime: Date;
+    modifiedDateTime: Date | null;
     status: boolean;
 }

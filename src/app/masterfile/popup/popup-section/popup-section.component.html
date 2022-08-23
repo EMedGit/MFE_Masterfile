@@ -29,14 +29,14 @@
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
                     <p-dropdown id="healthFacilityId" formControlName="healthFacilityId" 
-                    [options]="hfList" optionLabel="name" [(ngModel)]="selectedHF" placeholder="Select Health Facility" (onChange)="changeHF()"></p-dropdown>
+                    [options]="hfList" optionLabel="name" [(ngModel)]="selectedHF" placeholder=" " (onChange)="changeHF()"></p-dropdown>
                     <label for="healthFacilityId">Health Facility</label>
                 </span>
             </div>
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
                     <p-dropdown id="departmentId" formControlName="departmentId" 
-                    [options]="departmentList" optionLabel="description" [(ngModel)]="selectedDepartment" placeholder="Select Department"></p-dropdown>
+                    [options]="ddDepartmentList" optionLabel="description" [(ngModel)]="selectedDepartment" placeholder=" "></p-dropdown>
                     <label for="departmentId">Department</label>
                 </span>
             </div>
