@@ -1,9 +1,10 @@
-export class Province {
+export class Barangay {
     id: number;
+    barangayCode: string;
+    barangayName: string;
     provinceCode: string;
-    provinceName: string;
-    regionId: number;
-    regionCode: string;
+    municipalityCode: string;
+    zipCode: string;
     createdBy: string;
     createdDateTime: string;
     modifiedBy: string;

@@ -1,0 +1,106 @@
+
+<form [formGroup]="barangayForm">
+    <div class="card p-fluid">
+        <div class="grid mb-0 mt-1">
+            <div class="col-6">
+                <h1>BARANGAY DETAIL</h1>
+            </div>            
+        </div>
+        <div class="row">
+            <div class="col">
+                <hr>
+            </div>
+            <div class="col">
+            </div>
+        </div>  
+        <div class="grid mb-1">
+            <div class="col-3 p-fluid">
+                <span class="p-float-label">
+                    <input type="text" id="barangayCode" formControlName="barangayCode" pInputText style="font-weight: bold;" >
+                    <label for="barangayCode">Barangay Code</label>
+                </span>
+            </div>
+            <div class="col-7 p-fluid">
+                <span class="p-float-label">
+                    <input type="text" id="barangayName" formControlName="barangayName" pInputText style="font-weight: bold;">
+                    <label for="barangayName">Barangay Name</label>
+                </span>
+            </div>
+            <div class="col-2 p-fluid">
+                <span class="p-float-label">
+                    <input type="text" id="Zipcode" pInputText formControlName="zipcode" maxlength="4">
+                    <label for="Zipcode">ZIPCODE </label>
+                </span>
+            </div>
+        </div>      
+        <div class="grid mb-1">
+            <div class="col-12 lg:col-4  p-fluid" *ngIf="isForSaving">
+                <span class="p-float-label">
+                    <p-dropdown [options]="province" optionLabel="provinceName" [showClear]="true"
+                        styleClass="dropdown-custom" [autoDisplayFirst]="false" [filter]="true" filterBy="provinceName"
+                        [showClear]="true" formControlName="provinceCode" optionValue="provinceCode"
+                        [ngClass]="{ 'ng-invalid ng-dirty': (this.barangayForm.controls['provinceCode'].errors)}">
+                    </p-dropdown>
+                    <label for="Province">PROVINCE <span style="color: red; font-weight: 1000; ">*</span></label>
+                </span>
+            </div>
+            <div class="col-12 lg:col-4  p-fluid" *ngIf="isForSaving">
+                <span class="p-float-label">
+                    <p-dropdown [options]="municipality" optionLabel="municipalityName" styleClass="dropdown-custom"
+                        [autoDisplayFirst]="false" [showClear]="true" [filter]="true" filterBy="municipalityName"
+                        formControlName="municipalityCode" optionValue="municipalityCode"
+                        [ngClass]="{ 'ng-invalid ng-dirty': (this.barangayForm.controls['municipalityCode'].errors)}">
+                    </p-dropdown>
+                    <label for="City">CITY / MUNICIPALITY <span style="color: red; font-weight: 1000; ">*</span></label>
+                </span>
+            </div>
+            <div class="col-12 lg:col-6  p-fluid" *ngIf="isForUpdating">
+                <span class="p-float-label">
+                    <p-dropdown [options]="province" optionLabel="provinceName" [showClear]="true"
+                        styleClass="dropdown-custom" [autoDisplayFirst]="false" [filter]="true" filterBy="provinceName"
+                        [showClear]="true" formControlName="provinceCode" optionValue="provinceCode"
+                        [ngClass]="{ 'ng-invalid ng-dirty': (this.barangayForm.controls['provinceCode'].errors)}">
+                    </p-dropdown>
+                    <label for="Province">PROVINCE <span style="color: red; font-weight: 1000; ">*</span></label>
+                </span>
+            </div>
+            <div class="col-12 lg:col-6  p-fluid" *ngIf="isForUpdating">
+                <span class="p-float-label">
+                    <p-dropdown [options]="municipality" optionLabel="municipalityName" styleClass="dropdown-custom"
+                        [autoDisplayFirst]="false" [showClear]="true" [filter]="true" filterBy="municipalityName"
+                        formControlName="municipalityCode" optionValue="municipalityCode"
+                        [ngClass]="{ 'ng-invalid ng-dirty': (this.barangayForm.controls['municipalityCode'].errors)}">
+                    </p-dropdown>
+                    <label for="City">CITY / MUNICIPALITY <span style="color: red; font-weight: 1000; ">*</span></label>
+                </span>
+            </div>
+            <div class="col-12 lg:col-4  p-fluid" *ngIf="isForSaving">
+                <span class="p-float-label">
+                    <p-dropdown [options]="region" optionLabel="regionName" [readonly]="true" styleClass="dropdown-custom"
+                        [autoDisplayFirst]="false" [filter]="true" filterBy="regionName" formControlName="regionCode"
+                        optionValue="regionCode"
+                        [ngClass]="{ 'ng-invalid ng-dirty': (this.barangayForm.controls['regionCode'].errors)}">
+                    </p-dropdown>
+                    <label for="Street">REGION<span style="color: red; font-weight: 1000; ">*</span></label>
+                </span>
+            </div>
+        </div>    
+        <div class="grid mb-1 mr-1">
+            <div class="col-12 relative">
+                <div class="absolute top-0 right-0">
+                    <div class="flex justify-content-end flex-wrap card-container">
+                        <div class="flex align-items-center justify-content-center mr-2">
+                            <button pButton pRipple type="button" label="CANCEL" class="p-button-secondary" (click)="ngOnDestroy()"></button>
+                        </div>
+                        <div class="flex align-items-center justify-content-center mr-2">
+                            <button pButton pRipple type="button" icon="pi pi-pencil" *ngIf="isForUpdating" label="UPDATE" class="p-button-info" (click)="updateData()"></button>
+                        </div>
+                        <div class="flex align-items-center justify-content-center mr-2">
+                            <button pButton pRipple type="button" icon="pi pi-pencil" *ngIf="isForSaving" label="SAVE" class="p-button-success" (click)="saveData()"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+</form>

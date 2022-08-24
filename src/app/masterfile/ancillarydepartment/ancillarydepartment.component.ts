@@ -29,6 +29,7 @@ export class AncillarydepartmentComponent implements OnInit {
       next: (result: AncillaryDepartment[]) => {
         this.ancillarydepartmentList = result;
         this.prevAncillaryDepartmentList = this.ancillarydepartmentList.filter(x => x.status);
+        console.log('yati', this.prevAncillaryDepartmentList)
       },
       error: (err) => {
         console.log(err);
@@ -39,7 +40,6 @@ export class AncillarydepartmentComponent implements OnInit {
     })
   }
   filter() {
-    console.log(this.selectedAncillaryDepartment)
     let filter: any[] = [];
     this.ancillarydepartmentList.forEach(val => {
       console.log(val)

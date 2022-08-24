@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { MasterfileRoutingModule } from './masterfile-routing.module';
 import { RvsComponent } from './rvs/rvs.component';
 import { IcdComponent } from './icd/icd.component';
@@ -30,7 +29,6 @@ import { MedicineComponent } from './medicine/medicine.component';
 import { PopupMedicineComponent } from './popup/popup-medicine/popup-medicine.component';
 import { ProvinceComponent } from './province/province.component';
 import { MunicipalityComponent } from './municipality/municipality.component';
-import { BarangayComponent } from './barangay/barangay.component';
 import { PopupProvinceComponent } from './popup/popup-province/popup-province.component';
 import { ImmunizationComponent } from './immunization/immunization.component';
 import { PopupImmunizationComponent } from './popup/popup-immunization/popup-immunization.component';
@@ -98,6 +96,11 @@ import { PopupPhysicalexaminationsketchComponent } from './popup/popup-physicale
 import { PopupUserpermissionsComponent } from './popup/popup-userpermissions/popup-userpermissions.component';
 import { PopupUserhealthfacilityComponent } from './popup/popup-userhealthfacility/popup-userhealthfacility.component';
 import {TriStateCheckboxModule} from 'primeng/tristatecheckbox';
+import { BarangayComponent } from './barangay/barangay.component';
+import { RegionComponent } from './region/region.component';
+import { PopupBarangayComponent } from './popup/popup-barangay/popup-barangay.component';
+import { PopupMunicipalityComponent } from './popup/popup-municipality/popup-municipality.component';
+import { PopupRegionComponent } from './popup/popup-region/popup-region.component';
 @NgModule({
   declarations: [
     RvsComponent,
@@ -111,7 +114,6 @@ import {TriStateCheckboxModule} from 'primeng/tristatecheckbox';
     PopupMedicineComponent,
     ProvinceComponent,
     MunicipalityComponent,
-    BarangayComponent,
     PopupProvinceComponent,
     ImmunizationComponent,
     PopupImmunizationComponent,
@@ -170,7 +172,12 @@ import {TriStateCheckboxModule} from 'primeng/tristatecheckbox';
     PopupUserpermissionsComponent,
     PopupUserhealthfacilityComponent,
     PhysicalexaminationsketchComponent,
-    PopupPhysicalexaminationsketchComponent
+    PopupPhysicalexaminationsketchComponent,
+    BarangayComponent,
+    RegionComponent,
+    PopupBarangayComponent,
+    PopupMunicipalityComponent,
+    PopupRegionComponent
   ],
   imports: [
     CommonModule,

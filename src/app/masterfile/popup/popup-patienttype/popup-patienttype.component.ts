@@ -63,6 +63,7 @@ export class PopupPatienttypeComponent implements OnInit {
   }
   selectedItem(event : any){
     this.healthfacility = event.value;
+    console.log('hello', this.healthfacility);
   }
   ngOnDestroy() {
     if (this.ref) {

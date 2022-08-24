@@ -1,5 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Component, EventEmitter, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { BehaviorSubject } from 'rxjs';
+import { Address } from 'src/app/models/address.model';
+import { Province } from 'src/app/models/province.model';
 import { Region } from 'src/app/models/region.model';
+import { AddressService } from 'src/app/services/address.service';
 
 @Component({
   selector: 'app-popup-province',
@@ -8,35 +15,114 @@ import { Region } from 'src/app/models/region.model';
 })
 export class PopupProvinceComponent implements OnInit {
 
+  provinceForm : FormGroup;
+  formBuilder : FormBuilder;
+  province : Province;
+  arrProvince : Province[]=[];
+  provinceList : Province[];
+  region: Region[]=[];
+
+  provinces : Province[] = [];
+  regions: Region;
+  id : number = 0;
+  regionCode : string;
+  isActiveStatus=  false;
+  isForSaving= false;
   isForUpdating= false;
-
-  regions: Region[];
-
-  constructor() { 
-
-    this.regions = [
-      {regionName: 'Region I', regionCode: '010000000'},
-      {regionName: 'Region II', regionCode: '020000000'},
-      {regionName: 'Region III', regionCode: '030000000'},
-      {regionName: 'Region IV-A', regionCode: '040000000'},
-      {regionName: 'Mimaropa Region', regionCode: '170000000'},
-      {regionName: 'Region V', regionCode: '050000000'},
-      {regionName: 'Region VI', regionCode: '060000000'},
-      {regionName: 'Region VII', regionCode: '070000000'},
-      {regionName: 'Region VIII', regionCode: '080000000'},
-      {regionName: 'Region IX', regionCode: '090000000'},
-      {regionName: 'Region X', regionCode: '100000000'},
-      {regionName: 'Region XI', regionCode: '110000000'},
-      {regionName: 'Region XII', regionCode: '120000000'},
-      {regionName: 'National Capital Region', regionCode: '130000000'},
-      {regionName: 'Cordillera Administrative Region', regionCode: '140000000'},
-      {regionName: 'Autonomous Region in Muslim Mindanao', regionCode: '150000000'},
-      {regionName: 'Region XIII', regionCode: '160000000'}
-    ];
-  }
+  address = new BehaviorSubject<Address>(new Address());
+  outputAddress: EventEmitter<Address> = new EventEmitter<Address>();
+  outputAddressForm: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
+  constructor(private ref : DynamicDialogRef, private config : DynamicDialogConfig, private addressService : AddressService, private datePipe : DatePipe) { }
 
   ngOnInit(): void {
-    
+    this.isForUpdating = this.config.data.isForUpdating;
+    this.isForSaving = this.config.data.isForSaving;
+    this.buildFormGroup();
+    this.loadData();
+    this.provinceForm.patchValue(this.config.data.province);
   }
-
+  loadData() : void {
+    this.addressService.GetRegionById(0).subscribe(retVal => {
+      this.region = retVal;
+    });
+  }
+  buildFormGroup() : void {
+    this.formBuilder = new FormBuilder();
+    this.provinceForm = this.formBuilder.group(
+      {
+        provinceCode: [''],
+        provinceName: [''],
+        regionCode: [null, Validators.required]
+      });
+  }
+  ClosePopUp(data : Province){
+    this.ref.close(data);
+  }
+  selectedItem(event : any){
+    this.regionCode = event.value;
+  }
+  ngOnDestroy() {
+    if (this.ref) {
+      this.ref.close();
+    }
+  }
+  saveData(){
+    if(this.isForSaving){
+      this.addressService.postProvince(this.getValue()).subscribe(result => {
+        this.ClosePopUp(result);
+      });
+    }
+  }
+  getValue(): Province {
+    this.province = new Province();
+    this.region.forEach(element => {
+      if(element.regionCode == this.regionCode)
+      {
+        this.province.regionId = element.id;
+      }
+    });
+    this.province.regionCode = this.provinceForm.controls['regionCode'].value;
+    this.province.provinceCode = this.provinceForm.controls['provinceCode'].value;
+    this.province.provinceName = this.provinceForm.controls['provinceName'].value;
+    this.province.createdBy = 'admin';
+    return this.province;
+  }
+  onValueChanges() : void {
+    this.provinceForm.valueChanges.subscribe(value => {
+      value.regionName = this.region.find(t => t.regionCode == value.regionCode)?.regionName ?? null;
+      this.address.next(Object.assign(value));
+      console.log('yati', value.regionName);
+    });
+    this.provinceForm.get('provinceCode')?.valueChanges.subscribe();
+  } 
+  updateData(){
+    let data = this.config.data.province;
+    let obj = new Province();
+    this.region.forEach(element => {
+      if (element.regionCode == this.regionCode)
+      {
+        obj.regionId = element.id;
+      }
+    });
+    obj.regionCode = this.provinceForm.controls['regionCode'].value;
+    obj.provinceCode = this.provinceForm.controls['provinceCode'].value;
+    obj.provinceName = this.provinceForm.controls['provinceName'].value;
+    obj.modifiedDateTime = this.datePipe.transform(
+      new Date(), 'yyyy-MM-ddTHH:mm:ss'
+    ) as string;
+    if(this.isForUpdating){
+      this.addressService.putProvince(data.id, obj).subscribe({
+        next : (result : Province) => {
+          obj = result;
+          this.ClosePopUp(result);
+        },
+        error : (err) => {
+          console.log(err);
+        },
+        complete : () => {
+          console.log('complete');
+        }
+      });
+    }
+  }
 }

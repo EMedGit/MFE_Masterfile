@@ -8,7 +8,8 @@ export const environment = {
  //masterfileAPI: 'https://masterfile-development.azurewebsites.net/api/v1',
  authAPI: 'https://identity-development.azurewebsites.net/api/v1'
  //authAPI: 'https://localhost:44368/api/v1'
-  ,masterfileAPI: 'https://localhost:44353/api/v1'
+  ,masterfileAPI: 'https://localhost:44370/api/v1'
+  ,addressInformationAPI: 'https://localhost:44318/api/v1'
 };
 
 /*
