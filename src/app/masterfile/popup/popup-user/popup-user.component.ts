@@ -19,7 +19,7 @@ import { UsersService } from 'src/app/services/users.service';
 export class PopupUserComponent implements OnInit {
   usersForm: FormGroup;
   formBuilder: FormBuilder;
-  users: Users=new Users();
+  users: Users = new Users();
   arrusers: Users[] = [];
   usersList: Users[];
   id: number = 0;
@@ -209,6 +209,7 @@ export class PopupUserComponent implements OnInit {
     this.usertypelist = this.usersService.usertype;
   }
   patchValue() {
+    if(this.config.data.users!= null || this.config.data.users!=undefined){
     this.users = this.config.data.users;
     this.usersForm.patchValue(this.users);
     console.log(this.users);
@@ -217,6 +218,7 @@ export class PopupUserComponent implements OnInit {
     this.dateOfBirth?.patchValue(new Date(this.users.dateOfBirth));
     this.password?.patchValue('P@ssw0rd');
     this.confirmPassword?.patchValue('P@ssw0rd');
+    }
   }
   get username() {
     return this.usersForm.get('userName');
