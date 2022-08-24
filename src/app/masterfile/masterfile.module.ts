@@ -93,6 +93,8 @@ import {InputMaskModule} from 'primeng/inputmask';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { RadiologyComponent } from './radiology/radiology.component';
 import { PopupRadiologyComponent } from './popup/popup-radiology/popup-radiology.component';
+import { PhysicalexaminationsketchComponent } from './physicalexaminationsketch/physicalexaminationsketch.component';
+import { PopupPhysicalexaminationsketchComponent } from './popup/popup-physicalexaminationsketch/popup-physicalexaminationsketch.component';
 import { PopupUserpermissionsComponent } from './popup/popup-userpermissions/popup-userpermissions.component';
 import { PopupUserhealthfacilityComponent } from './popup/popup-userhealthfacility/popup-userhealthfacility.component';
 import {TriStateCheckboxModule} from 'primeng/tristatecheckbox';
@@ -166,7 +168,9 @@ import {TriStateCheckboxModule} from 'primeng/tristatecheckbox';
     RadiologyComponent,
     PopupRadiologyComponent,
     PopupUserpermissionsComponent,
-    PopupUserhealthfacilityComponent
+    PopupUserhealthfacilityComponent,
+    PhysicalexaminationsketchComponent,
+    PopupPhysicalexaminationsketchComponent
   ],
   imports: [
     CommonModule,

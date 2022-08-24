@@ -7,7 +7,7 @@ export class PhysicalExaminationDetail {
     createdBy: string;
     createdDateTime: Date;
     modifiedBy: string;
-    modifiedDateTime: Date;
+    modifiedDateTime: Date | null;
     status: boolean;
 }
 

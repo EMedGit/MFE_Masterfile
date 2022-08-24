@@ -6,7 +6,7 @@ export class Section {
     createdBy:string;
     createdDateTime: Date;
     modifiedBy: string;
-    modifiedDateTime: Date;
+    modifiedDateTime: Date | null;
 
     departmentID? : number;
 }

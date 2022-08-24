@@ -40,12 +40,13 @@ export class ZscoreComponent implements OnInit {
   }
 
   filter() {
-    console.log(this.selectedZScoreList)
+    console.log(this.selectedZScoreList);
     let filter: any[] = [];
     this.newZScoreList.forEach(val => {
       console.log(val)
       if (val.resultCode.toUpperCase().includes(this.searchkey.toUpperCase()) && val.status) {
-        filter.push(val);      }
+        filter.push(val);      
+      }
 
     });
     console.log(filter)

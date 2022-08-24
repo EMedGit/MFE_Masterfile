@@ -1,8 +1,8 @@
-<form [formGroup]="sectionForm">
+<form [formGroup]="peSketchForm">
     <div class="card p-fluid">
         <div class="grid mb-0 mt-1">
             <div class="col-6">
-                <h1>SECTION DETAIL</h1>
+                <h1>PHYSICAL EXAMINATION SKETCH</h1>
             </div>            
         </div>
         <div class="row">
@@ -11,13 +11,13 @@
             </div>
             <div class="col">
             </div>
-        </div>  
-    
+        </div>    
+        
         <div class="grid mb-1">
-            <div class="col-4 p-fluid">
+            <div class="col-12 p-fluid">
                 <span class="p-float-label">
-                    <input type="text" id="code" formControlName="code" pInputText style="font-weight: bold;" >
-                    <label for="code">Code</label>
+                    <input type="text" id="description" formControlName="description" pInputText style="font-weight: bold;" >
+                    <label for="description">Description</label>
                 </span>
             </div>
             <div class="col-4 p-fluid" style="align-self: center;" *ngIf="isForUpdating">
@@ -29,27 +29,34 @@
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
                     <p-dropdown id="healthFacilityId" formControlName="healthFacilityId" 
-                    [options]="hfList" optionLabel="name" [(ngModel)]="selectedHF" placeholder=" " (onChange)="changeHF()"></p-dropdown>
+                    [options]="ddHFList" optionLabel="name" [(ngModel)]="selectedHF" placeholder=" " (onChange)="changeHF()"></p-dropdown>
                     <label for="healthFacilityId">Health Facility</label>
                 </span>
             </div>
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
                     <p-dropdown id="departmentId" formControlName="departmentId" 
-                    [options]="ddDepartmentList" optionLabel="description" [(ngModel)]="selectedDepartment" placeholder=" "></p-dropdown>
+                    [options]="ddDepartmentList" optionLabel="description" [(ngModel)]="selectedDepartment" placeholder=" " 
+                    (onChange)="changeDept()"></p-dropdown>
                     <label for="departmentId">Department</label>
+                </span>
+            </div>
+            <div class="col-4 p-fluid">
+                <span class="p-float-label">
+                    <p-dropdown id="sectionId" formControlName="sectionId" 
+                    [options]="ddSectionList" optionLabel="description" [(ngModel)]="selectedSection" placeholder=" "></p-dropdown>
+                    <label for="sectionId">Section</label>
                 </span>
             </div>
         </div>
         <div class="grid mb-1">
-            <div class="col-12 p-fluid">
-                <span class="p-float-label">
-                    <input type="text" id="description" formControlName="description" pInputText style="font-weight: bold;">
-                    <label for="description">Description</label>
-                </span>
+            <div class="col-4 p-fluid">
+                <input  type="file" class="file-input" name="file" #fileInput (change)="onFileUpload($event)" accept="image/png, image/jpeg, image/jpg  ">
+            </div>
+            <div class="col-12 " *ngIf="hasimage" >
+                <img [src]="imagePreview" class="img-thumbnail img-fluid" width="450px" height="350px" >
             </div>
         </div>
-                
         <div class="grid mb-1 mr-1">
             <div class="col-12 relative">
                 <div class="absolute top-0 right-0">
@@ -58,10 +65,12 @@
                             <button pButton pRipple type="button" label="CANCEL" class="p-button-secondary" (click)="ngOnDestroy()"></button>
                         </div>
                         <div class="flex align-items-center justify-content-center mr-2">
-                            <button pButton pRipple type="button" icon="pi pi-pencil" *ngIf="isForUpdating" label="UPDATE" class="p-button-info" (click)="updateData()"></button>
+                            <button pButton pRipple type="button" icon="pi pi-pencil" *ngIf="isForUpdating" label="UPDATE" class="p-button-info" 
+                            (click)="updateData()"></button>
                         </div>
                         <div class="flex align-items-center justify-content-center mr-2">
-                            <button pButton pRipple type="button" icon="pi pi-pencil" *ngIf="isForSaving" label="SAVE" class="p-button-success" (click)="saveData()"></button>
+                            <button pButton pRipple type="button" icon="pi pi-pencil" *ngIf="isForSaving" label="SAVE" class="p-button-success"
+                            (click)="saveData()"></button>
                         </div>
                     </div>
                 </div>
