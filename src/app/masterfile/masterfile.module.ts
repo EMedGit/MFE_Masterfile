@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { MasterfileRoutingModule } from './masterfile-routing.module';
 import { RvsComponent } from './rvs/rvs.component';
 import { IcdComponent } from './icd/icd.component';
@@ -30,7 +29,6 @@ import { MedicineComponent } from './medicine/medicine.component';
 import { PopupMedicineComponent } from './popup/popup-medicine/popup-medicine.component';
 import { ProvinceComponent } from './province/province.component';
 import { MunicipalityComponent } from './municipality/municipality.component';
-import { BarangayComponent } from './barangay/barangay.component';
 import { PopupProvinceComponent } from './popup/popup-province/popup-province.component';
 import { ImmunizationComponent } from './immunization/immunization.component';
 import { PopupImmunizationComponent } from './popup/popup-immunization/popup-immunization.component';
@@ -100,6 +98,11 @@ import { PopupUserhealthfacilityComponent } from './popup/popup-userhealthfacili
 import {TriStateCheckboxModule} from 'primeng/tristatecheckbox';
 import { UsertypeComponent } from './usertype/usertype.component';
 import { PopupUserTypeComponent } from './popup/popup-usertype/popup-usertype.component';
+import { BarangayComponent } from './barangay/barangay.component';
+import { RegionComponent } from './region/region.component';
+import { PopupBarangayComponent } from './popup/popup-barangay/popup-barangay.component';
+import { PopupMunicipalityComponent } from './popup/popup-municipality/popup-municipality.component';
+import { PopupRegionComponent } from './popup/popup-region/popup-region.component';
 @NgModule({
   declarations: [
     RvsComponent,
@@ -113,7 +116,6 @@ import { PopupUserTypeComponent } from './popup/popup-usertype/popup-usertype.co
     PopupMedicineComponent,
     ProvinceComponent,
     MunicipalityComponent,
-    BarangayComponent,
     PopupProvinceComponent,
     ImmunizationComponent,
     PopupImmunizationComponent,
@@ -174,7 +176,12 @@ import { PopupUserTypeComponent } from './popup/popup-usertype/popup-usertype.co
     PhysicalexaminationsketchComponent,
     PopupPhysicalexaminationsketchComponent,
     UsertypeComponent,
-    PopupUserTypeComponent
+    PopupUserTypeComponent,
+    BarangayComponent,
+    RegionComponent,
+    PopupBarangayComponent,
+    PopupMunicipalityComponent,
+    PopupRegionComponent
   ],
   imports: [
     CommonModule,

@@ -1,8 +1,8 @@
-export class Region {
+export class Municipality {
     id: number;
-    regionCode: string;
-    regionName: string;
-    regionDescription: string;
+    municipalityCode: string;
+    municipalityName: string;
+    provinceCode: string;
     createdBy: string;
     createdDateTime: string;
     modifiedBy: string;

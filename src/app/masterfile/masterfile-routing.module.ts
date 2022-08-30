@@ -2,7 +2,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddressComponent } from './address/address.component';
-import { BarangayComponent } from './barangay/barangay.component';
 import { BrandComponent } from './brand/brand.component';
 import { CivilstatusComponent } from './civilstatus/civilstatus.component';
 import { DepartmentComponent } from './department/department.component';
@@ -38,6 +37,8 @@ import { ZscoreComponent } from './zscore/zscore.component';
 import { RadiologyComponent } from './radiology/radiology.component';
 import { PhysicalexaminationsketchComponent } from './physicalexaminationsketch/physicalexaminationsketch.component';
 import { UsertypeComponent } from './usertype/usertype.component';
+import { BarangayComponent } from './barangay/barangay.component';
+import { RegionComponent } from './region/region.component';
 
 const routes: Routes = [
   { path: 'rvs', component: RvsComponent },
@@ -48,7 +49,6 @@ const routes: Routes = [
               { path: 'medicine', component: MedicineComponent },
               { path: 'province', component: ProvinceComponent },
               { path: 'municipality', component: MunicipalityComponent },
-              { path: 'barangay', component: BarangayComponent },
               { path: 'immunization', component: ImmunizationComponent },
               { path: 'civilStatus', component: CivilstatusComponent}, 
               { path: 'healthfacility', component: HealthfacilityComponent},
@@ -77,7 +77,9 @@ const routes: Routes = [
               { path: 'pharmacy', component : PharmacyComponent },
               { path: 'radiology', component : RadiologyComponent },
               { path: 'physicalexaminationsketch', component: PhysicalexaminationsketchComponent},
-              { path: 'usertype', component: UsertypeComponent}         
+              { path: 'usertype', component: UsertypeComponent} ,
+              { path: 'barangay', component : BarangayComponent },
+              { path: 'region', component : RegionComponent }       
             ] },
 ];
 

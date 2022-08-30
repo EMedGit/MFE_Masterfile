@@ -1,9 +1,9 @@
 
-<form [formGroup]="provinceForm">
+<form [formGroup]="municipalityForm">
     <div class="card p-fluid">
         <div class="grid mb-0 mt-1">
             <div class="col-6">
-                <h1>PROVINCE DETAIL</h1>
+                <h1>MUNICIPALITY DETAIL</h1>
             </div>            
         </div>
         <div class="row">
@@ -16,26 +16,26 @@
         <div class="grid mb-1">
             <div class="col-3 p-fluid">
                 <span class="p-float-label">
-                    <input type="text" id="provinceCode" formControlName="provinceCode" pInputText style="font-weight: bold;" >
-                    <label for="provinceCode">Province Code</label>
+                    <input type="text" id="municipalityCode" formControlName="municipalityCode" pInputText style="font-weight: bold;" >
+                    <label for="municipalityCode">Municipality Code</label>
                 </span>
             </div>
             <div class="col-5 p-fluid">
                 <span class="p-float-label">
-                    <input type="text" id="provinceName" formControlName="provinceName" pInputText style="font-weight: bold;">
-                    <label for="provinceName">Province Name</label>
-                </span>
-            </div>  
-            <div class="col-12 lg:col-4  p-fluid" >
-                <span class="p-float-label">
-                    <p-dropdown [options]="region" optionLabel="regionName" [showClear]="true" 
-                        styleClass="dropdown-custom" [autoDisplayFirst]="false" [filter]="true" filterBy="regionName" 
-                        formControlName="regionCode" optionValue="regionCode" (onChange)="selectedItem($event)"
-                        [ngClass]="{ 'ng-invalid ng-dirty': (this.provinceForm.controls['regionCode'].errors)}">
-                    </p-dropdown>
-                    <label for="Street">REGION<span style="color: red; font-weight: 1000; ">*</span></label>
+                    <input type="text" id="municipalityName" formControlName="municipalityName" pInputText style="font-weight: bold;">
+                    <label for="municipalityName">Municipality Name</label>
                 </span>
             </div>
+            <div class="col-4 lg:col-4  p-fluid">
+                <span class="p-float-label">
+                    <p-dropdown [options]="province" optionLabel="provinceName" [showClear]="true"
+                        styleClass="dropdown-custom" [autoDisplayFirst]="false" [filter]="true" filterBy="provinceName"
+                        [showClear]="true" formControlName="provinceCode" optionValue="provinceCode"
+                        [ngClass]="{ 'ng-invalid ng-dirty': (this.municipalityForm.controls['provinceCode'].errors)}">
+                    </p-dropdown>
+                    <label for="Province">PROVINCE <span style="color: red; font-weight: 1000; ">*</span></label>
+                </span>
+            </div>   
         </div>      
         <div class="grid mb-1 mr-1">
             <div class="col-12 relative">

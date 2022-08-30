@@ -22,7 +22,7 @@ export class MenuComponent implements OnInit {
     this.masterfiles = [
       {name: 'Ancillary Department', code: "[ancillarydepartment]", routerLink: "/ancillarydepartment"},
       {name: 'Ancillary Section', code: "[ancillarysection]", routerLink: "/ancillarysection"},
-      {name: 'Barangay', code: "['barangay']", routerLink: "/barangay"},
+      {name: 'Barangay', code: "[barangay]", routerLink: "/barangay"},
       {name: 'Brand', code: "[brand]", routerLink: "/brand"},
       {name: 'Chief Complaint', code: "[chiefcomplaint]", routerLink: "/chiefcomplaint"},
       {name: 'Chief Complaint Details', code: "[chiefcomplaintdetail]", routerLink: "/chiefcomplaintdetail"},
@@ -52,7 +52,7 @@ export class MenuComponent implements OnInit {
       {name: 'Radiology', code: "['radiology']", routerLink: "/radiology"},
       {name: 'Referral Category', code: "[referralcategory]", routerLink: "/referralcategory"},
       {name: 'Referral Category Detail', code: "[referralcategorydetail]", routerLink: "/referralcategorydetail"},
-      {name: 'Region', code: "['icd']", routerLink: "/address"},
+      {name: 'Region', code: "['region']", routerLink: "/region"},
       {name: 'RVS', code: "['icd']", routerLink: "/rvs"},
       {name: 'Section', code: "['section']", routerLink: "/section"},
       {name: 'Users', code: "['users']", routerLink: "/users"},
