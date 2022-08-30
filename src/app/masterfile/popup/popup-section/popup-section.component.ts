@@ -97,8 +97,7 @@ export class PopupSectionComponent implements OnInit {
 
   saveData(){
     if(this.isForSaving){
-      //this.sectionService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
-      this.getData();
+      this.sectionService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
     }     
   }
 

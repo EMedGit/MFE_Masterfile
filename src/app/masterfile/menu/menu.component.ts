@@ -56,6 +56,7 @@ export class MenuComponent implements OnInit {
       {name: 'RVS', code: "['icd']", routerLink: "/rvs"},
       {name: 'Section', code: "['section']", routerLink: "/section"},
       {name: 'Users', code: "['users']", routerLink: "/users"},
+      {name: 'UserType', code: "['usertype']", routerLink: "/usertype"},
       {name: 'Z-Score', code: "['zscore']", routerLink: "/zscore"}
     ]
 

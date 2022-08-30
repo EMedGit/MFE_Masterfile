@@ -37,6 +37,7 @@ import { UsersComponent } from './users/users.component';
 import { ZscoreComponent } from './zscore/zscore.component';
 import { RadiologyComponent } from './radiology/radiology.component';
 import { PhysicalexaminationsketchComponent } from './physicalexaminationsketch/physicalexaminationsketch.component';
+import { UsertypeComponent } from './usertype/usertype.component';
 
 const routes: Routes = [
   { path: 'rvs', component: RvsComponent },
@@ -75,7 +76,8 @@ const routes: Routes = [
               { path: 'zscore', component: ZscoreComponent},
               { path: 'pharmacy', component : PharmacyComponent },
               { path: 'radiology', component : RadiologyComponent },
-              { path: 'physicalexaminationsketch', component: PhysicalexaminationsketchComponent}        
+              { path: 'physicalexaminationsketch', component: PhysicalexaminationsketchComponent},
+              { path: 'usertype', component: UsertypeComponent}         
             ] },
 ];
 

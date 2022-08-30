@@ -53,8 +53,8 @@
             <div class="col-4 p-fluid">
                 <input  type="file" class="file-input" name="file" #fileInput (change)="onFileUpload($event)" accept="image/png, image/jpeg, image/jpg  ">
             </div>
-            <div class="col-12 " *ngIf="hasimage" >
-                <img [src]="imagePreview" class="img-thumbnail img-fluid" width="450px" height="350px" >
+            <div class="col-12" *ngIf="hasimage">
+                <img [src]="imagePreview" class="img-thumbnail img-fluid" width="450px" height="350px">
             </div>
         </div>
         <div class="grid mb-1 mr-1">

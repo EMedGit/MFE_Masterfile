@@ -18,3 +18,9 @@
 .pi-times-circle {
     color: rgb(224, 42, 17);
 }
+
+.img-thumbnail {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

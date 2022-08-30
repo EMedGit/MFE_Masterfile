@@ -1,36 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Section } from 'src/app/models/section.model';
-import { SectionService } from 'src/app/services/section.service';
-import { PopupSectionComponent } from '../popup/popup-section/popup-section.component';
+import { UserType } from 'src/app/models/usertype.model';
+import { UserTypeService } from 'src/app/services/usertype.service';
+import { PopupUserTypeComponent } from '../popup/popup-usertype/popup-usertype.component';
 
 @Component({
-  selector: 'app-section',
-  templateUrl: './section.component.html',
-  styleUrls: ['./section.component.css'],
+  selector: 'app-usertype',
+  templateUrl: './usertype.component.html',
+  styleUrls: ['./usertype.component.css'],
   providers: [DialogService]
 })
-export class SectionComponent implements OnInit {
+export class UsertypeComponent implements OnInit {
   searchkey: ""
   ref: DynamicDialogRef;
-  section: Section;
-  sections: Section[];
-  selectedSections: Section[];
-  newSectionsList: Section[];
+  userType: UserType;
+  userTypeList: UserType[];
+  newUserTypeList: UserType[];
+  selectedUserTypes: UserType[];
 
-  constructor(private SectionService : SectionService, private dialogService: DialogService) { }
+  constructor(private userTypeService: UserTypeService, private dialogService: DialogService) { }
+
   ngOnInit(): void {
     this.getData();
   }
 
   getData() {
     try {
-      this.SectionService
-        .getSections('','',0,0,100)
-        .subscribe((retval : Section[]) => {
+      this.userTypeService
+        .getList('','',0,9999)
+        .subscribe((retval : UserType[]) => {
           console.log(retval);          
-          this.sections = retval;
-          this.newSectionsList = this.sections.filter(x => x.status);
+          this.userTypeList = retval;
+          this.newUserTypeList = this.userTypeList.filter(x => x.status);
         });
     }
     catch (error){
@@ -38,13 +39,12 @@ export class SectionComponent implements OnInit {
     }
   }
 
-
   filter() {
     //this.sections.every(a => a.description?.includes(value.key));
 
-    console.log(this.selectedSections)
+    console.log(this.selectedUserTypes)
     let filter: any[] = [];
-    this.newSectionsList.forEach(val => {
+    this.newUserTypeList.forEach(val => {
       console.log(val)
       if (val.description.toUpperCase().includes(this.searchkey.toUpperCase()) && val.status) {
         filter.push(val);
@@ -52,12 +52,13 @@ export class SectionComponent implements OnInit {
 
     });
     console.log(filter)
-    this.newSectionsList = filter;
+    this.newUserTypeList = filter;
   }
 
-  addSectionPopup()
+  
+  addUserTypePopup()
   {
-    this.dialogService.open(PopupSectionComponent, {
+    this.dialogService.open(PopupUserTypeComponent, {
       width: '1000px',
       height: '600px',
       showHeader: true,
@@ -67,16 +68,16 @@ export class SectionComponent implements OnInit {
         isForSaving: true
       }
     })
-    this.ref.onClose.subscribe((data: Section) => {
+    this.ref.onClose.subscribe((data: UserType) => {
       if (data != undefined) {
-        this.sections.push(data);
-        this.newSectionsList = this.sections.filter(x => x.status);
+        this.userTypeList.push(data);
+        this.newUserTypeList = this.userTypeList.filter(x => x.status);
       }
     })
   }
 
-  updateSectionPopup(section : Section) {
-    this.dialogService.open(PopupSectionComponent, {
+  updateUserTypePopup(section : UserType) {
+    this.dialogService.open(PopupUserTypeComponent, {
       width: '1000px',
       height: '600px',
       showHeader: true,
@@ -86,10 +87,10 @@ export class SectionComponent implements OnInit {
         isForUpdating: true
       }
     })
-    this.ref.onClose.subscribe((data: Section) => {
+    this.ref.onClose.subscribe((data: UserType) => {
 
       if (data != undefined) {
-        this.sections.forEach(val => {
+        this.userTypeList.forEach(val => {
           if (val.id == data.id) {
             val.code = data.code;
             val.description = data.description;
@@ -98,17 +99,17 @@ export class SectionComponent implements OnInit {
             val.createdDateTime = data.createdDateTime;
           }
         });
-        this.newSectionsList = this.sections.filter(x => x.status);
+        this.newUserTypeList = this.userTypeList.filter(x => x.status);
       }
     })
   }
 
-  removeSection(section : Section) {
-    this.SectionService.delete(section.id).subscribe({
+  removeUserType(data : UserType) {
+    this.userTypeService.delete(data.id).subscribe({
       next : (result : boolean) => {
         result;
-        this.sections.forEach(element => {
-          if (section.id == element.id)
+        this.userTypeList.forEach(element => {
+          if (data.id == element.id)
           {
             element.status = false;
           }
@@ -119,7 +120,7 @@ export class SectionComponent implements OnInit {
       },
       complete: () => {
         console.log('complete');
-        this.newSectionsList = this.sections.filter(x => x.status);
+        this.newUserTypeList = this.userTypeList.filter(x => x.status);
       }
     });
   }

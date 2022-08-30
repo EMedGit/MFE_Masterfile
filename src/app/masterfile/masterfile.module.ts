@@ -98,6 +98,8 @@ import { PopupPhysicalexaminationsketchComponent } from './popup/popup-physicale
 import { PopupUserpermissionsComponent } from './popup/popup-userpermissions/popup-userpermissions.component';
 import { PopupUserhealthfacilityComponent } from './popup/popup-userhealthfacility/popup-userhealthfacility.component';
 import {TriStateCheckboxModule} from 'primeng/tristatecheckbox';
+import { UsertypeComponent } from './usertype/usertype.component';
+import { PopupUserTypeComponent } from './popup/popup-usertype/popup-usertype.component';
 @NgModule({
   declarations: [
     RvsComponent,
@@ -170,7 +172,9 @@ import {TriStateCheckboxModule} from 'primeng/tristatecheckbox';
     PopupUserpermissionsComponent,
     PopupUserhealthfacilityComponent,
     PhysicalexaminationsketchComponent,
-    PopupPhysicalexaminationsketchComponent
+    PopupPhysicalexaminationsketchComponent,
+    UsertypeComponent,
+    PopupUserTypeComponent
   ],
   imports: [
     CommonModule,
