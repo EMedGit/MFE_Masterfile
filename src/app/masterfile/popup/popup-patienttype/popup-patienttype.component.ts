@@ -53,7 +53,7 @@ export class PopupPatienttypeComponent implements OnInit {
   }
 
   loadData() : void {
-    this.healthfacilityServices.getHealthFacility('','',0,999).subscribe(retval => { 
+    this.healthfacilityServices.getHealthFacility().subscribe(retval => { 
     return this.healthFacilityList = retval;
     });
   }

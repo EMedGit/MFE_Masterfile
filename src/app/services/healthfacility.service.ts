@@ -16,22 +16,32 @@ export class HealthFacilityService {
     HealthFacility : HealthFacility[]
     constructor(private http: HttpClient) { }
 
-    public getHealthFacility(code: string, name: string, page: number, itemsPerPage: number) : Observable<HealthFacility[]> 
+    public getHealthFacility() : Observable<HealthFacility[]> 
     {
-        let params = new HttpParams();
-        params = params.append('Code', code);
-        params = params.append('Name', name);
-        params = params.append('Page', 0);
-        params = params.append('ItemsPerPage', 999999);
-        return this.http
-        .get<HealthFacility[]>(`${environment.masterfileAPI}/healthFacility`, {params})
-        .pipe(
-            map((result) => {
-            return result;
-            })
-        );
+        // let params = new HttpParams();
+        // params = params.append('Code', code);
+        // params = params.append('Name', name);
+        // params = params.append('Page', 0);
+        // params = params.append('ItemsPerPage', 999999);
+        // return this.http
+        // .get<HealthFacility[]>(`${environment.masterfileAPI}/healthFacility`, {params})
+        // .pipe(
+        //     map((result) => {
+        //     return result;
+        //     })
+        // );
+        const params = new HttpParams()
+        .set('Page', 0)
+        .set('ItemsPerPage', 9999)
+        return this.http.get<HealthFacility[]>(`${environment.masterfileAPI}/healthFacility`, { params })
     }
-
+    public GetHealthFacilityByHealthFacilityCode(HF_CODE : string): Observable<HealthFacility[]> {
+        const params = new HttpParams()  
+        .set('Code',HF_CODE) 
+        .set('Page', 0)
+        .set('ItemsPerPage', 999);
+      return this.http.get<HealthFacility[]>(`${environment.masterfileAPI}/healthfacility`, { params });
+    }
     insert(data: HealthFacility) : Observable<HealthFacility>  {
         const url = `${environment.masterfileAPI}/healthfacility`;
         return this.http.post<HealthFacility>(url, data, httpOptions);

@@ -190,7 +190,7 @@ export class PopupUserhealthfacilityComponent implements OnInit {
   loaddata() {
     this.isForUpdating = this.config.data.isForUpdating;
     this.isForSaving = this.config.data.isForSaving;
-    this.healthFacilityService.getHealthFacility('', '', 0, 100).subscribe({
+    this.healthFacilityService.getHealthFacility().subscribe({
       next: (result: HealthFacility[]) => {
         this.heathfacilitylist = result;
         this.healthfacility?.patchValue(

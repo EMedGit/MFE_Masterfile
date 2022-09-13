@@ -54,7 +54,7 @@ export class PopupSectionComponent implements OnInit {
         healthFacilityId: [''],
       });
       
-    this.hfService.getHealthFacility('','',0,100).subscribe({
+    this.hfService.getHealthFacility().subscribe({
       next: (result: HealthFacility[]) => {
         this.hfList = result;
          this.ddHFList = this.hfList.filter(x => x.status);

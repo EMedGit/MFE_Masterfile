@@ -93,7 +93,7 @@ export class PopupPhysicalexaminationsketchComponent implements OnInit {
   }
 
   DropDownDataBound() {
-    this.hfService.getHealthFacility('','',0,100).subscribe({
+    this.hfService.getHealthFacility().subscribe({
       next: (result: HealthFacility[]) => {
         this.hfList = result;
          this.ddHFList = this.hfList.filter(x => x.status);
@@ -158,7 +158,7 @@ export class PopupPhysicalexaminationsketchComponent implements OnInit {
       this.media.filePath = this.filename;
       this.media.file = this.imagePreview as string;
 
-      console.log(this.media);
+      console.log(this.media,'hello');
 
       this.imageProcessingService.upload(this.media).subscribe((retval) => {
         this.pesService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval);});

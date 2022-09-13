@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { HealthFacility } from 'src/app/models/healthfacility.model';
 import { HealthFacilityService } from 'src/app/services/healthfacility.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-healthfacility',
@@ -20,7 +21,7 @@ export class PopupHealthfacilityComponent implements OnInit {
   isForSaving= false;
   isForUpdating= false;
   
-  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private healthFacilityService : HealthFacilityService) { }
+  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private healthFacilityService : HealthFacilityService, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isActiveStatus = this.config.data.healthFacility.status;
@@ -54,7 +55,12 @@ export class PopupHealthfacilityComponent implements OnInit {
 
   saveData(){
     if(this.isForSaving) {
-      this.healthFacilityService.insert(this.getData()).subscribe(result => { this.ClosePopUp(result); });
+      this.healthFacilityService.GetHealthFacilityByHealthFacilityCode(this.healthFacilityForm.controls['code'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.code == this.healthFacilityForm.controls['code'].value)
+        if(obj != undefined) {
+          this.toastService.showError('Code already Exist!');
+        } return this.healthFacilityService.insert(this.getData()).subscribe(result => { this.ClosePopUp(result); });     
+    })
     }
   }
 

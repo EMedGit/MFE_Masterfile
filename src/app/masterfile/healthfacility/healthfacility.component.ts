@@ -17,19 +17,18 @@ export class HealthfacilityComponent implements OnInit {
   healthFacilities: HealthFacility[];
   selectedHealthFacilities: HealthFacility[];
   newHealthFacilityList: HealthFacility[];
-  
-  constructor(private HealthFacilityService : HealthFacilityService,  private dialogService: DialogService) { }
+
+  constructor(private HealthFacilityService: HealthFacilityService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.getData();
   }
 
-  getData() {    
-    this.HealthFacilityService.getHealthFacility('','',0,100).subscribe({
+  getData() {
+    this.HealthFacilityService.getHealthFacility().subscribe({
       next: (result: HealthFacility[]) => {
         this.healthFacilities = result;
         this.newHealthFacilityList = this.healthFacilities.filter(x => x.status);
-        console.log(result);
       },
       error: (err) => {
         console.log(err);
@@ -48,15 +47,13 @@ export class HealthfacilityComponent implements OnInit {
       if (val.name.toUpperCase().includes(this.searchkey.toUpperCase()) && val.status) {
         filter.push(val);
       }
-
     });
     console.log(filter)
     this.newHealthFacilityList = filter;
   }
 
-  addHealthFacilityPopup()
-  {
-    this.dialogService.open(PopupHealthfacilityComponent, {
+  addHealthFacilityPopup() {
+    this.ref = this.dialogService.open(PopupHealthfacilityComponent, {
       width: '1000px',
       height: '500px',
       showHeader: true,
@@ -74,7 +71,7 @@ export class HealthfacilityComponent implements OnInit {
     })
   }
 
-  updateHealthFacilityPopup(healthFacility : HealthFacility) {
+  updateHealthFacilityPopup(healthFacility: HealthFacility) {
     this.dialogService.open(PopupHealthfacilityComponent, {
       width: '1000px',
       height: '500px',
@@ -100,26 +97,25 @@ export class HealthfacilityComponent implements OnInit {
     })
   }
 
-  removeHealthFacility(healthFacility : HealthFacility) {
+  removeHealthFacility(healthFacility: HealthFacility) {
     console.log(healthFacility);
-      this.HealthFacilityService.delete(healthFacility.id).subscribe({
-        next : (result : boolean) => {
-          result;
-          this.healthFacilities.forEach(element => {
-            if (healthFacility.id == element.id)
-            {
-              element.status = false;
-            }
-          });
-        },
-        error : (err: any) => {
-          console.log(err);
-        },
-        complete: () => {
-          console.log('complete');
-          this.newHealthFacilityList = this.healthFacilities.filter(x => x.status);
-        }
-      });
+    this.HealthFacilityService.delete(healthFacility.id).subscribe({
+      next: (result: boolean) => {
+        result;
+        this.healthFacilities.forEach(element => {
+          if (healthFacility.id == element.id) {
+            element.status = false;
+          }
+        });
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('complete');
+        this.newHealthFacilityList = this.healthFacilities.filter(x => x.status);
+      }
+    });
   }
 
 
