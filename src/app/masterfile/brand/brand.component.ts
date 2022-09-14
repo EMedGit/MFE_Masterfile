@@ -46,6 +46,7 @@ export class BrandComponent implements OnInit {
         filter.push(val);
       }
     });
+    this.prevBrandList = filter;
   }
   addBrandPopup(){
     this.ref = this.dialogService.open(PopupBrandComponent, {

@@ -3,7 +3,7 @@ export class HealthFacility {
     id:number;
     name : string;
     code : string;
-    facilityaddress : string;
+    facilityAddress : string;
     status : boolean;
     createdBy : string;
     createdDateTime : Date;

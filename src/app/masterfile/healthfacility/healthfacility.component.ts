@@ -39,16 +39,13 @@ export class HealthfacilityComponent implements OnInit {
   }
 
 
-  filter(value: any) {
-    console.log(this.selectedHealthFacilities)
+  filter() {
     let filter: any[] = [];
-    this.newHealthFacilityList.forEach(val => {
-      console.log(val)
+    this.healthFacilities.forEach(val => {
       if (val.name.toUpperCase().includes(this.searchkey.toUpperCase()) && val.status) {
         filter.push(val);
       }
     });
-    console.log(filter)
     this.newHealthFacilityList = filter;
   }
 
@@ -59,7 +56,7 @@ export class HealthfacilityComponent implements OnInit {
       showHeader: true,
       closable: true,
       data: {
-        healthFacility: {},
+        // healthFacility: {},
         isForSaving: true
       }
     })
@@ -72,7 +69,7 @@ export class HealthfacilityComponent implements OnInit {
   }
 
   updateHealthFacilityPopup(healthFacility: HealthFacility) {
-    this.dialogService.open(PopupHealthfacilityComponent, {
+    this.ref = this.dialogService.open(PopupHealthfacilityComponent, {
       width: '1000px',
       height: '500px',
       showHeader: true,
@@ -87,12 +84,14 @@ export class HealthfacilityComponent implements OnInit {
           if (val.id == data.id) {
             val.code = data.code;
             val.name = data.name;
+            val.facilityAddress = data.facilityAddress;
             val.status = data.status;
             val.createdBy = data.createdBy;
             val.createdDateTime = data.createdDateTime;
           }
         });
         this.newHealthFacilityList = this.healthFacilities.filter(x => x.status);
+        console.log(this.newHealthFacilityList,'heysss')
       }
     })
   }

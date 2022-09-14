@@ -66,15 +66,16 @@ export class PopupHealthfacilityComponent implements OnInit {
 
   updateData(){    
     let data = this.config.data.healthFacility;
-    data.code = this.healthFacilityForm.controls['code'].value;
-    data.name = this.healthFacilityForm.controls['name'].value;
-    data.facilityaddress = this.healthFacilityForm.controls['facilityAddress'].value;
-    data.modifiedBy = '';
-    data.modifiedDateTime = new Date();
+    let obj = new HealthFacility();
+    obj.code = this.healthFacilityForm.controls['code'].value;
+    obj.name = this.healthFacilityForm.controls['name'].value;
+    obj.facilityAddress = this.healthFacilityForm.controls['facilityAddress'].value;
+    obj.modifiedBy = '';
+    obj.modifiedDateTime = new Date();
     if(this.isForUpdating){
-      this.healthFacilityService.update(data.id, data).subscribe({
+      this.healthFacilityService.update(data.id, obj).subscribe({
       next: (result : HealthFacility) => {
-        data = result;
+        obj = result;
           this.ClosePopUp(result); 
       },
       error: (err) => {
@@ -92,7 +93,7 @@ export class PopupHealthfacilityComponent implements OnInit {
     this.healthFacility = new HealthFacility();
     this.healthFacility.code = this.healthFacilityForm.controls['code'].value;
     this.healthFacility.name = this.healthFacilityForm.controls['name'].value;
-    this.healthFacility.facilityaddress = this.healthFacilityForm.controls['facilityAddress'].value
+    this.healthFacility.facilityAddress = this.healthFacilityForm.controls['facilityAddress'].value
     this.healthFacility.createdBy = '';
     this.healthFacility.createdDateTime = new Date();
     return this.healthFacility;

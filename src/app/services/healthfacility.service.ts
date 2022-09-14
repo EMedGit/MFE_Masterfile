@@ -47,8 +47,6 @@ export class HealthFacilityService {
         return this.http.post<HealthFacility>(url, data, httpOptions);
     } 
     update(id: number, data: HealthFacility): Observable<HealthFacility> {
-        console.log(data);
-        console.log(JSON.stringify(data));
         const url = `${environment.masterfileAPI}/healthFacility/${id}`;
         return this.http.put<HealthFacility>(url, data, httpOptions);
     }
