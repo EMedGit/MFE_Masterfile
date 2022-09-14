@@ -24,7 +24,6 @@ export class PopupHealthfacilityComponent implements OnInit {
   constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private healthFacilityService : HealthFacilityService, private toastService: ToastService) { }
 
   ngOnInit(): void {
-    this.isActiveStatus = this.config.data.healthFacility.status;
     this.isForUpdating= this.config.data.isForUpdating;
     this.isForSaving = this.config.data.isForSaving;
     
