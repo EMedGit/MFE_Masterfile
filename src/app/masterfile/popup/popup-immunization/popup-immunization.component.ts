@@ -47,7 +47,7 @@ export class PopupImmunizationComponent implements OnInit {
         immunizationTypeId: null       
       });
     
-      this.itService.get('','',0,100).subscribe({
+      this.itService.getImmunizationType().subscribe({
         next: (result: ImmunizationType[]) => {
           this.itList = result;
           this.itList = this.itList.filter(x => x.status);

@@ -17,21 +17,25 @@ export class ImmunizationTypeService {
     ImmunizationType: ImmunizationType [];
     constructor(private http: HttpClient) { }
 
-    public get(code: string, description: string, page: number, itemsPerPage: number) : Observable<ImmunizationType[]> 
+    public getImmunizationType() : Observable<ImmunizationType[]> 
     {
-        let params = new HttpParams();
-        params = params.append('Code', code);
-        params = params.append('Description', description);
-        params = params.append('Page', page);
-        params = params.append('ItemsPerPage', itemsPerPage);
+        // let params = new HttpParams();
+        // params = params.append('Code', code);
+        // params = params.append('Description', description);
+        // params = params.append('Page', page);
+        // params = params.append('ItemsPerPage', itemsPerPage);
 
-        return this.http
-        .get<ImmunizationType[]>(`${environment.masterfileAPI}/immunizationType`, {params})
-        .pipe(
-            map((result) => {
-            return result;
-            })
-        );
+        // return this.http
+        // .get<ImmunizationType[]>(`${environment.masterfileAPI}/immunizationType`, {params})
+        // .pipe(
+        //     map((result) => {
+        //     return result;
+        //     })
+        // );
+        const params = new HttpParams()
+        .set('Page', 0)
+        .set('ItemsPerPage', 9999)
+        return this.http.get<ImmunizationType[]>(`${environment.masterfileAPI}/immunizationType`, { params })
     } 
     GetImmunizationTypeByCode(HF_CODE: string): Observable<ImmunizationType[]> {
         const params = new HttpParams()

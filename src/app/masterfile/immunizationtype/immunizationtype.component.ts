@@ -25,7 +25,7 @@ export class ImmunizationtypeComponent implements OnInit {
   }
 
   getdata() {
-    this.itService.get('','',0,10000).subscribe({
+    this.itService.getImmunizationType().subscribe({
       next: (result: ImmunizationType[]) => {
         this.immunizationTypeList = result;
         this.newImmunizationTypeList = this.immunizationTypeList.filter(x => x.status);
@@ -34,44 +34,38 @@ export class ImmunizationtypeComponent implements OnInit {
         console.log(err);
       },
       complete: () => {
-        console.log('getdata complete');
-        console.log(this.newImmunizationTypeList);
       }
     })
   }
 
   filter() {
-    console.log(this.selectedImmunizationTypeList)
     let filter: any[] = [];
-    this.newImmunizationTypeList.forEach(val => {
-      console.log(val)
+    this.immunizationTypeList.forEach(val => {
       if (val.description.toUpperCase().includes(this.searchkey.toUpperCase()) && val.status) {
         filter.push(val);
       }
-
     });
-    console.log(filter)
     this.newImmunizationTypeList = filter;
   }
 
 
   addPopup(){
-    this.dialogService.open(PopupImmunizationtypeComponent, {
+    this.ref = this.dialogService.open(PopupImmunizationtypeComponent, {
     width: '1000px',
     height: '430px',
     showHeader: true,
     closable: true,
     data: {
-      immunizationType: {},
+      // immunizationType: {},
       isForSaving: true
     }
-  })
+  });
   this.ref.onClose.subscribe((data: ImmunizationType) => {
     if (data != undefined) {
       this.immunizationTypeList.push(data);
       this.newImmunizationTypeList = this.immunizationTypeList.filter(x => x.status);
     }
-  })
+  });
 
 }
 

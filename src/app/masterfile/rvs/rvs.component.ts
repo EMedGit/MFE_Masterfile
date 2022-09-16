@@ -25,6 +25,15 @@ export class RvsComponent implements OnInit {
     this.getData();
   }
 
+  filter() {
+    let filter: any[] = [];
+    this.rvsList.forEach(val => {
+      if (val.description.toUpperCase().includes(this.searchkey.toUpperCase()) && val.status) {
+        filter.push(val);
+      }
+    });
+    this.newRVSList = filter;
+  }
   getData() {
     this.rvsService.get('','',0,100).subscribe({
       next: (result: RVS[]) => {
