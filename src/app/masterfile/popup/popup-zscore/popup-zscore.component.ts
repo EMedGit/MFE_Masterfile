@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DynamicDialogRef,DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { ZScore } from 'src/app/models/zscore.model';
+import { ToastService } from 'src/app/services/toast.service';
 import { ZScoreService } from 'src/app/services/zscore.service';
 
 @Component({
@@ -26,7 +27,7 @@ export class PopupZscoreComponent implements OnInit {
    ]
   // let selectedGender = this.genderList;
 
-  constructor(private ref: DynamicDialogRef,  private config: DynamicDialogConfig, private zScoreService: ZScoreService) { }
+  constructor(private ref: DynamicDialogRef,  private config: DynamicDialogConfig, private zScoreService: ZScoreService, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isActiveStatus = this.config.data.zScore.status;

@@ -19,6 +19,13 @@ export class PhicmembercategoryService {
       .set('ItemsPerPage', 9999);
     return this.http.get<Phicmembercategory[]>(`${environment.masterfileAPI}/phicmemberCategory`, { params })
   }
+  GetPHICMemberCategoryByCode(HF_CODE: string): Observable<Phicmembercategory[]> {
+    const params = new HttpParams()
+        .set('Code', HF_CODE)
+        .set('Page', 0)
+        .set('ItemsPerPage', 999);
+    return this.http.get<Phicmembercategory[]>(`${environment.masterfileAPI}/phicmemberCategory`, { params });
+  }
   postPhicmembercategory(data : Phicmembercategory) : Observable<Phicmembercategory>{
     return this.http.post<Phicmembercategory>(`${environment.masterfileAPI}/phicmemberCategory/`, data, httpOptions);
   }

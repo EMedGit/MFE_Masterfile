@@ -6,6 +6,7 @@ import { AncillaryDepartment } from 'src/app/models/ancillarydepartment.model';
 import { HealthFacility } from 'src/app/models/healthfacility.model';
 import { AncillarydepartmentService } from 'src/app/services/ancillarydepartment.service';
 import { HealthFacilityService } from 'src/app/services/healthfacility.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-ancillarydepartment',
@@ -14,24 +15,25 @@ import { HealthFacilityService } from 'src/app/services/healthfacility.service';
 })
 export class PopupAncillarydepartmentComponent implements OnInit {
 
-  healthfacility : HealthFacility;
-  healthFacilityList : HealthFacility[];
-  ancillarydepartmentForm : FormGroup;
-  formBuilder : FormBuilder;
-  ancillarydepartment : AncillaryDepartment;
-  arrAncillaryDepartment : AncillaryDepartment[] = [];
-  ancillarydepartmentList : AncillaryDepartment[];
-  id : number = 0;
+  healthfacility: HealthFacility;
+  healthFacilityList: HealthFacility[];
+  ancillarydepartmentForm: FormGroup;
+  formBuilder: FormBuilder;
+  ancillarydepartment: AncillaryDepartment;
+  arrAncillaryDepartment: AncillaryDepartment[] = [];
+  ancillarydepartmentList: AncillaryDepartment[];
+  id: number = 0;
 
-  isActiveStatus=  false;
-  isForSaving= false;
-  isForUpdating= false;
+  isActiveStatus = false;
+  isForSaving = false;
+  isForUpdating = false;
 
-  constructor(private ref : DynamicDialogRef, 
-    private config : DynamicDialogConfig, 
-    private ancillarydepartmentService : AncillarydepartmentService, 
-    private datePipe : DatePipe,
-    private healthfacilityServices : HealthFacilityService) { }
+  constructor(private ref: DynamicDialogRef,
+    private config: DynamicDialogConfig,
+    private ancillarydepartmentService: AncillarydepartmentService,
+    private datePipe: DatePipe,
+    private healthfacilityServices: HealthFacilityService,
+    private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isForUpdating = this.config.data.isForUpdating;
@@ -45,19 +47,19 @@ export class PopupAncillarydepartmentComponent implements OnInit {
     this.formBuilder = new FormBuilder();
     this.ancillarydepartmentForm = this.formBuilder.group(
       {
-        code : [''],
-        description : ['']
+        code: [''],
+        description: ['']
       });
   }
-  loadData() : void {
-    this.healthfacilityServices.getHealthFacility().subscribe(retval => { 
-    return this.healthFacilityList = retval;
+  loadData(): void {
+    this.healthfacilityServices.getHealthFacility().subscribe(retval => {
+      return this.healthFacilityList = retval;
     });
   }
-  ClosePopUp(data : AncillaryDepartment){
+  ClosePopUp(data: AncillaryDepartment) {
     this.ref.close(data);
   }
-  selectedItem(event : any){
+  selectedItem(event: any) {
     this.healthfacility = event.value;
   }
   ngOnDestroy() {
@@ -65,18 +67,22 @@ export class PopupAncillarydepartmentComponent implements OnInit {
       this.ref.close();
     }
   }
-  saveData(){
-    if(this.isForSaving){
-        this.ancillarydepartmentService.postAncillaryDepartment(this.getValue()).subscribe(result=>{
-          this.ClosePopUp(result);  
-        });      
+  saveData() {
+    if (this.isForSaving) {
+      this.ancillarydepartmentService.GetAncillaryDepartmentByCode(this.ancillarydepartmentForm.controls['code'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.code.toUpperCase() == this.ancillarydepartmentForm.controls['code'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Code already Exist!');
+        } else {
+          this.ancillarydepartmentService.postAncillaryDepartment(this.getValue()).subscribe(result => { this.ClosePopUp(result); });
+        }
+      });
     }
   }
-  updateData(){    
+  updateData() {
     let data = this.config.data.ancillarydepartment;
     let obj = new AncillaryDepartment();
-    if(this.healthfacility == undefined)
-    {
+    if (this.healthfacility == undefined) {
       obj.healthFacilityId = data.healthFacilityId;
     } else {
       obj.healthFacilityId = this.healthfacility.id;
@@ -86,26 +92,25 @@ export class PopupAncillarydepartmentComponent implements OnInit {
     obj.modifiedDateTime = this.datePipe.transform(
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
     ) as string;
-    if(this.isForUpdating){
+    if (this.isForUpdating) {
       this.ancillarydepartmentService.putAncillaryDepartment(data.id, obj).subscribe({
-      next: (result : AncillaryDepartment) => {
+        next: (result: AncillaryDepartment) => {
           obj = result;
-          this.ClosePopUp(result); 
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {        
-        console.log('complete');
-      }
+          this.ClosePopUp(result);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('complete');
+        }
       });
     }
   }
   getValue(): AncillaryDepartment {
     this.ancillarydepartment = new AncillaryDepartment();
-    if(this.healthfacility == undefined)
-    {
-      let x = this.healthFacilityList.find(x => x.id); 
+    if (this.healthfacility == undefined) {
+      let x = this.healthFacilityList.find(x => x.id);
       this.ancillarydepartment.healthFacilityId = x?.id;
     } else {
       this.ancillarydepartment.healthFacilityId = this.healthfacility.id;

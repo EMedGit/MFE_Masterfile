@@ -19,6 +19,13 @@ export class DiagnosticcenterService {
       .set('ItemsPerPage', 9999999);
     return this.http.get<DiagnosticCenter[]>(`${environment.masterfileAPI}/diagnosticCenter`, { params })
   }
+  GetDiagnosticCenterByCode(HF_CODE: string): Observable<DiagnosticCenter[]> {
+    const params = new HttpParams()
+      .set('Code', HF_CODE)
+      .set('Page', 0)
+      .set('ItemsPerPage', 999);
+    return this.http.get<DiagnosticCenter[]>(`${environment.masterfileAPI}/diagnosticCenter`, { params });
+  }
   postDiagnosticCenter(data : DiagnosticCenter) : Observable<DiagnosticCenter>{
     return this.http.post<DiagnosticCenter>(`${environment.masterfileAPI}/diagnosticCenter/`, data, httpOptions);
   }

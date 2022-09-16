@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Medicinecategory } from 'src/app/models/medicinecategory.model';
 import { MedicinecategoryService } from 'src/app/services/medicinecategory.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-medicinecategory',
@@ -12,38 +13,38 @@ import { MedicinecategoryService } from 'src/app/services/medicinecategory.servi
 })
 export class PopupMedicinecategoryComponent implements OnInit {
 
-  medicinecategoryForm : FormGroup;
-  formBuilder : FormBuilder;
-  medicinecategory : Medicinecategory;
-  arrMedicineCategory : Medicinecategory[] = [];
-  medicinecategoryList : Medicinecategory[];
-  id : number = 0;
+  medicinecategoryForm: FormGroup;
+  formBuilder: FormBuilder;
+  medicinecategory: Medicinecategory;
+  arrMedicineCategory: Medicinecategory[] = [];
+  medicinecategoryList: Medicinecategory[];
+  id: number = 0;
 
-  isActiveStatus=  false;
-  isForSaving= false;
-  isForUpdating= false;
+  isActiveStatus = false;
+  isForSaving = false;
+  isForUpdating = false;
 
-  constructor(private ref : DynamicDialogRef, 
-    private config : DynamicDialogConfig, 
-    private medicinecategoryService : MedicinecategoryService, 
-    private datePipe : DatePipe) { }
+  constructor(private ref: DynamicDialogRef,
+    private config: DynamicDialogConfig,
+    private medicinecategoryService: MedicinecategoryService,
+    private datePipe: DatePipe, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isForUpdating = this.config.data.isForUpdating;
     this.isForSaving = this.config.data.isForSaving;
-    
+
     this.buildFormGroup();
     this.medicinecategoryForm.patchValue(this.config.data.medicineCategory);
   }
-  buildFormGroup() : void {
+  buildFormGroup(): void {
     this.formBuilder = new FormBuilder();
     this.medicinecategoryForm = this.formBuilder.group(
       {
-        code : [''],
-        description : ['']
+        code: [''],
+        description: ['']
       });
   }
-  ClosePopUp(data:Medicinecategory){
+  ClosePopUp(data: Medicinecategory) {
     this.ref.close(data);
   }
 
@@ -52,14 +53,21 @@ export class PopupMedicinecategoryComponent implements OnInit {
       this.ref.close();
     }
   }
-  saveData(){
-    if(this.isForSaving){
-        this.medicinecategoryService.postMedicineCategory(this.getValue()).subscribe(result=>{
-          this.ClosePopUp(result);  
-        });      
+  saveData() {
+    if (this.isForSaving) {
+      this.medicinecategoryService.GetMedicineCategoryByCode(this.medicinecategoryForm.controls['code'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.code.toUpperCase() == this.medicinecategoryForm.controls['code'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Code already Exist!');
+        } else {
+          this.medicinecategoryService.postMedicineCategory(this.getValue()).subscribe(result => {
+            this.ClosePopUp(result);
+          });
+        }
+      });
     }
   }
-  updateData(){    
+  updateData() {
     let data = this.config.data.medicineCategory;
     let obj = new Medicinecategory();
     obj.code = this.medicinecategoryForm.controls['code'].value;
@@ -67,18 +75,18 @@ export class PopupMedicinecategoryComponent implements OnInit {
     obj.modifiedDateTime = this.datePipe.transform(
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
     ) as string;
-    if(this.isForUpdating){
+    if (this.isForUpdating) {
       this.medicinecategoryService.putMedicineCategory(data.id, obj).subscribe({
-      next: (result : Medicinecategory) => {
+        next: (result: Medicinecategory) => {
           obj = result;
-          this.ClosePopUp(result); 
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {        
-        console.log('complete');
-      }
+          this.ClosePopUp(result);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('complete');
+        }
       });
     }
   }

@@ -6,6 +6,7 @@ import { Consultationtype } from 'src/app/models/consultationtype.model';
 import { HealthFacility } from 'src/app/models/healthfacility.model';
 import { ConsultationtypeService } from 'src/app/services/consultationtype.service';
 import { HealthFacilityService } from 'src/app/services/healthfacility.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-consultationtype',
@@ -31,7 +32,8 @@ export class PopupConsultationtypeComponent implements OnInit {
     private config : DynamicDialogConfig, 
     private consultationtypeService : ConsultationtypeService, 
     private datePipe : DatePipe,
-    private healthfacilityServices : HealthFacilityService) { }
+    private healthfacilityServices : HealthFacilityService,
+    private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isForUpdating = this.config.data.isForUpdating;
@@ -68,9 +70,16 @@ export class PopupConsultationtypeComponent implements OnInit {
   }
   saveData(){
     if(this.isForSaving){
+      this.consultationtypeService.GetConsultationTypeByCode(this.consultationtypeForm.controls['code'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.code.toUpperCase() == this.consultationtypeForm.controls['code'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Code already Exist!');
+        } else {
         this.consultationtypeService.postConsultationType(this.getValue()).subscribe(result => {
           this.ClosePopUp(result);
         });
+      }
+      });
     }
   } 
   updateData(){

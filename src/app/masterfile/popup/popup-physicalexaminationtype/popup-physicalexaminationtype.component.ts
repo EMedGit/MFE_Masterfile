@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PhysicalExaminationType } from 'src/app/models/physicalexaminationtype.model';
 import { PhysicalExaminationTypeService } from 'src/app/services/physicalexaminationtype.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-physicalexaminationtype',
@@ -10,7 +11,7 @@ import { PhysicalExaminationTypeService } from 'src/app/services/physicalexamina
   styleUrls: ['./popup-physicalexaminationtype.component.css']
 })
 export class PopupPhysicalexaminationtypeComponent implements OnInit {
-  
+
   physicalExaminationTypeForm: FormGroup;
   formBuilder: FormBuilder;
 
@@ -20,7 +21,7 @@ export class PopupPhysicalexaminationtypeComponent implements OnInit {
   isForSaving = false;
   isForUpdating = false;
 
-  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private petService: PhysicalExaminationTypeService) { }
+  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private petService: PhysicalExaminationTypeService, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isActiveStatus = this.config.data.physicalExaminationType.status;
@@ -51,10 +52,17 @@ export class PopupPhysicalexaminationtypeComponent implements OnInit {
 
   saveData() {
     if (this.isForSaving) {
-      this.petService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
+      this.petService.GetPhysicalExaminationTypeByCode(this.physicalExaminationTypeForm.controls['type'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.type.toUpperCase() == this.physicalExaminationTypeForm.controls['type'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Type already Exist!');
+        } else {
+          this.petService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
+        }
+      });
     }
   }
-  
+
   updateData() {
     let data = this.config.data.physicalExaminationType;
     data.type = this.physicalExaminationTypeForm.controls['type'].value;

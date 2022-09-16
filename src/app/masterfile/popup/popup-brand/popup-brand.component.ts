@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Brand } from 'src/app/models/brand.model';
 import { BrandService } from 'src/app/services/brand.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-brand',
@@ -23,7 +24,11 @@ export class PopupBrandComponent implements OnInit {
   isForSaving= false;
   isForUpdating= false;
 
-  constructor(private ref : DynamicDialogRef, private config : DynamicDialogConfig, private brandService : BrandService, private datePipe : DatePipe) { }
+  constructor(private ref : DynamicDialogRef, 
+    private config : DynamicDialogConfig, 
+    private brandService : BrandService, 
+    private datePipe : DatePipe, 
+    private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isForUpdating = this.config.data.isForUpdating;
@@ -51,9 +56,14 @@ export class PopupBrandComponent implements OnInit {
   }
   saveData(){
     if(this.isForSaving){
-        this.brandService.postBrand(this.getValue()).subscribe(result => {
-          this.ClosePopUp(result);
-        });
+      this.brandService.GetBrandByCode(this.brandForm.controls['code'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.code.toUpperCase() == this.brandForm.controls['code'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Code already Exist!');
+        } else {
+        this.brandService.postBrand(this.getValue()).subscribe(result => { this.ClosePopUp(result); });
+        }
+      });
     }
   }
   updateData(){

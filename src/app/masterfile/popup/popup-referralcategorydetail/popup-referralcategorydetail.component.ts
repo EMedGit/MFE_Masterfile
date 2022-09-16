@@ -6,6 +6,7 @@ import { ReferralCategory } from 'src/app/models/referralcategory.model';
 import { ReferralCategoryDetail } from 'src/app/models/referralcategorydetail.model';
 import { ReferralcategoryService } from 'src/app/services/referralcategory.service';
 import { ReferralcategorydetailService } from 'src/app/services/referralcategorydetail.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-referralcategorydetail',
@@ -14,24 +15,25 @@ import { ReferralcategorydetailService } from 'src/app/services/referralcategory
 })
 export class PopupReferralcategorydetailComponent implements OnInit {
 
-  referralcategory : ReferralCategory;
-  referralcategoryList : ReferralCategory[];
-  referralcategorydetailForm : FormGroup;
-  formBuilder : FormBuilder;
-  referralcategorydetail : ReferralCategoryDetail;
-  arrReferralCategoryDetail : ReferralCategoryDetail[] = [];
-  referralcategorydetailList : ReferralCategoryDetail[];
-  id : number = 0;
+  referralcategory: ReferralCategory;
+  referralcategoryList: ReferralCategory[];
+  referralcategorydetailForm: FormGroup;
+  formBuilder: FormBuilder;
+  referralcategorydetail: ReferralCategoryDetail;
+  arrReferralCategoryDetail: ReferralCategoryDetail[] = [];
+  referralcategorydetailList: ReferralCategoryDetail[];
+  id: number = 0;
 
-  isActiveStatus=  false;
-  isForSaving= false;
-  isForUpdating= false;
+  isActiveStatus = false;
+  isForSaving = false;
+  isForUpdating = false;
 
-  constructor(private ref : DynamicDialogRef, 
-    private config : DynamicDialogConfig, 
-    private referralcategorydetailService : ReferralcategorydetailService, 
-    private datePipe : DatePipe,
-    private referralcategoryService : ReferralcategoryService) { }
+  constructor(private ref: DynamicDialogRef,
+    private config: DynamicDialogConfig,
+    private referralcategorydetailService: ReferralcategorydetailService,
+    private datePipe: DatePipe,
+    private referralcategoryService: ReferralcategoryService,
+    private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isForUpdating = this.config.data.isForUpdating;
@@ -45,22 +47,22 @@ export class PopupReferralcategorydetailComponent implements OnInit {
     this.formBuilder = new FormBuilder();
     this.referralcategorydetailForm = this.formBuilder.group(
       {
-        referralCategoryDescription : [''],
+        referralCategoryDescription: [''],
         condition: [''],
-        indications: [''], 
-        category:['']
+        indications: [''],
+        category: ['']
       });
   }
-  loadData() : void {
+  loadData(): void {
     this.referralcategoryService.getReferralcategory().subscribe(retval => {
       this.referralcategoryList = retval;
       console.log(this.referralcategoryList, 'yikes')
     });
   }
-  ClosePopUp(data : ReferralCategoryDetail){
+  ClosePopUp(data: ReferralCategoryDetail) {
     this.ref.close(data);
   }
-  selectedItem(event : any){
+  selectedItem(event: any) {
     this.referralcategory = event.value;
   }
   ngOnDestroy() {
@@ -68,49 +70,54 @@ export class PopupReferralcategorydetailComponent implements OnInit {
       this.ref.close();
     }
   }
-  saveData(){
-    if(this.isForSaving){
-        this.referralcategorydetailService.postReferralcategorydetail(this.getValue()).subscribe(result=>{
-          this.ClosePopUp(result);  
-        });      
+  saveData() {
+    if (this.isForSaving) {
+      this.referralcategorydetailService.GetReferralCategoryDetailByDescription(this.referralcategorydetailForm.controls['referralCategoryDescription'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.referralCategoryDescription.toUpperCase() == this.referralcategorydetailForm.controls['referralCategoryDescription'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Referral Category Description already Exist!');
+        } else {
+          this.referralcategorydetailService.postReferralcategorydetail(this.getValue()).subscribe(result => {
+            this.ClosePopUp(result);
+          });
+        }
+      });
     }
   }
-  updateData(){    
+  updateData() {
     let data = this.config.data.referralcategorydetail;
     let obj = new ReferralCategoryDetail();
-    if(this.referralcategory == undefined)
-    {
+    if (this.referralcategory == undefined) {
       obj.referralCategoryId = data.id;
     } else {
       obj.referralCategoryId = this.referralcategory.id;
     }
-    obj.referralCategoryDescription = this.referralcategorydetailForm.controls['code'].value;
+    obj.referralCategoryDescription = this.referralcategorydetailForm.controls['referralCategoryDescription'].value;
     obj.condition = this.referralcategorydetailForm.controls['description'].value;
     obj.indications = this.referralcategorydetailForm.controls['description'].value;
     obj.category = this.referralcategorydetailForm.controls['description'].value;
     obj.modifiedDateTime = this.datePipe.transform(
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
     ) as string;
-    if(this.isForUpdating){
+    if (this.isForUpdating) {
       this.referralcategorydetailService.putReferralcategorydetail(data.id, obj).subscribe({
-      next: (result : ReferralCategoryDetail) => {
+        next: (result: ReferralCategoryDetail) => {
           obj = result;
-          this.ClosePopUp(result); 
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {        
-        console.log('complete');
-      }
+          this.ClosePopUp(result);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('complete');
+        }
       });
     }
   }
   getValue(): ReferralCategoryDetail {
     this.referralcategorydetail = new ReferralCategoryDetail();
-    if(this.referralcategory == undefined)
-    {
-      let x = this.referralcategoryList.find(x => x.id); 
+    if (this.referralcategory == undefined) {
+      let x = this.referralcategoryList.find(x => x.id);
       this.referralcategorydetail.referralCategoryId = x?.id;
 
     } else {

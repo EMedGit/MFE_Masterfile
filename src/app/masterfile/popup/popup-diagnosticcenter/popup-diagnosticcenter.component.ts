@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DiagnosticCenter } from 'src/app/models/diagnosticcenter.model';
 import { DiagnosticcenterService } from 'src/app/services/diagnosticcenter.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-diagnosticcenter',
@@ -25,7 +26,8 @@ export class PopupDiagnosticcenterComponent implements OnInit {
   constructor(private ref : DynamicDialogRef,
     private config : DynamicDialogConfig,
     private diagnosticcenterService : DiagnosticcenterService,
-    private datePipe : DatePipe) { }
+    private datePipe : DatePipe,
+    private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isForUpdating = this.config.data.isForUpdating;
@@ -52,9 +54,16 @@ export class PopupDiagnosticcenterComponent implements OnInit {
   }
   saveData(){
     if(this.isForSaving){
+      this.diagnosticcenterService.GetDiagnosticCenterByCode(this.diagnosticCenterForm.controls['code'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.code.toUpperCase() == this.diagnosticCenterForm.controls['code'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Code already Exist!');
+        } else {
         this.diagnosticcenterService.postDiagnosticCenter(this.getValue()).subscribe(result=>{
           this.ClosePopUp(result);  
         });      
+      }
+    });
     }
   }
   updateData(){    

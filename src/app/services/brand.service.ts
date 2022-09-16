@@ -20,6 +20,13 @@ export class BrandService {
       .set('ItemsPerPage', 9999);
     return this.http.get<Brand[]>(`${environment.masterfileAPI}/brand`, { params })
   }
+  GetBrandByCode(HF_CODE: string): Observable<Brand[]> {
+    const params = new HttpParams()
+      .set('Code', HF_CODE)
+      .set('Page', 0)
+      .set('ItemsPerPage', 999);
+    return this.http.get<Brand[]>(`${environment.masterfileAPI}/brand`, { params });
+  }
   postBrand(data : Brand) : Observable<Brand>{
     return this.http.post<Brand>(`${environment.masterfileAPI}/brand/`, data, httpOptions);
   }

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Radiology } from 'src/app/models/radiology.model';
 import { RadiologyService } from 'src/app/services/radiology.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-radiology',
@@ -11,17 +12,17 @@ import { RadiologyService } from 'src/app/services/radiology.service';
   styleUrls: ['./popup-radiology.component.css']
 })
 export class PopupRadiologyComponent implements OnInit {
-  radiology : Radiology;
-  radiologyForm : FormGroup;
-  formBuilder : FormBuilder;
-  arrRadiology : Radiology[]=[];
-  radiologyList : Radiology[];
-  id : number = 0;
+  radiology: Radiology;
+  radiologyForm: FormGroup;
+  formBuilder: FormBuilder;
+  arrRadiology: Radiology[] = [];
+  radiologyList: Radiology[];
+  id: number = 0;
 
-  isActiveStatus=  false;
-  isForSaving= false;
-  isForUpdating= false;
-  constructor(private ref : DynamicDialogRef, private config : DynamicDialogConfig, private radiologyService : RadiologyService, private datePipe : DatePipe) { }
+  isActiveStatus = false;
+  isForSaving = false;
+  isForUpdating = false;
+  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private radiologyService: RadiologyService, private datePipe: DatePipe, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isForUpdating = this.config.data.isForUpdating;
@@ -45,7 +46,7 @@ export class PopupRadiologyComponent implements OnInit {
         specializationCode: ['']
       });
   }
-  ClosePopUp(data : Radiology){
+  ClosePopUp(data: Radiology) {
     this.ref.close(data);
   }
   ngOnDestroy() {
@@ -53,15 +54,19 @@ export class PopupRadiologyComponent implements OnInit {
       this.ref.close();
     }
   }
-  saveData(){
-    if(this.isForSaving){
-      this.radiologyService.postRadiology(this.getValue()).subscribe(result=>{
-
-        this.ClosePopUp(result);  
-      });      
+  saveData() {
+    if (this.isForSaving) {
+      this.radiologyService.GetRadiologyByCode(this.radiologyForm.controls['code'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.code.toUpperCase() == this.radiologyForm.controls['code'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Code already Exist!');
+        } else {
+          this.radiologyService.postRadiology(this.getValue()).subscribe(result => { this.ClosePopUp(result); });
+        }
+      });
     }
   }
-  updateData(){
+  updateData() {
     let data = this.config.data.radiology;
     let obj = new Radiology();
     obj.code = this.radiologyForm.controls['code'].value;
@@ -77,23 +82,23 @@ export class PopupRadiologyComponent implements OnInit {
     obj.modifiedDateTime = this.datePipe.transform(
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
     ) as string;
-    if(this.isForUpdating){
+    if (this.isForUpdating) {
       this.radiologyService.putRadiology(data.id, obj).subscribe({
-      next: (result : Radiology) => {
+        next: (result: Radiology) => {
           obj = result;
-          this.ClosePopUp(result); 
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {        
-        console.log('complete');
-      }
+          this.ClosePopUp(result);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('complete');
+        }
       });
     }
   }
   getValue(): Radiology {
-    this.radiology = new Radiology();  
+    this.radiology = new Radiology();
     this.radiology.createdBy = 'admin';
     this.radiology.code = this.radiologyForm.controls['code'].value;
     this.radiology.description = this.radiologyForm.controls['description'].value;

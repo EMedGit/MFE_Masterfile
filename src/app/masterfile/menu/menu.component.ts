@@ -31,7 +31,7 @@ export class MenuComponent implements OnInit {
       {name: 'Department', code: "['department']", routerLink: "/department"},
       {name: 'Diagnostics', code: "['diagnosticCenter']", routerLink: "/diagnosticCenter"},
       {name: 'Discounts', code: "[discounts]", routerLink: "/discounts"},
-      {name: 'Doctors', code: "['icd']", routerLink: "/address"},
+      // {name: 'Doctors', code: "['icd']", routerLink: "/address"},
       {name: 'Health Facility', code: "['healthfacility']", routerLink: "/healthfacility"},
       {name: 'ICD10', code: "['icd']", routerLink: "/icd"},
       {name: 'Immunization', code: "['immunization']", routerLink: "/immunization"},
@@ -80,6 +80,7 @@ export class MenuComponent implements OnInit {
   selectedMastefiles(event: any): void {
     let toRoute = 'masterfile/menu' + event.routerLink;
     this.router.navigate([toRoute]);
+    console.log(toRoute,'yeah')
   }
 
 }

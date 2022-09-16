@@ -58,7 +58,7 @@ export class PopupPhysicalexaminationsketchComponent implements OnInit {
     private sectionService: SectionService,
     private toastService: ToastService,
     private imageProcessingService: ImageprocessingService,
-    private datePipe: DatePipe,) { }
+    private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.filename = ('Result--' +

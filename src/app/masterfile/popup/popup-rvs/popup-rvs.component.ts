@@ -4,6 +4,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { RVS } from 'src/app/models/rvs.model';
 import { SpecialProcedure } from 'src/app/models/specialProcedure.model';
 import { RVSService } from 'src/app/services/rvs.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-rvs',
@@ -11,33 +12,33 @@ import { RVSService } from 'src/app/services/rvs.service';
   styleUrls: ['./popup-rvs.component.css']
 })
 export class PopupRvsComponent implements OnInit {
-  
+
   rvsForm: FormGroup;
   formBuilder: FormBuilder;
   rvs: RVS;
 
-  isActiveStatus=  false;
-  isForSaving= false;
-  isForUpdating= false;
-  
+  isActiveStatus = false;
+  isForSaving = false;
+  isForUpdating = false;
+
   specialProcedures: SpecialProcedure[];
   selectedSpecialProcedure: SpecialProcedure;
 
-  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private rvsService: RVSService) {
+  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private rvsService: RVSService, private toastService: ToastService) {
 
     this.specialProcedures = [
-      {name: 'LINAC', code: 'NY'},
-      {name: 'HEMODIALYSIS', code: 'RM'},
-      {name: 'PERITONEAL', code: 'LDN'},
-      {name: 'BRACHYTHERAPHY', code: 'IST'},
-      {name: 'CHEMOTHERAPY', code: 'PRS'}
+      { name: 'LINAC', code: 'NY' },
+      { name: 'HEMODIALYSIS', code: 'RM' },
+      { name: 'PERITONEAL', code: 'LDN' },
+      { name: 'BRACHYTHERAPHY', code: 'IST' },
+      { name: 'CHEMOTHERAPY', code: 'PRS' }
     ];
   }
 
   ngOnInit(): void {
-    
+
     this.isActiveStatus = this.config.data.rvs.status;
-    this.isForUpdating= this.config.data.isForUpdating;
+    this.isForUpdating = this.config.data.isForUpdating;
     this.isForSaving = this.config.data.isForSaving;
 
     this.buildFormGroup();
@@ -66,8 +67,8 @@ export class PopupRvsComponent implements OnInit {
 
   get rvsControl(): { [key: string]: AbstractControl } {
     return this.rvsForm.controls;
-  }  
-  
+  }
+
   ClosePopUp(data: RVS) {
     console.log(this.ref);
     this.ref.close(data);
@@ -81,15 +82,20 @@ export class PopupRvsComponent implements OnInit {
 
   saveData() {
     if (this.isForSaving) {
-      console.log(this.getData());
-      this.rvsService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
+      this.rvsService.GetRVSByCode(this.rvsForm.controls['code'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.code.toUpperCase() == this.rvsForm.controls['code'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Code already Exist!');
+        } else {
+          this.rvsService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
+        }
+      });
     }
   }
 
   updateData() {
     let specialProcedure = new String();
-    if (this.selectedSpecialProcedure != undefined)
-    {
+    if (this.selectedSpecialProcedure != undefined) {
       specialProcedure = this.selectedSpecialProcedure.name || '';
     }
 
@@ -148,7 +154,7 @@ export class PopupRvsComponent implements OnInit {
   }
 
 
-  setValues(){
+  setValues() {
     //this.rvsControl.procedureType.setValue("");
   }
 }

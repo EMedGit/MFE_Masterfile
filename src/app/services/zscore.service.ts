@@ -33,7 +33,13 @@ const httpOptions = {
             })
         );
     }
-
+    GetZScoreByCode(HF_CODE: string): Observable<ZScore[]> {
+        const params = new HttpParams()
+            .set('Code', HF_CODE)
+            .set('Page', 0)
+            .set('ItemsPerPage', 999);
+        return this.http.get<ZScore[]>(`${environment.masterfileAPI}/zscore`, { params });
+      }
     insert(data: ZScore) : Observable<ZScore>  {
         const url = `${environment.masterfileAPI}/zscore`;
         return this.http.post<ZScore>(url, data, httpOptions);

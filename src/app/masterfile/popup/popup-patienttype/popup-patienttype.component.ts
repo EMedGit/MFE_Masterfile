@@ -7,6 +7,7 @@ import { HealthFacility } from 'src/app/models/healthfacility.model';
 import { PatientType } from 'src/app/models/patienttype.model';
 import { HealthFacilityService } from 'src/app/services/healthfacility.service';
 import { PatienttypeService } from 'src/app/services/patienttype.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-patienttype',
@@ -15,24 +16,25 @@ import { PatienttypeService } from 'src/app/services/patienttype.service';
 })
 export class PopupPatienttypeComponent implements OnInit {
 
-  healthfacility : HealthFacility;
-  healthFacilityList : HealthFacility[];
-  patienttypeForm : FormGroup;
-  formBuilder : FormBuilder;
-  patienttype : PatientType;
-  arrPatientType : PatientType[] = [];
-  patienttypeList : PatientType[];
-  id : number = 0;
+  healthfacility: HealthFacility;
+  healthFacilityList: HealthFacility[];
+  patienttypeForm: FormGroup;
+  formBuilder: FormBuilder;
+  patienttype: PatientType;
+  arrPatientType: PatientType[] = [];
+  patienttypeList: PatientType[];
+  id: number = 0;
 
-  isActiveStatus=  false;
-  isForSaving= false;
-  isForUpdating= false;
+  isActiveStatus = false;
+  isForSaving = false;
+  isForUpdating = false;
 
-  constructor(private ref : DynamicDialogRef, 
-    private config : DynamicDialogConfig, 
-    private patienttypeService : PatienttypeService, 
-    private datePipe : DatePipe,
-    private healthfacilityServices : HealthFacilityService) { }
+  constructor(private ref: DynamicDialogRef,
+    private config: DynamicDialogConfig,
+    private patienttypeService: PatienttypeService,
+    private datePipe: DatePipe,
+    private healthfacilityServices: HealthFacilityService,
+    private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isForUpdating = this.config.data.isForUpdating;
@@ -43,25 +45,25 @@ export class PopupPatienttypeComponent implements OnInit {
     // this.patienttypeForm.get("selectedHealthFacilityName")?.setValue(this.healthFacilityList.find(x => x.name));
     this.loadData();
   }
-  buildFormGroup() : void {
+  buildFormGroup(): void {
     this.formBuilder = new FormBuilder();
     this.patienttypeForm = this.formBuilder.group(
       {
         description: ['']
       });
-      console.log(this.patienttypeForm, 'aerox');
+    console.log(this.patienttypeForm, 'aerox');
   }
 
-  loadData() : void {
-    this.healthfacilityServices.getHealthFacility().subscribe(retval => { 
-    return this.healthFacilityList = retval;
+  loadData(): void {
+    this.healthfacilityServices.getHealthFacility().subscribe(retval => {
+      return this.healthFacilityList = retval;
     });
   }
-  
-  ClosePopUp(data:PatientType){
+
+  ClosePopUp(data: PatientType) {
     this.ref.close(data);
   }
-  selectedItem(event : any){
+  selectedItem(event: any) {
     this.healthfacility = event.value;
     console.log('hello', this.healthfacility);
   }
@@ -70,18 +72,24 @@ export class PopupPatienttypeComponent implements OnInit {
       this.ref.close();
     }
   }
-  saveData(){
-    if(this.isForSaving){
-        this.patienttypeService.postPatientType(this.getValue()).subscribe(result=>{
-          this.ClosePopUp(result);
-        });
+  saveData() {
+    if (this.isForSaving) {
+      this.patienttypeService.GetPatientTypeByCode(this.patienttypeForm.controls['description'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.description.toUpperCase() == this.patienttypeForm.controls['description'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Description already Exist!');
+        } else {
+          this.patienttypeService.postPatientType(this.getValue()).subscribe(result => {
+            this.ClosePopUp(result);
+          });
+        }
+      });
     }
   }
-  updateData(){
+  updateData() {
     let data = this.config.data.patienttype;
     let obj = new PatientType();
-    if(this.healthfacility == undefined)
-    {
+    if (this.healthfacility == undefined) {
       let x = this.healthFacilityList.find(x => x.id);
       obj.healthFacilityId = x?.id
       obj.healthFacilityCode = x?.code;
@@ -98,27 +106,26 @@ export class PopupPatienttypeComponent implements OnInit {
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
     ) as string;
     console.log('start', obj);
-    if(this.isForUpdating){
+    if (this.isForUpdating) {
 
       this.patienttypeService.putPatientType(data.id, obj).subscribe({
-      next: (result : PatientType) => {
+        next: (result: PatientType) => {
           obj = result;
-          this.ClosePopUp(result); 
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {        
-        console.log('complete');
-      }
+          this.ClosePopUp(result);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('complete');
+        }
       });
     }
   }
   getValue(): PatientType {
     this.patienttype = new PatientType();
-    if(this.healthfacility == undefined)
-    {
-      let x = this.healthFacilityList.find(x => x.id); 
+    if (this.healthfacility == undefined) {
+      let x = this.healthFacilityList.find(x => x.id);
       this.patienttype.healthFacilityId = x?.id;
       this.patienttype.healthFacilityCode = x?.code;
       this.patienttype.healthFacilityName = x?.name;

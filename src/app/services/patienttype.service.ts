@@ -20,6 +20,13 @@ export class PatienttypeService {
       .set('ItemsPerPage', 9999);
     return this.http.get<PatientType[]>(`${environment.masterfileAPI}/patientType`, { params });
   }
+  GetPatientTypeByCode(HF_CODE: string): Observable<PatientType[]> {
+    const params = new HttpParams()
+        .set('Description', HF_CODE)
+        .set('Page', 0)
+        .set('ItemsPerPage', 999);
+    return this.http.get<PatientType[]>(`${environment.masterfileAPI}/patientType`, { params });
+  }
   postPatientType(data : PatientType) : Observable<PatientType>{
     return this.http.post<PatientType>(`${environment.masterfileAPI}/patientType/`, data, httpOptions);
   }

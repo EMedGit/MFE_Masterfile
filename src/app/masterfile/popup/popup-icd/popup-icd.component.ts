@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ICD10 } from 'src/app/models/icd10.model';
 import { ICD10Service } from 'src/app/services/icd10.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-icd',
@@ -15,16 +16,16 @@ export class PopupIcdComponent implements OnInit {
   formBuilder: FormBuilder;
   icd10: ICD10;
 
-  isActiveStatus=  false;
-  isForSaving= false;
-  isForUpdating= false;
+  isActiveStatus = false;
+  isForSaving = false;
+  isForUpdating = false;
 
-  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private icd10Service: ICD10Service) { }
+  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private icd10Service: ICD10Service, private toastService: ToastService) { }
 
   ngOnInit(): void {
 
     this.isActiveStatus = this.config.data.icd.status;
-    this.isForUpdating= this.config.data.isForUpdating;
+    this.isForUpdating = this.config.data.isForUpdating;
     this.isForSaving = this.config.data.isForSaving;
 
     this.buildFormGroup();
@@ -47,7 +48,7 @@ export class PopupIcdComponent implements OnInit {
         noOfDays: null,
       });
   }
-  
+
   ClosePopUp(data: ICD10) {
     console.log(this.ref);
     this.ref.close(data);
@@ -61,7 +62,14 @@ export class PopupIcdComponent implements OnInit {
 
   saveData() {
     if (this.isForSaving) {
-      this.icd10Service.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
+      this.icd10Service.GetICDByCode(this.icd10Form.controls['code'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.code.toUpperCase() == this.icd10Form.controls['code'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Code already Exist!');
+        } else {
+          this.icd10Service.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
+        }
+      });
     }
   }
 

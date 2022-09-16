@@ -19,6 +19,13 @@ export class PharmacyService {
       .set('ItemsPerPage', 9999999);
     return this.http.get<Pharmacy[]>(`${environment.masterfileAPI}/pharmacy`, { params })
   }
+  GetPharmacyByCode(HF_CODE: string): Observable<Pharmacy[]> {
+    const params = new HttpParams()
+        .set('Code', HF_CODE)
+        .set('Page', 0)
+        .set('ItemsPerPage', 999);
+    return this.http.get<Pharmacy[]>(`${environment.masterfileAPI}/pharmacy`, { params });
+  }
   postPharmacyService(data : Pharmacy) : Observable<Pharmacy>{
     return this.http.post<Pharmacy>(`${environment.masterfileAPI}/pharmacy/`, data, httpOptions);
   }

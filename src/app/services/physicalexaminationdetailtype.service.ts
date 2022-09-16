@@ -33,6 +33,13 @@ export class PhysicalExaminationDetailTypeService {
             })
         );
     }
+    GetPhysicalExaminationDetailTypeByCode(HF_CODE: string): Observable<PhysicalExaminationDetailType[]> {
+        const params = new HttpParams()
+            .set('Code', HF_CODE)
+            .set('Page', 0)
+            .set('ItemsPerPage', 999);
+        return this.http.get<PhysicalExaminationDetailType[]>(`${environment.masterfileAPI}/physicalExaminationDetailType`, { params });
+      }
     insert(data: PhysicalExaminationDetailType) : Observable<PhysicalExaminationDetailType>  {
         const url = `${environment.masterfileAPI}/physicalExaminationDetailType`;
         return this.http.post<PhysicalExaminationDetailType>(url, data, httpOptions);

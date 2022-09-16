@@ -37,6 +37,13 @@ export class DepartmentService {
     // insert(departments: Department) : Observable<boolean> {
     //     return this.http.post<boolean>(`${environment.masterfileAPI}/department`, departments, httpOptions);
     // }    
+    GetDepartmentByCode(HF_CODE: string): Observable<Department[]> {
+        const params = new HttpParams()
+          .set('Code', HF_CODE)
+          .set('Page', 0)
+          .set('ItemsPerPage', 999);
+        return this.http.get<Department[]>(`${environment.masterfileAPI}/department`, { params });
+      }
     insert(data: Department) : Observable<Department>  {
         console.log(data);
         console.log(JSON.stringify(data));

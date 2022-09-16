@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CivilStatus } from 'src/app/models/civilstatus.model';
 import { CivilstatusService } from 'src/app/services/civilstatus.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-civilstatus',
@@ -23,7 +24,7 @@ export class PopupCivilstatusComponent implements OnInit {
   isForSaving= false;
   isForUpdating= false;
 
-  constructor(private ref : DynamicDialogRef, private config : DynamicDialogConfig, private civilstatusService : CivilstatusService, private datePipe : DatePipe) { }
+  constructor(private ref : DynamicDialogRef, private config : DynamicDialogConfig, private civilstatusService : CivilstatusService, private datePipe : DatePipe, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isForUpdating = this.config.data.isForUpdating;
@@ -51,9 +52,16 @@ export class PopupCivilstatusComponent implements OnInit {
   }
   saveData(){
     if(this.isForSaving){
+      this.civilstatusService.GetCivilStatustByCode(this.civilstatusForm.controls['code'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.code.toUpperCase() == this.civilstatusForm.controls['code'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Code already Exist!');
+        } else {
         this.civilstatusService.postCivilStatus(this.getValue()).subscribe(result=>{
           this.ClosePopUp(result);  
-        });      
+        });   
+      }
+      });   
     }
   }
   updateData(){    

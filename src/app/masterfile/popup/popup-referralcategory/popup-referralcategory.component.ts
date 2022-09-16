@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ReferralCategory } from 'src/app/models/referralcategory.model';
 import { ReferralcategoryService } from 'src/app/services/referralcategory.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-referralcategory',
@@ -12,21 +13,22 @@ import { ReferralcategoryService } from 'src/app/services/referralcategory.servi
 })
 export class PopupReferralcategoryComponent implements OnInit {
 
-  referralcategoryForm : FormGroup;
-  formBuilder : FormBuilder;
-  referralcategory : ReferralCategory;
-  arrReferralCategory : ReferralCategory[] = [];
-  referralcategoryList : ReferralCategory[];
-  id : number = 0;
+  referralcategoryForm: FormGroup;
+  formBuilder: FormBuilder;
+  referralcategory: ReferralCategory;
+  arrReferralCategory: ReferralCategory[] = [];
+  referralcategoryList: ReferralCategory[];
+  id: number = 0;
 
-  isActiveStatus=  false;
-  isForSaving= false;
-  isForUpdating= false;
+  isActiveStatus = false;
+  isForSaving = false;
+  isForUpdating = false;
 
-  constructor(private ref : DynamicDialogRef, 
-    private config : DynamicDialogConfig, 
-    private referralcategoryService : ReferralcategoryService, 
-    private datePipe : DatePipe) { }
+  constructor(private ref: DynamicDialogRef,
+    private config: DynamicDialogConfig,
+    private referralcategoryService: ReferralcategoryService,
+    private datePipe: DatePipe,
+    private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isForUpdating = this.config.data.isForUpdating;
@@ -39,11 +41,11 @@ export class PopupReferralcategoryComponent implements OnInit {
     this.formBuilder = new FormBuilder();
     this.referralcategoryForm = this.formBuilder.group(
       {
-        code : [''],
-        description : ['']
+        code: [''],
+        description: ['']
       });
   }
-  ClosePopUp(data : ReferralCategory){
+  ClosePopUp(data: ReferralCategory) {
     this.ref.close(data);
   }
   ngOnDestroy() {
@@ -51,33 +53,40 @@ export class PopupReferralcategoryComponent implements OnInit {
       this.ref.close();
     }
   }
-  saveData(){
-    if(this.isForSaving){
-        this.referralcategoryService.postReferralcategory(this.getValue()).subscribe(result=>{
-          this.ClosePopUp(result);  
-        });      
+  saveData() {
+    if (this.isForSaving) {
+      this.referralcategoryService.GetReferralCategoryByCode(this.referralcategoryForm.controls['code'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.code.toUpperCase() == this.referralcategoryForm.controls['code'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Code already Exist!');
+        } else {
+          this.referralcategoryService.postReferralcategory(this.getValue()).subscribe(result => {
+            this.ClosePopUp(result);
+          });
+        }
+      });
     }
   }
-  updateData(){    
+  updateData() {
     let data = this.config.data.referralcategory;
-    let obj = new ReferralCategory();    
+    let obj = new ReferralCategory();
     obj.code = this.referralcategoryForm.controls['code'].value;
     obj.description = this.referralcategoryForm.controls['description'].value;
     obj.modifiedDateTime = this.datePipe.transform(
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
     ) as string;
-    if(this.isForUpdating){
+    if (this.isForUpdating) {
       this.referralcategoryService.putReferralcategory(data.id, obj).subscribe({
-      next: (result : ReferralCategory) => {
+        next: (result: ReferralCategory) => {
           obj = result;
-          this.ClosePopUp(result); 
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {        
-        console.log('complete');
-      }
+          this.ClosePopUp(result);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('complete');
+        }
       });
     }
   }

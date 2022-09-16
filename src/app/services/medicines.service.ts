@@ -38,7 +38,13 @@ export class MedicineService {
             })
         );
     }
-
+    GetMedicinesByCode(HF_CODE: string): Observable<Medicine[]> {
+        const params = new HttpParams()
+            .set('Code', HF_CODE)
+            .set('Page', 0)
+            .set('ItemsPerPage', 999);
+        return this.http.get<Medicine[]>(`${environment.masterfileAPI}/medicine`, { params });
+      }
     insert(data: Medicine) : Observable<Medicine>  {
         const url = `${environment.masterfileAPI}/medicine`;
         return this.http.post<Medicine>(url, data, httpOptions);

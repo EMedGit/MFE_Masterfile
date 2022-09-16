@@ -19,6 +19,13 @@ export class LaboratoryService {
       .set('ItemsPerPage', 9999999);
     return this.http.get<Laboratory[]>(`${environment.masterfileAPI}/laboratory`, { params })
   }
+  GetLaboratoryByCode(HF_CODE: string): Observable<Laboratory[]> {
+    const params = new HttpParams()
+        .set('Code', HF_CODE)
+        .set('Page', 0)
+        .set('ItemsPerPage', 999);
+    return this.http.get<Laboratory[]>(`${environment.masterfileAPI}/laboratory`, { params });
+  }
   postLaboratory(data : Laboratory) : Observable<Laboratory>{
     return this.http.post<Laboratory>(`${environment.masterfileAPI}/laboratory/`, data, httpOptions);
   }

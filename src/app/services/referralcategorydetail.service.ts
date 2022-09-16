@@ -19,6 +19,13 @@ export class ReferralcategorydetailService {
       .set('ItemsPerPage', 9999999);
     return this.http.get<ReferralCategoryDetail[]>(`${environment.masterfileAPI}/referralCategoryDetail`, { params })
   }
+  GetReferralCategoryDetailByDescription(HF_CODE: string): Observable<ReferralCategoryDetail[]> {
+    const params = new HttpParams()
+        .set('ReferralCategoryDescription', HF_CODE)
+        .set('Page', 0)
+        .set('ItemsPerPage', 999);
+    return this.http.get<ReferralCategoryDetail[]>(`${environment.masterfileAPI}/referralCategoryDetail`, { params });
+  }
   postReferralcategorydetail(data : ReferralCategoryDetail) : Observable<ReferralCategoryDetail>{
     return this.http.post<ReferralCategoryDetail>(`${environment.masterfileAPI}/referralCategoryDetail/`, data, httpOptions);
   }

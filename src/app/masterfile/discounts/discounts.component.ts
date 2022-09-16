@@ -65,7 +65,7 @@ export class DiscountsComponent implements OnInit {
       }
     });
   }
-  updateCivilStatusPopUp(discounts : Discounts){
+  updateDiscountsPopUp(discounts : Discounts){
     this.ref = this.dialogService.open(PopupDiscountsComponent, {
       width: '1000px',
       height: '450px',
@@ -82,9 +82,9 @@ export class DiscountsComponent implements OnInit {
         this.discountsList.forEach(val => {
           if (val.id == data.id) {
             val.patientTypeDescription = data.patientTypeDescription;
-            val.discountschemaLaboratory = data.discountschemaLaboratory;
-            val.discountschemaPharmacy = data.discountschemaPharmacy;
-            val.discountschemaRadiology = data.discountschemaRadiology;
+            val.discountSchemaLaboratory = data.discountSchemaLaboratory;
+            val.discountSchemaPharmacy = data.discountSchemaPharmacy;
+            val.discountSchemaRadiology = data.discountSchemaRadiology;
             val.status = data.status;
             val.createdBy = data.createdBy;
             val.createdDateTime = data.createdDateTime;
@@ -94,7 +94,7 @@ export class DiscountsComponent implements OnInit {
       }
     });
   }
-  removeCivilStatusRecord(discounts : Discounts){
+  removeDiscountsRecord(discounts : Discounts){
     this.discountsService.deleteDiscounts(discounts.id).subscribe({
       next: (result: boolean) => {
         result;

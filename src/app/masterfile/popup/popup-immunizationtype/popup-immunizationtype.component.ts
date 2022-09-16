@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ImmunizationType } from 'src/app/models/immunizationtype.model';
 import { ImmunizationTypeService } from 'src/app/services/immunizationtype.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-immunizationtype',
@@ -13,18 +14,18 @@ export class PopupImmunizationtypeComponent implements OnInit {
 
   immunizationTypeForm: FormGroup;
   formBuilder: FormBuilder;
-  
+
   immunizationType: ImmunizationType;
 
-  isActiveStatus=  false;
-  isForSaving= false;
-  isForUpdating= false;
+  isActiveStatus = false;
+  isForSaving = false;
+  isForUpdating = false;
 
-  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private itService: ImmunizationTypeService) { }
+  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private itService: ImmunizationTypeService, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isActiveStatus = this.config.data.immunizationType.status;
-    this.isForUpdating= this.config.data.isForUpdating;
+    this.isForUpdating = this.config.data.isForUpdating;
     this.isForSaving = this.config.data.isForSaving;
 
     this.buildFormGroup();
@@ -36,11 +37,11 @@ export class PopupImmunizationtypeComponent implements OnInit {
     this.immunizationTypeForm = this.formBuilder.group(
       {
         code: [''],
-        description: ['']    
+        description: ['']
       });
   }
 
-  ClosePopUp(data : ImmunizationType){
+  ClosePopUp(data: ImmunizationType) {
     this.ref.close(data);
   }
 
@@ -50,13 +51,20 @@ export class PopupImmunizationtypeComponent implements OnInit {
     }
   }
 
-  saveData(){
+  saveData() {
     if (this.isForSaving) {
-      this.itService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
+      this.itService.GetImmunizationTypeByCode(this.immunizationTypeForm.controls['code'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.code.toUpperCase() == this.immunizationTypeForm.controls['code'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Code already Exist!');
+        } else {
+          this.itService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
+        }
+      });
     }
   }
 
-  getData() : ImmunizationType {
+  getData(): ImmunizationType {
     this.immunizationType = new ImmunizationType();
     this.immunizationType.code = this.immunizationTypeForm.controls['code'].value;
     this.immunizationType.description = this.immunizationTypeForm.controls['description'].value;
@@ -85,7 +93,7 @@ export class PopupImmunizationtypeComponent implements OnInit {
         }
       });
     }
-    
+
   }
 
 }

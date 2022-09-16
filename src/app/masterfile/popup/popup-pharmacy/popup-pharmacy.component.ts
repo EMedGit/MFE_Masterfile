@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Pharmacy } from 'src/app/models/pharmacy.model';
 import { PharmacyService } from 'src/app/services/pharmacy.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-pharmacy',
@@ -23,7 +24,7 @@ export class PopupPharmacyComponent implements OnInit {
   isForSaving= false;
   isForUpdating= false;
 
-  constructor(private ref : DynamicDialogRef, private config : DynamicDialogConfig, private pharmacyService : PharmacyService, private datePipe : DatePipe) { }
+  constructor(private ref : DynamicDialogRef, private config : DynamicDialogConfig, private pharmacyService : PharmacyService, private datePipe : DatePipe, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isForUpdating = this.config.data.isForUpdating;
@@ -50,9 +51,16 @@ export class PopupPharmacyComponent implements OnInit {
   }
   saveData(){
     if(this.isForSaving){
+      this.pharmacyService.GetPharmacyByCode(this.pharmacyForm.controls['code'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.code.toUpperCase() == this.pharmacyForm.controls['code'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Code already Exist!');
+        } else {
         this.pharmacyService.postPharmacyService(this.getValue()).subscribe(result=>{
           this.ClosePopUp(result);  
         });      
+      }
+    });
     }
   }
   updateData(){    

@@ -6,6 +6,7 @@ import { AncillaryDepartment } from 'src/app/models/ancillarydepartment.model';
 import { AncillarySection } from 'src/app/models/ancillarysection.model';
 import { AncillarydepartmentService } from 'src/app/services/ancillarydepartment.service';
 import { AncillarysectionService } from 'src/app/services/ancillarysection.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-ancillarysection',
@@ -14,24 +15,25 @@ import { AncillarysectionService } from 'src/app/services/ancillarysection.servi
 })
 export class PopupAncillarysectionComponent implements OnInit {
 
-  ancillarydepartment : AncillaryDepartment;
-  ancillarydepartmentList : AncillaryDepartment[];
-  ancillarysectionForm : FormGroup;
-  formBuilder : FormBuilder;
-  ancillarysection : AncillarySection;
-  arrAncillarySection : AncillarySection[] = [];
-  ancillarysectionList : AncillarySection[];
-  id : number = 0;
+  ancillarydepartment: AncillaryDepartment;
+  ancillarydepartmentList: AncillaryDepartment[];
+  ancillarysectionForm: FormGroup;
+  formBuilder: FormBuilder;
+  ancillarysection: AncillarySection;
+  arrAncillarySection: AncillarySection[] = [];
+  ancillarysectionList: AncillarySection[];
+  id: number = 0;
 
-  isActiveStatus=  false;
-  isForSaving= false;
-  isForUpdating= false;
+  isActiveStatus = false;
+  isForSaving = false;
+  isForUpdating = false;
 
-  constructor(private ref : DynamicDialogRef, 
-    private config : DynamicDialogConfig, 
-    private ancillarysectionService : AncillarysectionService, 
-    private datePipe : DatePipe,
-    private ancillarydepartmentService : AncillarydepartmentService) { }
+  constructor(private ref: DynamicDialogRef,
+    private config: DynamicDialogConfig,
+    private ancillarysectionService: AncillarysectionService,
+    private datePipe: DatePipe,
+    private ancillarydepartmentService: AncillarydepartmentService,
+    private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isForUpdating = this.config.data.isForUpdating;
@@ -46,18 +48,18 @@ export class PopupAncillarysectionComponent implements OnInit {
     this.ancillarysectionForm = this.formBuilder.group(
       {
         code: [''],
-        description: ['']   
+        description: ['']
       });
   }
-  loadData() : void {
+  loadData(): void {
     this.ancillarydepartmentService.getAncillaryDepartment().subscribe(retval => {
       this.ancillarydepartmentList = retval;
     });
   }
-  ClosePopUp(data : AncillarySection){
+  ClosePopUp(data: AncillarySection) {
     this.ref.close(data);
   }
-  selectedItem(event : any){
+  selectedItem(event: any) {
     this.ancillarydepartment = event.value;
   }
   ngOnDestroy() {
@@ -65,18 +67,22 @@ export class PopupAncillarysectionComponent implements OnInit {
       this.ref.close();
     }
   }
-  saveData(){
-    if(this.isForSaving){
-        this.ancillarysectionService.postAncillarySection(this.getValue()).subscribe(result=>{
-          this.ClosePopUp(result);  
-        });      
+  saveData() {
+    if (this.isForSaving) {
+      this.ancillarysectionService.GetAncillarySectionByCode(this.ancillarysectionForm.controls['code'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.code.toUpperCase() == this.ancillarysectionForm.controls['code'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Code already Exist!');
+        } else {
+          this.ancillarysectionService.postAncillarySection(this.getValue()).subscribe(result => { this.ClosePopUp(result); });
+        }
+      });
     }
   }
-  updateData(){    
+  updateData() {
     let data = this.config.data.ancillarysection;
     let obj = new AncillarySection();
-    if(this.ancillarydepartment == undefined)
-    {
+    if (this.ancillarydepartment == undefined) {
       obj.ancillaryDepartmentId = data.id;
     } else {
       obj.ancillaryDepartmentId = this.ancillarydepartment.id;
@@ -86,26 +92,25 @@ export class PopupAncillarysectionComponent implements OnInit {
     obj.modifiedDateTime = this.datePipe.transform(
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
     ) as string;
-    if(this.isForUpdating){
+    if (this.isForUpdating) {
       this.ancillarysectionService.putAncillarySection(data.id, obj).subscribe({
-      next: (result : AncillarySection) => {
+        next: (result: AncillarySection) => {
           obj = result;
-          this.ClosePopUp(result); 
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {        
-        console.log('complete');
-      }
+          this.ClosePopUp(result);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('complete');
+        }
       });
     }
   }
   getValue(): AncillarySection {
     this.ancillarysection = new AncillarySection();
-    if(this.ancillarydepartment == undefined)
-    {
-      let x = this.ancillarydepartmentList.find(x => x.id); 
+    if (this.ancillarydepartment == undefined) {
+      let x = this.ancillarydepartmentList.find(x => x.id);
       this.ancillarysection.ancillaryDepartmentId = x?.id;
 
     } else {

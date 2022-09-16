@@ -55,10 +55,19 @@ export class PopupHealthfacilityComponent implements OnInit {
   saveData(){
     if(this.isForSaving) {
       this.healthFacilityService.GetHealthFacilityByHealthFacilityCode(this.healthFacilityForm.controls['code'].value).subscribe(retVal => {
-        let obj = retVal.find(x => x.code.toUpperCase() == this.healthFacilityForm.controls['code'].value.toUpperCase())
-        if(obj != undefined) {
-          this.toastService.showError('Code already Exist!');
-        } return this.healthFacilityService.insert(this.getData()).subscribe(result => { this.ClosePopUp(result); });     
+        // let obj = retVal.find(x => x.code.toUpperCase() == this.healthFacilityForm.controls['code'].value.toUpperCase())
+        // if(obj != undefined) {
+        //   this.toastService.showError('Code already Exist!');
+        // } return 
+        if(retVal)
+          this.healthFacilityService.insert(this.getData()).subscribe({ 
+            next: result => { this.ClosePopUp(result); 
+          }, error : (err) => {
+            this.toastService.showError(err.error.messages);
+          }, complete: () => {
+            this.toastService.showSuccess('Successfully Updated.');
+          }
+        });     
     })
     }
   }

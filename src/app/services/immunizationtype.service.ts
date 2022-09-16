@@ -33,6 +33,13 @@ export class ImmunizationTypeService {
             })
         );
     } 
+    GetImmunizationTypeByCode(HF_CODE: string): Observable<ImmunizationType[]> {
+        const params = new HttpParams()
+            .set('Code', HF_CODE)
+            .set('Page', 0)
+            .set('ItemsPerPage', 999);
+        return this.http.get<ImmunizationType[]>(`${environment.masterfileAPI}/immunizationType`, { params });
+      }
     insert(data: ImmunizationType) : Observable<ImmunizationType>  {
         const url = `${environment.masterfileAPI}/immunizationType`;
         return this.http.post<ImmunizationType>(url, data, httpOptions);

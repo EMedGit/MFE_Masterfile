@@ -42,15 +42,15 @@
                     <p-tableCheckbox [value]="discounts"></p-tableCheckbox>
                 </td>
                 <td>{{discounts.patientTypeDescription}}</td>
-                <td>{{discounts.discountschemaPharmacy}}%</td>
-                <td>{{discounts.discountschemaLaboratory | number: '1.1-5'}}</td>
-                <td>{{discounts.discountschemaRadiology}}</td>
+                <td>{{discounts.discountSchemaPharmacy | number : '1.0-3' }}</td>
+                <td>{{discounts.discountSchemaLaboratory | number : '1.0-3'}}</td>
+                <td>{{discounts.discountSchemaRadiology | number : '1.0-3'}}</td>
                 <td>
                     <i class="pi" style="font-size: 2rem"  [ngClass]="{'true-icon pi-check-circle': discounts.status, 'false-icon pi-times-circle': !discounts.status}"></i>
                 </td>
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" (click)="updateCivilStatusPopUp(discounts)"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="removeCivilStatusRecord(discounts)"></button>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" (click)="updateDiscountsPopUp(discounts)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="removeDiscountsRecord(discounts)"></button>
                 </td>
             </tr>
         </ng-template>

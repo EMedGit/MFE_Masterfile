@@ -7,6 +7,7 @@ import { PhysicalExaminationType } from 'src/app/models/physicalexaminationtype.
 import { PhysicalExaminationDetailService } from 'src/app/services/physicalexaminationdetail.service';
 import { PhysicalExaminationDetailTypeService } from 'src/app/services/physicalexaminationdetailtype.service';
 import { PhysicalExaminationTypeService } from 'src/app/services/physicalexaminationtype.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-physicalexaminationdetail',
@@ -14,7 +15,7 @@ import { PhysicalExaminationTypeService } from 'src/app/services/physicalexamina
   styleUrls: ['./popup-physicalexaminationdetail.component.css']
 })
 export class PopupPhysicalexaminationdetailComponent implements OnInit {
-  
+
   physicalExaminationDetailForm: FormGroup;
   formBuilder: FormBuilder;
 
@@ -24,15 +25,16 @@ export class PopupPhysicalexaminationdetailComponent implements OnInit {
   isForSaving = false;
   isForUpdating = false;
 
-  pedtList : PhysicalExaminationDetailType [];
-  petList : PhysicalExaminationType [];
-  
-  selectedpedt : PhysicalExaminationDetailType;
-  selectedpet : PhysicalExaminationType;
+  pedtList: PhysicalExaminationDetailType[];
+  petList: PhysicalExaminationType[];
 
-  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, 
-    private pedService : PhysicalExaminationDetailService, private pedtService : PhysicalExaminationDetailTypeService, 
-    private petService : PhysicalExaminationTypeService) { }
+  selectedpedt: PhysicalExaminationDetailType;
+  selectedpet: PhysicalExaminationType;
+
+  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig,
+    private pedService: PhysicalExaminationDetailService, private pedtService: PhysicalExaminationDetailTypeService,
+    private petService: PhysicalExaminationTypeService,
+    private toastService: ToastService) { }
   ngOnInit(): void {
     this.isActiveStatus = this.config.data.physicalExaminationDetail.status;
     this.isForUpdating = this.config.data.isForUpdating;
@@ -53,7 +55,7 @@ export class PopupPhysicalexaminationdetailComponent implements OnInit {
 
       });
 
-    this.petService.get('',0,100).subscribe({
+    this.petService.get('', 0, 100).subscribe({
       next: (result: PhysicalExaminationType[]) => {
         this.petList = result;
         this.petList = this.petList.filter(x => x.status);
@@ -81,7 +83,14 @@ export class PopupPhysicalexaminationdetailComponent implements OnInit {
 
   saveData() {
     if (this.isForSaving) {
-      this.pedService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
+      this.pedService.GetPhysicalExaminationDetailByCode(this.physicalExaminationDetailForm.controls['code'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.code.toUpperCase() == this.physicalExaminationDetailForm.controls['code'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Code already Exist!');
+        } else {
+          this.pedService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
+        }
+      });
     }
   }
 
@@ -113,8 +122,8 @@ export class PopupPhysicalexaminationdetailComponent implements OnInit {
   getData(): PhysicalExaminationDetail {
     this.physicalExaminationDetail = new PhysicalExaminationDetail();
     this.physicalExaminationDetail.code = this.physicalExaminationDetailForm.controls['code'].value;
-    this.physicalExaminationDetail.description = this.physicalExaminationDetailForm.controls['description'].value;    
-    this.physicalExaminationDetail.physicalExaminationTypeId = this.selectedpet.id;    
+    this.physicalExaminationDetail.description = this.physicalExaminationDetailForm.controls['description'].value;
+    this.physicalExaminationDetail.physicalExaminationTypeId = this.selectedpet.id;
     this.physicalExaminationDetail.physicalExaminationDetailTypeId = this.selectedpedt.id;
 
     this.physicalExaminationDetail.createdBy = '';
@@ -124,7 +133,7 @@ export class PopupPhysicalexaminationdetailComponent implements OnInit {
   }
 
   changePEType() {
-    this.pedtService.get(this.selectedpet.id,'','',0,100).subscribe({
+    this.pedtService.get(this.selectedpet.id, '', '', 0, 100).subscribe({
       next: (result: PhysicalExaminationDetailType[]) => {
         this.pedtList = result;
         this.pedtList = this.pedtList.filter(x => x.status);

@@ -6,6 +6,7 @@ import { ChiefComplaint } from 'src/app/models/chiefcomplaint.model';
 import { ChiefComplaintDetail } from 'src/app/models/chiefcomplaintdetail.model';
 import { ChiefcomplaintService } from 'src/app/services/chiefcomplaint.service';
 import { ChiefcomplaintdetailService } from 'src/app/services/chiefcomplaintdetail.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-chiefcomplaintdetail',
@@ -14,24 +15,25 @@ import { ChiefcomplaintdetailService } from 'src/app/services/chiefcomplaintdeta
 })
 export class PopupChiefcomplaintdetailComponent implements OnInit {
 
-  chiefcomplaint : ChiefComplaint;
-  chiefcomplaintList : ChiefComplaint[];
-  chiefcomplaintdetailForm : FormGroup;
-  formBuilder : FormBuilder;
-  chiefcomplaintdetail : ChiefComplaintDetail;
-  arrChiefComplaintDetail : ChiefComplaintDetail[] = [];
-  chiefcomplaintdetailList : ChiefComplaintDetail[];
-  id : number = 0;
-  
-  isActiveStatus=  false;
-  isForSaving= false;
-  isForUpdating= false;
+  chiefcomplaint: ChiefComplaint;
+  chiefcomplaintList: ChiefComplaint[];
+  chiefcomplaintdetailForm: FormGroup;
+  formBuilder: FormBuilder;
+  chiefcomplaintdetail: ChiefComplaintDetail;
+  arrChiefComplaintDetail: ChiefComplaintDetail[] = [];
+  chiefcomplaintdetailList: ChiefComplaintDetail[];
+  id: number = 0;
 
-  constructor(private ref : DynamicDialogRef, 
-    private config : DynamicDialogConfig, 
-    private chiefcomplaintdetailService : ChiefcomplaintdetailService, 
-    private datePipe : DatePipe,
-    private chiefcomplaintService : ChiefcomplaintService) { }
+  isActiveStatus = false;
+  isForSaving = false;
+  isForUpdating = false;
+
+  constructor(private ref: DynamicDialogRef,
+    private config: DynamicDialogConfig,
+    private chiefcomplaintdetailService: ChiefcomplaintdetailService,
+    private datePipe: DatePipe,
+    private chiefcomplaintService: ChiefcomplaintService,
+    private toastService: ToastService) { }
 
 
   ngOnInit(): void {
@@ -45,19 +47,19 @@ export class PopupChiefcomplaintdetailComponent implements OnInit {
     this.chiefcomplaintdetailForm = this.formBuilder.group(
       {
         code: [''],
-        description: ['']   
+        description: ['']
       });
   }
-  loadData() : void {
+  loadData(): void {
     this.chiefcomplaintService.getChiefcomplaint().subscribe(retval => {
       this.chiefcomplaintList = retval;
-      console.log(this.chiefcomplaintList,'f');
+      console.log(this.chiefcomplaintList, 'f');
     });
   }
-  ClosePopUp(data : ChiefComplaintDetail){
+  ClosePopUp(data: ChiefComplaintDetail) {
     this.ref.close(data);
   }
-  selectedItem(event : any){
+  selectedItem(event: any) {
     this.chiefcomplaint = event.value;
   }
   ngOnDestroy() {
@@ -65,18 +67,22 @@ export class PopupChiefcomplaintdetailComponent implements OnInit {
       this.ref.close();
     }
   }
-  saveData(){
-    if(this.isForSaving){
-        this.chiefcomplaintdetailService.postChiefcomplaintdetail(this.getValue()).subscribe(result=>{
-          this.ClosePopUp(result);  
-        });      
+  saveData() {
+    if (this.isForSaving) {
+      this.chiefcomplaintdetailService.GetChiefComplaintDetailByCode(this.chiefcomplaintdetailForm.controls['code'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.code.toUpperCase() == this.chiefcomplaintdetailForm.controls['code'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Code already Exist!');
+        } else {
+          this.chiefcomplaintdetailService.postChiefcomplaintdetail(this.getValue()).subscribe(result => { this.ClosePopUp(result); });
+        }
+      });
     }
   }
-  updateData(){    
+  updateData() {
     let data = this.config.data.chiefcomplaintdetail;
     let obj = new ChiefComplaintDetail();
-    if(this.chiefcomplaint == undefined)
-    {
+    if (this.chiefcomplaint == undefined) {
       obj.chiefComplaintId = data.id;
     } else {
       obj.chiefComplaintId = this.chiefcomplaint.id;
@@ -86,25 +92,24 @@ export class PopupChiefcomplaintdetailComponent implements OnInit {
     obj.modifiedDateTime = this.datePipe.transform(
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
     ) as string;
-    if(this.isForUpdating){
+    if (this.isForUpdating) {
       this.chiefcomplaintdetailService.putChiefcomplaintdetail(data.id, obj).subscribe({
-      next: (result : ChiefComplaintDetail) => {
+        next: (result: ChiefComplaintDetail) => {
           obj = result;
-          this.ClosePopUp(result); 
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {        
-        console.log('complete');
-      }
+          this.ClosePopUp(result);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('complete');
+        }
       });
     }
   }
   getValue(): ChiefComplaintDetail {
     this.chiefcomplaintdetail = new ChiefComplaintDetail();
-    if(this.chiefcomplaint == undefined)
-    {
+    if (this.chiefcomplaint == undefined) {
       let x = this.chiefcomplaintList.find(x => x.id);
       this.chiefcomplaintdetail.chiefComplaintId = x?.id;
 

@@ -5,6 +5,7 @@ import { Department } from 'src/app/models/department.model';
 import { HealthFacility } from 'src/app/models/healthfacility.model';
 import { DepartmentService } from 'src/app/services/department.service';
 import { HealthFacilityService } from 'src/app/services/healthfacility.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-department',
@@ -25,8 +26,8 @@ export class PopupDepartmentComponent implements OnInit {
   hfList: HealthFacility[];
   selectedHF: HealthFacility;
 
-  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private departmentService: DepartmentService, 
-    private hfService: HealthFacilityService) { }
+  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private departmentService: DepartmentService,
+    private hfService: HealthFacilityService, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isActiveStatus = this.config.data.department.status;
@@ -46,19 +47,19 @@ export class PopupDepartmentComponent implements OnInit {
         healthFacilityId: ['']
       });
 
-      this.hfService.getHealthFacility().subscribe({
-        next: (result: HealthFacility[]) => {
-          this.hfList = result;
-          this.hfList = this.hfList.filter(x => x.status);
-        },
-        error: (err) => {
-          console.log(err);
-        },
-        complete: () => {
-          console.log('dropdown getdata complete');
-          console.log(this.hfList);
-        }
-      });
+    this.hfService.getHealthFacility().subscribe({
+      next: (result: HealthFacility[]) => {
+        this.hfList = result;
+        this.hfList = this.hfList.filter(x => x.status);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('dropdown getdata complete');
+        console.log(this.hfList);
+      }
+    });
   }
 
   ClosePopUp(data: Department) {
@@ -74,7 +75,14 @@ export class PopupDepartmentComponent implements OnInit {
 
   saveData() {
     if (this.isForSaving) {
-      this.departmentService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
+      this.departmentService.GetDepartmentByCode(this.departmentForm.controls['code'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.code.toUpperCase() == this.departmentForm.controls['code'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Code already Exist!');
+        } else {
+          this.departmentService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
+        }
+      });
     }
   }
 
@@ -103,7 +111,7 @@ export class PopupDepartmentComponent implements OnInit {
   }
 
   getData(): Department {
-    let healthfacility = Object.assign(this.selectedHF,this.departmentForm.controls['healthFacilityId'].value);
+    let healthfacility = Object.assign(this.selectedHF, this.departmentForm.controls['healthFacilityId'].value);
 
     this.department = new Department();
     this.department.code = this.departmentForm.controls['code'].value;

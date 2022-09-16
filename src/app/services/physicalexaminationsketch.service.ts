@@ -31,7 +31,13 @@ export class PhysicalExaminationSketchService {
             })
         );
     }
-
+    GetPhysicalExaminationSketchByCode(HF_CODE: string): Observable<PhysicalExaminationSketch[]> {
+        const params = new HttpParams()
+            .set('Code', HF_CODE)
+            .set('Page', 0)
+            .set('ItemsPerPage', 999);
+        return this.http.get<PhysicalExaminationSketch[]>(`${environment.masterfileAPI}/physicalExaminationSketch`, { params });
+      }
     insert(data: PhysicalExaminationSketch) : Observable<PhysicalExaminationSketch>  {
         const url = `${environment.masterfileAPI}/physicalExaminationSketch`;
         return this.http.post<PhysicalExaminationSketch>(url, data, httpOptions);

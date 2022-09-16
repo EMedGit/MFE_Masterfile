@@ -36,6 +36,13 @@ export class SectionService {
     // insert(section: Section) : Observable<boolean> {
     //     return this.http.post<boolean>(`${environment.masterfileAPI}/section`, section, httpOptions);
     // }
+    GetSectionByCode(HF_CODE: string): Observable<Section[]> {
+        const params = new HttpParams()
+            .set('Code', HF_CODE)
+            .set('Page', 0)
+            .set('ItemsPerPage', 999);
+        return this.http.get<Section[]>(`${environment.masterfileAPI}/section`, { params });
+      }
     insert(data: Section) : Observable<Section>  {
         const url = `${environment.masterfileAPI}/section`;
         return this.http.post<Section>(url, data, httpOptions);

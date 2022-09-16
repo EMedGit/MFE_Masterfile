@@ -20,6 +20,13 @@ export class MedicinecategoryService {
       .set('ItemsPerPage', 9999999);
     return this.http.get<Medicinecategory[]>(`${environment.masterfileAPI}/medicineCategory`, { params })
   }
+  GetMedicineCategoryByCode(HF_CODE: string): Observable<Medicinecategory[]> {
+    const params = new HttpParams()
+        .set('Code', HF_CODE)
+        .set('Page', 0)
+        .set('ItemsPerPage', 999);
+    return this.http.get<Medicinecategory[]>(`${environment.masterfileAPI}/medicineCategory`, { params });
+  }
   postMedicineCategory(data : Medicinecategory) : Observable<Medicinecategory>{
     return this.http.post<Medicinecategory>(`${environment.masterfileAPI}/medicineCategory/`, data, httpOptions);
   }

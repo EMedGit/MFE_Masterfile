@@ -31,7 +31,13 @@ const httpOptions = {
             })
         );
     }
-
+    GetUserTypeByCode(HF_CODE: string): Observable<UserType[]> {
+        const params = new HttpParams()
+            .set('Code', HF_CODE)
+            .set('Page', 0)
+            .set('ItemsPerPage', 999);
+        return this.http.get<UserType[]>(`${environment.masterfileAPI}/userType`, { params });
+      }
     insert(data: UserType) : Observable<UserType>  {
         const url = `${environment.masterfileAPI}/userType`;
         return this.http.post<UserType>(url, data, httpOptions);

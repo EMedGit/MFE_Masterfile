@@ -35,7 +35,7 @@ export class HealthFacilityService {
         .set('ItemsPerPage', 9999)
         return this.http.get<HealthFacility[]>(`${environment.masterfileAPI}/healthFacility`, { params })
     }
-    public GetHealthFacilityByHealthFacilityCode(HF_CODE : string): Observable<HealthFacility[]> {
+    GetHealthFacilityByHealthFacilityCode(HF_CODE : string): Observable<HealthFacility[]> {
         const params = new HttpParams()  
         .set('Code',HF_CODE) 
         .set('Page', 0)

@@ -20,6 +20,13 @@ export class CivilstatusService {
       .set('ItemsPerPage', 9999999);
     return this.http.get<CivilStatus[]>(`${environment.masterfileAPI}/civilStatus`, { params })
   }
+  GetCivilStatustByCode(HF_CODE: string): Observable<CivilStatus[]> {
+    const params = new HttpParams()
+      .set('Code', HF_CODE)
+      .set('Page', 0)
+      .set('ItemsPerPage', 999);
+    return this.http.get<CivilStatus[]>(`${environment.masterfileAPI}/civilStatus`, { params });
+  }
   postCivilStatus(data : CivilStatus) : Observable<CivilStatus>{
     return this.http.post<CivilStatus>(`${environment.masterfileAPI}/civilStatus/`, data, httpOptions);
   }

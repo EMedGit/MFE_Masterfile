@@ -35,6 +35,13 @@ export class PhysicalExaminationDetailService {
             })
         );
     }
+    GetPhysicalExaminationDetailByCode(HF_CODE: string): Observable<PhysicalExaminationDetail[]> {
+        const params = new HttpParams()
+            .set('Code', HF_CODE)
+            .set('Page', 0)
+            .set('ItemsPerPage', 999);
+        return this.http.get<PhysicalExaminationDetail[]>(`${environment.masterfileAPI}/physicalExaminationDetail`, { params });
+      }
     insert(data: PhysicalExaminationDetail) : Observable<PhysicalExaminationDetail>  {
         const url = `${environment.masterfileAPI}/physicalExaminationDetail`;
         return this.http.post<PhysicalExaminationDetail>(url, data, httpOptions);

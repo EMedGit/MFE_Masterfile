@@ -19,6 +19,13 @@ export class ConsultationtypeService {
       .set('ItemsPerPage', 9999);
     return this.http.get<Consultationtype[]>(`${environment.masterfileAPI}/consultationType`, { params })
   }
+  GetConsultationTypeByCode(HF_CODE: string): Observable<Consultationtype[]> {
+    const params = new HttpParams()
+      .set('Code', HF_CODE)
+      .set('Page', 0)
+      .set('ItemsPerPage', 999);
+    return this.http.get<Consultationtype[]>(`${environment.masterfileAPI}/consultationType`, { params });
+  }
   postConsultationType(data : Consultationtype) : Observable<Consultationtype>{
     return this.http.post<Consultationtype>(`${environment.masterfileAPI}/consultationType/`, data, httpOptions);
   }

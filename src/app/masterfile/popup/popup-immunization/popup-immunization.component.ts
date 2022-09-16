@@ -5,6 +5,7 @@ import { Immunization } from 'src/app/models/immunization.model';
 import { ImmunizationType } from 'src/app/models/immunizationtype.model';
 import { ImmunizationService } from 'src/app/services/immunization.service';
 import { ImmunizationTypeService } from 'src/app/services/immunizationtype.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-immunization',
@@ -26,7 +27,7 @@ export class PopupImmunizationComponent implements OnInit {
   selectedIT: ImmunizationType;
 
   constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private immunizationService: ImmunizationService, 
-    private itService: ImmunizationTypeService ) { }
+    private itService: ImmunizationTypeService, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isActiveStatus = this.config.data.immunization.status;
@@ -72,7 +73,14 @@ export class PopupImmunizationComponent implements OnInit {
 
   saveData(){
     if (this.isForSaving) {
+      this.immunizationService.GetImmunizationByCode(this.immunizationForm.controls['code'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.code.toUpperCase() == this.immunizationForm.controls['code'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Code already Exist!');
+        } else {
       this.immunizationService.insert(this.getImmunizationData()).subscribe((retval) => { this.ClosePopUp(retval); });
+    }
+  });
     }
   }
 

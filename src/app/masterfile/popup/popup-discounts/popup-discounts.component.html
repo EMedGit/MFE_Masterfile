@@ -23,6 +23,14 @@
             </div>
         </div>      
         <div class="grid mb-1">
+            <div class="col-7 p-fluid">
+                <span class="p-float-label">
+                    <input type="text" id="patientTypeDescription" formControlName="patientTypeDescription" pInputText style="font-weight: bold;">
+                    <label for="patientTypeDescription">Description</label>
+                </span>
+            </div>
+        </div> 
+        <div class="grid mb-1">
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
                     <!-- <p-inputNumber inputId="discountschemaPharmacy"  formControlName="discountschemaPharmacy" suffix="%">
@@ -30,25 +38,25 @@
                     <input
                     type="text"
                     id="discountschemaPharmacy"
-                    formControlName="discountschemaPharmacy"
+                    formControlName="discountSchemaPharmacy"
                     pInputText
                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                     />
-                    <label for="discountschemaPharmacy">Pharmacy Discount</label>
+                    <label for="discountSchemaPharmacy">Pharmacy Discount</label>
                 </span>
             </div>
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
-                    <!-- <p-inputNumber inputId="discountschemaLaboratory" formControlName="discountschemaLaboratory" suffix="%">
+                    <!-- <p-inputNumber inputId="discountschemaLaboratory" formControlName="discountSchemaLaboratory" suffix="%">
                     </p-inputNumber> -->
                     <input
                     type="text"
                     id="discountschemaLaboratory"
-                    formControlName="discountschemaLaboratory"
+                    formControlName="discountSchemaLaboratory"
                     pInputText
                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                     />
-                    <label for="discountschemaLaboratory">Laboratory Discount</label>
+                    <label for="discountSchemaLaboratory">Laboratory Discount</label>
                 </span>
             </div>
             <div class="col-4 p-fluid">
@@ -58,11 +66,11 @@
                     <input
                     type="text"
                     id="discountschemaRadiology"
-                    formControlName="discountschemaRadiology"
+                    formControlName="discountSchemaRadiology"
                     pInputText
                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                     />
-                    <label for="discountschemaRadiology">Radiology Discount</label>
+                    <label for="discountSchemaRadiology">Radiology Discount</label>
                 </span>
             </div>
         </div>

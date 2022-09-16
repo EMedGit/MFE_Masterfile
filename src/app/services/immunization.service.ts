@@ -42,7 +42,13 @@ export class ImmunizationService {
         })
       );
   }
-  
+  GetImmunizationByCode(HF_CODE: string): Observable<Immunization[]> {
+    const params = new HttpParams()
+        .set('Code', HF_CODE)
+        .set('Page', 0)
+        .set('ItemsPerPage', 999);
+    return this.http.get<Immunization[]>(`${environment.masterfileAPI}/immunization`, { params });
+  }
   insert(data: Immunization) : Observable<Immunization>  {
     console.log(data);
     console.log(JSON.stringify(data));

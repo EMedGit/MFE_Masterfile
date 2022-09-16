@@ -6,6 +6,7 @@ import { Discounts } from 'src/app/models/discounts.model';
 import { PatientType } from 'src/app/models/patienttype.model';
 import { DiscountsService } from 'src/app/services/discounts.service';
 import { PatienttypeService } from 'src/app/services/patienttype.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-discounts',
@@ -31,7 +32,8 @@ export class PopupDiscountsComponent implements OnInit {
     private config : DynamicDialogConfig, 
     private discountsService : DiscountsService, 
     private patientTypeService : PatienttypeService,
-    private datePipe : DatePipe) { }
+    private datePipe : DatePipe,
+    private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isForUpdating = this.config.data.isForUpdating;
@@ -39,6 +41,7 @@ export class PopupDiscountsComponent implements OnInit {
 
     this.buildFormGroup();
     this.discountsForm.patchValue(this.config.data.discounts);
+    console.log(this.config.data.discounts,'hellox')
     this.loadData();
   }
 
@@ -50,15 +53,14 @@ export class PopupDiscountsComponent implements OnInit {
     this.discountsForm = this.formBuilder.group(
       {
         patientTypeDescription : [''],
-        discountschemaPharmacy : null,
-        discountschemaLaboratory : null,
-        discountschemaRadiology : null
+        discountSchemaPharmacy : 0,
+        discountSchemaLaboratory : 0,
+        discountSchemaRadiology : 0
       });
   }
   loadData() : void {
     this.patientTypeService.getPatientType().subscribe(retval => {
       this.patienttypeList = retval;
-      console.log('hello', this.patienttypeList)
     });
   }
   ClosePopUp(data:Discounts){
@@ -73,7 +75,6 @@ export class PopupDiscountsComponent implements OnInit {
   saveData(){
     if(this.isForSaving){
       this.discountsService.postDiscounts(this.getValue()).subscribe(result=>{
-
         this.ClosePopUp(result);  
       });      
     }
@@ -81,13 +82,20 @@ export class PopupDiscountsComponent implements OnInit {
   updateData(){
     let data = this.config.data.discounts;
     let obj = new Discounts();
-    obj.discountschemaLaboratory = this.discountsForm.controls['discountschemaLaboratory'].value;
-    obj.discountschemaPharmacy = this.discountsForm.controls['discountschemaPharmacy'].value;
-    obj.discountschemaRadiology = this.discountsForm.controls['discountschemaRadiology'].value;
+    if(this.patienttype == undefined){
+      obj.patientTypeId = data.id;
+    } else {
+      obj.patientTypeId = this.patienttype.id;
+    }
+    obj.patientTypeDescription = this.discountsForm.controls['patientTypeDescription'].value;
+    obj.discountSchemaLaboratory = this.discountsForm.controls['discountSchemaLaboratory'].value;
+    obj.discountSchemaPharmacy = this.discountsForm.controls['discountSchemaPharmacy'].value;
+    obj.discountSchemaRadiology = this.discountsForm.controls['discountSchemaRadiology'].value;
     obj.modifiedDateTime = this.datePipe.transform(
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
     ) as string;
     if(this.isForUpdating){
+      console.log(obj,'hello')
       this.discountsService.putDiscounts(data.id, obj).subscribe({
       next: (result : Discounts) => {
           obj = result;
@@ -114,9 +122,11 @@ export class PopupDiscountsComponent implements OnInit {
       this.discounts.patientTypeId = this.patienttype.id;
       this.discounts.patientTypeDescription = this.patienttype.description;
     }
-    this.discounts.discountschemaPharmacy = this.discountsForm.controls['discountschemaPharmacy'].value;
-    this.discounts.discountschemaLaboratory = this.discountsForm.controls['discountschemaLaboratory'].value;
-    this.discounts.discountschemaRadiology = this.discountsForm.controls['discountschemaRadiology'].value;
+    this.discounts.patientTypeDescription = this.discountsForm.controls['patientTypeDescription'].value;
+    this.discounts.discountSchemaPharmacy = this.discountsForm.controls['discountSchemaPharmacy'].value;
+    this.discounts.discountSchemaLaboratory = this.discountsForm.controls['discountSchemaLaboratory'].value;
+    this.discounts.discountSchemaRadiology = this.discountsForm.controls['discountSchemaRadiology'].value;
+    this.discounts.createdBy = '';
     return this.discounts;
   }
 }

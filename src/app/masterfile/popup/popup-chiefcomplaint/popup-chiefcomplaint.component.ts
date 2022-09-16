@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ChiefComplaint } from 'src/app/models/chiefcomplaint.model';
 import { ChiefcomplaintService } from 'src/app/services/chiefcomplaint.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-chiefcomplaint',
@@ -12,18 +13,18 @@ import { ChiefcomplaintService } from 'src/app/services/chiefcomplaint.service';
 })
 export class PopupChiefcomplaintComponent implements OnInit {
 
-  chiefcomplaintForm : FormGroup;
-  formBuilder : FormBuilder;
-  chiefcomplaint : ChiefComplaint;
-  arrChiefComplaint : ChiefComplaint[] = [];
-  chiefcomplaintList : ChiefComplaint[];
-  id : number = 0;
+  chiefcomplaintForm: FormGroup;
+  formBuilder: FormBuilder;
+  chiefcomplaint: ChiefComplaint;
+  arrChiefComplaint: ChiefComplaint[] = [];
+  chiefcomplaintList: ChiefComplaint[];
+  id: number = 0;
 
-  isActiveStatus=  false;
-  isForSaving= false;
-  isForUpdating= false;
+  isActiveStatus = false;
+  isForSaving = false;
+  isForUpdating = false;
 
-  constructor(private ref : DynamicDialogRef, private config : DynamicDialogConfig, private chiefcomplaintService : ChiefcomplaintService, private datePipe : DatePipe) { }
+  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private chiefcomplaintService: ChiefcomplaintService, private datePipe: DatePipe, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isForUpdating = this.config.data.isForUpdating;
@@ -40,7 +41,7 @@ export class PopupChiefcomplaintComponent implements OnInit {
         description: ['']
       });
   }
-  ClosePopUp(data:ChiefComplaint){
+  ClosePopUp(data: ChiefComplaint) {
     this.ref.close(data);
   }
 
@@ -49,14 +50,19 @@ export class PopupChiefcomplaintComponent implements OnInit {
       this.ref.close();
     }
   }
-  saveData(){
-    if(this.isForSaving){
-        this.chiefcomplaintService.postChiefcomplaint(this.getValue()).subscribe(result=>{
-          this.ClosePopUp(result);  
-        });      
+  saveData() {
+    if (this.isForSaving) {
+      this.chiefcomplaintService.GetChiefComplaintByCode(this.chiefcomplaintForm.controls['code'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.code.toUpperCase() == this.chiefcomplaintForm.controls['code'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Code already Exist!');
+        } else {
+          this.chiefcomplaintService.postChiefcomplaint(this.getValue()).subscribe(result => { this.ClosePopUp(result); });
+        }
+      });
     }
   }
-  updateData(){    
+  updateData() {
     let data = this.config.data.chiefcomplaint;
     let obj = new ChiefComplaint();
     obj.code = this.chiefcomplaintForm.controls['code'].value;
@@ -64,18 +70,18 @@ export class PopupChiefcomplaintComponent implements OnInit {
     obj.modifiedDateTime = this.datePipe.transform(
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
     ) as string;
-    if(this.isForUpdating){
+    if (this.isForUpdating) {
       this.chiefcomplaintService.putChiefcomplaint(data.id, obj).subscribe({
-      next: (result : ChiefComplaint) => {
+        next: (result: ChiefComplaint) => {
           obj = result;
-          this.ClosePopUp(result); 
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {        
-        console.log('complete');
-      }
+          this.ClosePopUp(result);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('complete');
+        }
       });
     }
   }

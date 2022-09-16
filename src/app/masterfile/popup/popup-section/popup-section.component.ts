@@ -7,6 +7,7 @@ import { Section } from 'src/app/models/section.model';
 import { DepartmentService } from 'src/app/services/department.service';
 import { HealthFacilityService } from 'src/app/services/healthfacility.service';
 import { SectionService } from 'src/app/services/section.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-section',
@@ -20,9 +21,9 @@ export class PopupSectionComponent implements OnInit {
 
   section: Section;
 
-  isActiveStatus=  false;
-  isForSaving= false;
-  isForUpdating= false;
+  isActiveStatus = false;
+  isForSaving = false;
+  isForUpdating = false;
 
   hfList: HealthFacility[];
   ddHFList: HealthFacility[];
@@ -31,17 +32,17 @@ export class PopupSectionComponent implements OnInit {
   departmentList: Department[];
   ddDepartmentList: Department[];
   selectedDepartment: Department;
-  
-  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private sectionService : SectionService, 
-    private departmentService: DepartmentService, private hfService: HealthFacilityService) { }
+
+  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private sectionService: SectionService,
+    private departmentService: DepartmentService, private hfService: HealthFacilityService, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isActiveStatus = this.config.data.section.status;
-    this.isForUpdating= this.config.data.isForUpdating;
+    this.isForUpdating = this.config.data.isForUpdating;
     this.isForSaving = this.config.data.isForSaving;
 
     this.buildFormGroup();
-    this.sectionForm.patchValue(this.config.data.section)    
+    this.sectionForm.patchValue(this.config.data.section)
   }
 
   buildFormGroup(): void {
@@ -53,11 +54,11 @@ export class PopupSectionComponent implements OnInit {
         departmentId: [''],
         healthFacilityId: [''],
       });
-      
+
     this.hfService.getHealthFacility().subscribe({
       next: (result: HealthFacility[]) => {
         this.hfList = result;
-         this.ddHFList = this.hfList.filter(x => x.status);
+        this.ddHFList = this.hfList.filter(x => x.status);
       },
       error: (err) => {
         console.log(err);
@@ -67,8 +68,8 @@ export class PopupSectionComponent implements OnInit {
         console.log(this.hfList);
       }
     });
-      
-    this.departmentService.getDepartments('','',0,0,100).subscribe({
+
+    this.departmentService.getDepartments('', '', 0, 0, 100).subscribe({
       next: (result: Department[]) => {
         this.departmentList = result;
         this.departmentList = this.departmentList.filter(x => x.status);
@@ -84,7 +85,7 @@ export class PopupSectionComponent implements OnInit {
 
   }
 
-  ClosePopUp(data: Section){
+  ClosePopUp(data: Section) {
     console.log(this.ref);
     this.ref.close(data);
   }
@@ -95,14 +96,21 @@ export class PopupSectionComponent implements OnInit {
     }
   }
 
-  saveData(){
-    if(this.isForSaving){
-      this.sectionService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
-    }     
+  saveData() {
+    if (this.isForSaving) {
+      this.sectionService.GetSectionByCode(this.sectionForm.controls['code'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.code.toUpperCase() == this.sectionForm.controls['code'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Code already Exist!');
+        } else {
+          this.sectionService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
+        }
+      });
+    }
   }
 
-  updateData(){   
-    let dp = Object.assign(this.selectedDepartment,this.sectionForm.controls['departmentId'].value); 
+  updateData() {
+    let dp = Object.assign(this.selectedDepartment, this.sectionForm.controls['departmentId'].value);
 
     let data = this.config.data.section;
     data.code = this.sectionForm.controls['code'].value;
@@ -110,25 +118,25 @@ export class PopupSectionComponent implements OnInit {
     data.departmentID = dp.id;
     data.modifiedBy = '';
     data.modifiedDateTime = new Date();
-    if(this.isForUpdating){
+    if (this.isForUpdating) {
       this.sectionService.update(data.id, data).subscribe({
-      next: (result : Section) => {
-        data = result;
-        this.ClosePopUp(result); 
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {        
-        console.log('complete');
-      }
+        next: (result: Section) => {
+          data = result;
+          this.ClosePopUp(result);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('complete');
+        }
       });
     }
 
   }
 
-  getData() : Section {
-    let dp = Object.assign(this.selectedDepartment,this.sectionForm.controls['departmentId'].value);
+  getData(): Section {
+    let dp = Object.assign(this.selectedDepartment, this.sectionForm.controls['departmentId'].value);
 
     this.section = new Section();
     this.section.code = this.sectionForm.controls['code'].value;
@@ -137,7 +145,7 @@ export class PopupSectionComponent implements OnInit {
 
     this.section.createdBy = '';
     this.section.createdDateTime = new Date();
-    
+
     return this.section;
 
   }

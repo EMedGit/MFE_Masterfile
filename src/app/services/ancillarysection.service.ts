@@ -19,6 +19,13 @@ export class AncillarysectionService {
       .set('ItemsPerPage', 9999999);
     return this.http.get<AncillarySection[]>(`${environment.masterfileAPI}/ancillarySection`, { params })
   }
+  GetAncillarySectionByCode(HF_CODE: string): Observable<AncillarySection[]> {
+    const params = new HttpParams()
+      .set('Code', HF_CODE)
+      .set('Page', 0)
+      .set('ItemsPerPage', 999);
+    return this.http.get<AncillarySection[]>(`${environment.masterfileAPI}/ancillarySection`, { params });
+  }
   postAncillarySection(data : AncillarySection) : Observable<AncillarySection>{
     return this.http.post<AncillarySection>(`${environment.masterfileAPI}/ancillarySection/`, data, httpOptions);
   }

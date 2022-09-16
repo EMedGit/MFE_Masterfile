@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UserType } from 'src/app/models/usertype.model';
+import { ToastService } from 'src/app/services/toast.service';
 import { UserTypeService } from 'src/app/services/usertype.service';
 
 @Component({
@@ -21,7 +22,7 @@ export class PopupUserTypeComponent implements OnInit {
   isForUpdating= false;
 
 
-  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private userTypeService: UserTypeService) { }
+  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private userTypeService: UserTypeService, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isActiveStatus = this.config.data.userType.status;

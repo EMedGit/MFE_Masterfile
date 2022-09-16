@@ -19,6 +19,13 @@ export class ChiefcomplaintService {
       .set('ItemsPerPage', 9999999);
     return this.http.get<ChiefComplaint[]>(`${environment.masterfileAPI}/chiefComplaint`, { params })
   }
+  GetChiefComplaintByCode(HF_CODE: string): Observable<ChiefComplaint[]> {
+    const params = new HttpParams()
+      .set('Code', HF_CODE)
+      .set('Page', 0)
+      .set('ItemsPerPage', 999);
+    return this.http.get<ChiefComplaint[]>(`${environment.masterfileAPI}/chiefComplaint`, { params });
+  }
   postChiefcomplaint(data : ChiefComplaint) : Observable<ChiefComplaint>{
     return this.http.post<ChiefComplaint>(`${environment.masterfileAPI}/chiefComplaint/`, data, httpOptions);
   }

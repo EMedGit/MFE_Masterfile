@@ -9,7 +9,7 @@
                 </div>
                 
                 <p-listbox [options]="masterfiles" [(ngModel)]="selectedMasterfile" [metaKeySelection]="false" (click)="selectedMastefiles(selectedMasterfile)"
-                        [filter]="true" optionLabel="name" [listStyle]="{'max-height':'750px'}" [style]="{'width':'20rem'}" style="height: 800px;">
+                        [filter]="true" optionLabel="name" [listStyle]="{'max-height':'750px'}" [style]="{'width':'20rem'}">
                 <ng-template let-masterfile pTemplate="item">
                 <div class="masterfile-item">
                     <div>

@@ -19,6 +19,13 @@ export class RadiologyService {
       .set('ItemsPerPage', 9999999);
     return this.http.get<Radiology[]>(`${environment.masterfileAPI}/radiology`, { params })
   }
+  GetRadiologyByCode(HF_CODE: string): Observable<Radiology[]> {
+    const params = new HttpParams()
+        .set('Code', HF_CODE)
+        .set('Page', 0)
+        .set('ItemsPerPage', 999);
+    return this.http.get<Radiology[]>(`${environment.masterfileAPI}/radiology`, { params });
+  }
   postRadiology(data : Radiology) : Observable<Radiology>{
     return this.http.post<Radiology>(`${environment.masterfileAPI}/radiology/`, data, httpOptions);
   }

@@ -39,6 +39,13 @@ export class RVSService {
             })
         );
     }
+    GetRVSByCode(HF_CODE: string): Observable<RVS[]> {
+        const params = new HttpParams()
+            .set('Code', HF_CODE)
+            .set('Page', 0)
+            .set('ItemsPerPage', 999);
+        return this.http.get<RVS[]>(`${environment.masterfileAPI}/rvs`, { params });
+      }
     insert(data: RVS) : Observable<RVS>  {
         const url = `${environment.masterfileAPI}/rvs`;
         return this.http.post<RVS>(url, data, httpOptions);

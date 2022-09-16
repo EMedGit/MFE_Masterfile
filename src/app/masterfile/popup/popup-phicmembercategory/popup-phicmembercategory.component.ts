@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Phicmembercategory } from 'src/app/models/phicmembercategory.model';
 import { PhicmembercategoryService } from 'src/app/services/phicmembercategory.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-phicmembercategory',
@@ -23,7 +24,7 @@ export class PopupPhicmembercategoryComponent implements OnInit {
   isForSaving= false;
   isForUpdating= false;
 
-  constructor(private ref : DynamicDialogRef, private config : DynamicDialogConfig, private phicmembercategoryService : PhicmembercategoryService, private datePipe : DatePipe) { }
+  constructor(private ref : DynamicDialogRef, private config : DynamicDialogConfig, private phicmembercategoryService : PhicmembercategoryService, private datePipe : DatePipe, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isForUpdating = this.config.data.isForUpdating;
@@ -52,9 +53,16 @@ export class PopupPhicmembercategoryComponent implements OnInit {
   }
   saveData(){
     if(this.isForSaving){
+      this.phicmembercategoryService.GetPHICMemberCategoryByCode(this.phicmembercategoryForm.controls['code'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.code.toUpperCase() == this.phicmembercategoryForm.controls['code'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Code already Exist!');
+        } else {
         this.phicmembercategoryService.postPhicmembercategory(this.getValue()).subscribe(result => {
           this.ClosePopUp(result);
         });
+      }
+    });
     }
   }
   updateData(){

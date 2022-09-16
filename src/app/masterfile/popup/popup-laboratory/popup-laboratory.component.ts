@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Laboratory } from 'src/app/models/laboratory.model';
 import { LaboratoryService } from 'src/app/services/laboratory.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-laboratory',
@@ -12,20 +13,21 @@ import { LaboratoryService } from 'src/app/services/laboratory.service';
 })
 export class PopupLaboratoryComponent implements OnInit {
 
-  laboratory : Laboratory;
-  laboratoryForm : FormGroup;
-  formBuilder : FormBuilder;
-  arrLaboratory : Laboratory[] = [];
-  laboratoryList : Laboratory[];
-  id : number = 0;
+  laboratory: Laboratory;
+  laboratoryForm: FormGroup;
+  formBuilder: FormBuilder;
+  arrLaboratory: Laboratory[] = [];
+  laboratoryList: Laboratory[];
+  id: number = 0;
 
-  isActiveStatus=  false;
-  isForSaving= false;
-  isForUpdating= false;
-  constructor(private ref : DynamicDialogRef,
-    private config : DynamicDialogConfig,
-    private laboratoryService : LaboratoryService,
-    private datePipe : DatePipe) { }
+  isActiveStatus = false;
+  isForSaving = false;
+  isForUpdating = false;
+  constructor(private ref: DynamicDialogRef,
+    private config: DynamicDialogConfig,
+    private laboratoryService: LaboratoryService,
+    private datePipe: DatePipe,
+    private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isForUpdating = this.config.data.isForUpdating;
@@ -34,7 +36,7 @@ export class PopupLaboratoryComponent implements OnInit {
     this.buildFormGroup();
     this.laboratoryForm.patchValue(this.config.data.laboratory);
   }
-  buildFormGroup() : void {
+  buildFormGroup(): void {
     this.formBuilder = new FormBuilder();
     this.laboratoryForm = this.formBuilder.group(
       {
@@ -49,7 +51,7 @@ export class PopupLaboratoryComponent implements OnInit {
         specializationCode: ['']
       });
   }
-  ClosePopUp(data:Laboratory){
+  ClosePopUp(data: Laboratory) {
     this.ref.close(data);
   }
 
@@ -58,15 +60,22 @@ export class PopupLaboratoryComponent implements OnInit {
       this.ref.close();
     }
   }
-  saveData(){
-    if(this.isForSaving){
-      this.laboratoryService.postLaboratory(this.getValue()).subscribe(result=>{
+  saveData() {
+    if (this.isForSaving) {
+      this.laboratoryService.GetLaboratoryByCode(this.laboratoryForm.controls['code'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.code.toUpperCase() == this.laboratoryForm.controls['code'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Code already Exist!');
+        } else {
+          this.laboratoryService.postLaboratory(this.getValue()).subscribe(result => {
 
-        this.ClosePopUp(result);  
-      });      
+            this.ClosePopUp(result);
+          });
+        }
+      });
     }
   }
-  updateData(){
+  updateData() {
     let data = this.config.data.laboratory;
     let obj = new Laboratory();
     obj.code = this.laboratoryForm.controls['code'].value;
@@ -82,24 +91,24 @@ export class PopupLaboratoryComponent implements OnInit {
     obj.modifiedDateTime = this.datePipe.transform(
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
     ) as string;
-    if(this.isForUpdating){
+    if (this.isForUpdating) {
       this.laboratoryService.putLaboratory(data.id, obj).subscribe({
-      next: (result : Laboratory) => {
+        next: (result: Laboratory) => {
           obj = result;
-          this.ClosePopUp(result); 
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {        
-        console.log('complete');
-      }
+          this.ClosePopUp(result);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('complete');
+        }
       });
     }
   }
 
   getValue(): Laboratory {
-    this.laboratory = new Laboratory();  
+    this.laboratory = new Laboratory();
     this.laboratory.createdBy = 'admin';
     this.laboratory.code = this.laboratoryForm.controls['code'].value;
     this.laboratory.description = this.laboratoryForm.controls['description'].value;
