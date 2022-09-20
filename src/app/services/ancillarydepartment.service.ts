@@ -19,6 +19,13 @@ export class AncillarydepartmentService {
       .set('ItemsPerPage', 9999999);
     return this.http.get<AncillaryDepartment[]>(`${environment.masterfileAPI}/ancillaryDepartment`, { params })
   }
+  GetAncillaryDepartmentByDescription(Descrip : string): Observable<AncillaryDepartment[]> {
+    const params = new HttpParams()
+      .set('Description', Descrip)
+      .set('Page', 0)
+      .set('ItemsPerPage', 99);
+    return this.http.get<AncillaryDepartment[]>(`${environment.masterfileAPI}/ancillaryDepartment`, { params })
+  }
   GetAncillaryDepartmentByCode(HF_CODE: string): Observable<AncillaryDepartment[]> {
     const params = new HttpParams()
       .set('Code', HF_CODE)

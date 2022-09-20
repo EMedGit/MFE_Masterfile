@@ -91,7 +91,6 @@ export class PopupProvinceComponent implements OnInit {
     this.provinceForm.valueChanges.subscribe(value => {
       value.regionName = this.region.find(t => t.regionCode == value.regionCode)?.regionName ?? null;
       this.address.next(Object.assign(value));
-      console.log('yati', value.regionName);
     });
     this.provinceForm.get('provinceCode')?.valueChanges.subscribe();
   } 

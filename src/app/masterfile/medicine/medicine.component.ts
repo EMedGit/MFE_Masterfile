@@ -40,13 +40,10 @@ export class MedicineComponent implements OnInit {
   }
   
   filter() {
-    console.log(this.selectedMedicineList)
     let filter: any[] = [];
-    this.newMedicineList.forEach(val => {
-      console.log(val)
+    this.medicineList.forEach(val => {
       if (val.code.toUpperCase().includes(this.searchkey.toUpperCase()) && val.status) {
         filter.push(val);      }
-
     });
     console.log(filter)
     this.newMedicineList = filter;

@@ -1,13 +1,17 @@
 <div class="card">
-    <div class="flex-initial flex align-items-center justify-content-center bg-cyan-400 font-bold text-white m-2 px-5 py-3 border-round">
-        <label style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: 900;">HEALTH FACILITY</label>
+    <div class="grid mt-2 mb-2">
+        <div class="col-12" style="text-align:center">
+            <h1> HEALTH FACILITY</h1>
+        </div>
     </div>
-
+</div>
+<div class="card mt-1">
     <p-toolbar styleClass="p-mb-4">
         <ng-template pTemplate="left" class="flex">
-            <button pButton pRipple label="NEW" icon="pi pi-plus-circle" class="p-button-success mr-2" (click)="addHealthFacilityPopup()"></button>
+            <button pButton pRipple label="NEW" icon="pi pi-plus-circle" class="p-button-success mr-2"
+                (click)="addHealthFacilityPopup()"></button>
             <button pButton pRipple label="REMOVE" icon="pi pi-trash" class="p-button-danger" [disabled]="!selectedHealthFacilities || 
-            !selectedHealthFacilities.length" ></button>
+            !selectedHealthFacilities.length"></button>
         </ng-template>
 
         <ng-template pTemplate="right">
@@ -19,19 +23,22 @@
             </div>
         </ng-template>
     </p-toolbar>
-    
-    <p-table #dt [value]="newHealthFacilityList" [rows]="5" [paginator]="true" [globalFilterFields]="['code','name']" 
+
+    <p-table #dt [value]="newHealthFacilityList" [rows]="5" [paginator]="true" [globalFilterFields]="['code','name']"
         [(selection)]="selectedHealthFacilities"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
-        
+
         <ng-template pTemplate="header">
             <tr>
                 <th style="width: 1rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
-                <th pSortableColumn="code">Code<p-sortIcon field="code"></p-sortIcon></th>
-                <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
-                <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
+                <th pSortableColumn="code">Code<p-sortIcon field="code"></p-sortIcon>
+                </th>
+                <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon>
+                </th>
+                <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon>
+                </th>
                 <th></th>
             </tr>
         </ng-template>
@@ -48,10 +55,10 @@
                     </i>
                 </td>
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" 
-                    (click)="updateHealthFacilityPopup(healthFacility)"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" 
-                    (click)="removeHealthFacility(healthFacility)"></button>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2"
+                        (click)="updateHealthFacilityPopup(healthFacility)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                        (click)="removeHealthFacility(healthFacility)"></button>
                 </td>
             </tr>
         </ng-template>

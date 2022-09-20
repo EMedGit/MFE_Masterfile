@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Laboratory } from 'src/app/models/laboratory.model';
 import { LaboratoryService } from 'src/app/services/laboratory.service';
@@ -9,17 +10,17 @@ import { PopupLaboratoryComponent } from '../popup/popup-laboratory/popup-labora
   selector: 'app-laboratory',
   templateUrl: './laboratory.component.html',
   styleUrls: ['./laboratory.component.css'],
-  providers: [DialogService]
+  providers: [DialogService, ConfirmationService]
 })
 export class LaboratoryComponent implements OnInit {
   searchkey: ""
   ref: DynamicDialogRef;
-  laboratory : Laboratory;
-  prevLaboratory : Laboratory[];
-  laboratoryList : Laboratory[];
-  selectedLaboratory : Laboratory[];
+  laboratory: Laboratory;
+  prevLaboratory: Laboratory[];
+  laboratoryList: Laboratory[];
+  selectedLaboratory: Laboratory[];
 
-  constructor(private laboratoryService : LaboratoryService, private dialogService : DialogService, private datePipe : DatePipe) { }
+  constructor(private laboratoryService: LaboratoryService, private dialogService: DialogService, private confirmationService: ConfirmationService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.fetchData();
@@ -42,7 +43,6 @@ export class LaboratoryComponent implements OnInit {
     console.log(this.selectedLaboratory)
     let filter: any[] = [];
     this.laboratoryList.forEach(val => {
-      console.log(val)
       if (val.description.toUpperCase().includes(this.searchkey.toUpperCase()) && val.status) {
         filter.push(val);
       }
@@ -52,7 +52,7 @@ export class LaboratoryComponent implements OnInit {
   addLaboratoryPopup() {
     this.ref = this.dialogService.open(PopupLaboratoryComponent, {
       width: '1200px',
-      height: '430px',
+      height: '830px',
       showHeader: true,
       closable: true,
       data: {
@@ -66,10 +66,10 @@ export class LaboratoryComponent implements OnInit {
       }
     })
   }
-  updateLaboratoryPopUp(laboratory : Laboratory) {
+  updateLaboratoryPopUp(laboratory: Laboratory) {
     this.ref = this.dialogService.open(PopupLaboratoryComponent, {
       width: '1200px',
-      height: '430px',
+      height: '830px',
       showHeader: true,
       closable: true,
       data: {
@@ -91,6 +91,8 @@ export class LaboratoryComponent implements OnInit {
             val.diagnosisRemarks = data.diagnosisRemarks;
             val.departmentCode = data.departmentCode;
             val.specializationCode = data.specializationCode;
+            val.ancillaryDepartmentId = data.ancillaryDepartmentId;
+            val.ancillarySpecializationId = data.ancillarySpecializationId;
             val.status = data.status;
             val.createdBy = data.createdBy;
             val.createdDateTime = data.createdDateTime;
@@ -100,25 +102,34 @@ export class LaboratoryComponent implements OnInit {
       }
     })
   }
-  removeLaboratoryRecord(laboratory : Laboratory) {
-    this.laboratoryService.deleteLaboratory(laboratory.id).subscribe({
-      next: (result: boolean) => {
-        result;
-        this.laboratoryList.forEach(element => {
-          if (laboratory.id == element.id) {
-            element.status = false;
-          }
-
-        });
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('complete');
-        this.prevLaboratory = this.laboratoryList.filter(x => x.status);
-      }
-    });
+  removeLaboratoryRecord(laboratory: Laboratory) {
+    // console.log(laboratory, 'remove')
+    // if (laboratory != undefined) {
+    //   this.confirmationService.confirm({
+    //     message: `Are you sure you want to delete the record?`,
+    //     header: 'Confirm',
+    //     icon: 'pi pi-exclamation-triangle',
+    //     accept: () => {
+          this.laboratoryService.deleteLaboratory(laboratory.id).subscribe({
+            next: (result: boolean) => {
+              result;
+              this.laboratoryList.forEach(element => {
+                if (laboratory.id == element.id) {
+                  element.status = false;
+                }
+              });
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+            complete: () => {
+              console.log('complete');
+              this.prevLaboratory = this.laboratoryList.filter(x => x.status);
+            }
+          });
+    //     }
+    //   });
+    // }
   }
   batchdeleteLaboratory() {
     if (this.selectedLaboratory.length > 0) {

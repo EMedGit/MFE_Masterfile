@@ -4,12 +4,12 @@
     <div class="grid">
         <div class="col-12 md:col-4 lg:col-2">
             <div>
-                <div class="flex-initial flex align-items-center justify-content-center bg-cyan-400 font-bold text-white m-2 px-5 py-3 border-round">
-                    <label>MASTERFILE</label>
+                <div class="flex-initial flex align-items-center justify-content-center font-bold text-black m-2 px-5 py-3 border-round">
+                    <label style="font-size: 185%">MASTERFILE</label>
                 </div>
                 
                 <p-listbox [options]="masterfiles" [(ngModel)]="selectedMasterfile" [metaKeySelection]="false" (click)="selectedMastefiles(selectedMasterfile)"
-                        [filter]="true" optionLabel="name" [listStyle]="{'max-height':'750px'}" [style]="{'width':'20rem'}">
+                        [filter]="true" optionLabel="name" [listStyle]="{'max-height':'750px'}" [style]="{'width':'20rem'}" style="height: 800px;">
                 <ng-template let-masterfile pTemplate="item">
                 <div class="masterfile-item">
                     <div>

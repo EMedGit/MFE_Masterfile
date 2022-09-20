@@ -133,6 +133,7 @@ export class PopupBarangayComponent implements OnInit {
       value.municipalityName = this.municipality.find(t => t.municipalityCode == value.municipalityCode)?.municipalityName ?? null;
       this.address.next(Object.assign(value));
     });
+    console.log(this.barangayForm.get('provinceCode'),' test')
     this.barangayForm.get('provinceCode')?.valueChanges.subscribe(provinceCode => {
       if (provinceCode == null) {
         this.barangayForm.patchValue({

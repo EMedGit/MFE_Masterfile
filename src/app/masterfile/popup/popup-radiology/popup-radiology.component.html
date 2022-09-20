@@ -85,15 +85,29 @@
                 </span>
             </div>  
             <div class="col-4 p-fluid">
-                <span class="p-float-label">
+                <!-- <span class="p-float-label">
                     <input type="text" id="departmentCode" formControlName="departmentCode" pInputText style="font-weight: bold;">
                     <label for="departmentCode">Department Code</label>
+                </span> -->
+                <span class="p-float-label">
+                    <p-dropdown inputId="rcbAncillaryDepartment" [options]="ancillarydepartment" formControlName="ancillaryDepartmentId"
+                        [showClear]="true" [autoDisplayFirst]="false" styleClass="dropdown-custom"
+                        optionLabel="description" optionValue="id">
+                    </p-dropdown>
+                    <label>Ancillary Department <span style="color: red; font-weight: 1000">*</span></label>
                 </span>
             </div>
             <div class="col-4 p-fluid">
-                <span class="p-float-label">
+                <!-- <span class="p-float-label">
                     <input type="text" id="specializationCode" formControlName="specializationCode" pInputText style="font-weight: bold;">
                     <label for="specializationCode">Specialization Code</label>
+                </span> -->
+                <span class="p-float-label">
+                    <p-dropdown inputId="rcbAncillarySection" [options]="ancillarysection" formControlName="ancillarySectionId"
+                        [showClear]="true" [autoDisplayFirst]="false" styleClass="dropdown-custom"
+                        optionLabel="description" optionValue="id">
+                    </p-dropdown>
+                    <label>Ancillary Section <span style="color: red; font-weight: 1000">*</span></label>
                 </span>
             </div>
         </div>      

@@ -52,7 +52,7 @@ export class RadiologyComponent implements OnInit {
   addRadiologyPopup() {
     this.ref = this.dialogService.open(PopupRadiologyComponent, {
       width: '1200px',
-      height: '430px',
+      height: '830px',
       showHeader: true,
       closable: true,
       data: {
@@ -69,7 +69,7 @@ export class RadiologyComponent implements OnInit {
   updateRadiologyPopUp(radiology : Radiology) {
     this.ref = this.dialogService.open(PopupRadiologyComponent, {
       width: '1200px',
-      height: '430px',
+      height: '830px',
       showHeader: true,
       closable: true,
       data: {
@@ -91,6 +91,8 @@ export class RadiologyComponent implements OnInit {
             val.diagnosisRemarks = data.diagnosisRemarks;
             val.departmentCode = data.departmentCode;
             val.specializationCode = data.specializationCode;
+            val.ancillaryDepartmentId = data.ancillaryDepartmentId;
+            val.ancillarySectionId = data.ancillarySectionId;
             val.status = data.status;
             val.modifiedBy = data.modifiedBy;
             val.modifiedDateTime = data.modifiedDateTime;

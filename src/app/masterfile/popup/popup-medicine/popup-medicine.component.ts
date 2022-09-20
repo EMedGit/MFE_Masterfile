@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Brand } from 'src/app/models/brand.model';
 import { Medicine } from 'src/app/models/medicine.model';
+import { MedicineBrand } from 'src/app/models/medicinebrand.model';
 import { Medicinecategory } from 'src/app/models/medicinecategory.model';
+import { BrandService } from 'src/app/services/brand.service';
 import { MedicinecategoryService } from 'src/app/services/medicinecategory.service';
 import { MedicineService } from 'src/app/services/medicines.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -18,6 +21,15 @@ export class PopupMedicineComponent implements OnInit {
   formBuilder: FormBuilder;
 
   medicine: Medicine;
+  brand: Brand;
+  brandList: Brand[];
+  medicineBrand: MedicineBrand;
+  medicineBrandList: MedicineBrand[];
+  medicineId: number;
+  brandId: number;
+  brandName: string;
+  medicineNewData: Medicine;
+  medicineBrandId: number;
 
   isActiveStatus = false;
   isForSaving = false;
@@ -27,7 +39,7 @@ export class PopupMedicineComponent implements OnInit {
   selectedMC: Medicinecategory;
 
   constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig,
-    private medicineService: MedicineService, private mcService: MedicinecategoryService, private toastService: ToastService) { }
+    private medicineService: MedicineService, private mcService: MedicinecategoryService, private brandService: BrandService, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isActiveStatus = this.config.data.medicine.status;
@@ -36,9 +48,25 @@ export class PopupMedicineComponent implements OnInit {
 
     this.buildFormGroup();
     this.medicineForm.patchValue(this.config.data.medicine);
+    this.loadData();
+    this.onValueChanges();
   }
 
-
+  loadData(): void {
+    this.brandService.getBrandList().subscribe(retVal => { this.brandList = retVal });
+    this.medicineService.getMedicineBrandList().subscribe(retVal => { this.medicineBrandList= retVal })
+  }
+  onValueChanges(): void {
+    this.medicineForm.valueChanges.subscribe(value => {
+      if (this.brandList != undefined) {
+        value.BrandData = this.brandList.find(t => t.id == value.BrandData)?.description ?? null;
+        this.brandName = value.BrandData;
+      }
+    });
+  }
+  selectedItem(event: any) {
+    this.brand = event.value;
+  }
   buildFormGroup(): void {
     this.formBuilder = new FormBuilder();
     this.medicineForm = this.formBuilder.group(
@@ -49,7 +77,8 @@ export class PopupMedicineComponent implements OnInit {
         cost: null,
         price: null,
         activeInActiveStatus: false,
-        categoryId: null
+        categoryId: null,
+        BrandData: null
       });
 
     this.mcService.getMedicineCategory().subscribe({
@@ -83,10 +112,42 @@ export class PopupMedicineComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Code already Exist!');
         } else {
-          this.medicineService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
+          this.medicineService.insert(this.getData()).subscribe((retval) => {
+            this.getNewData();
+            this.ClosePopUp(retval);
+          });
         }
       });
     }
+  }
+  getMedicineBrand(medicineID: number): MedicineBrand {
+    this.medicineBrand = new MedicineBrand();
+    if (this.brand == undefined) {
+      let x = this.brandList.find(x => x.id == this.brand.id);
+      this.medicineBrand.brandId = x?.id;
+      this.medicineBrand.brandName = x?.description;
+      this.medicineBrand.medicineId = medicineID ?? 0;
+    } else {
+      this.medicineBrand.brandId = this.brand.id;
+      this.medicineBrand.brandName = this.brand.description;
+      this.medicineBrand.medicineId = medicineID ?? 0;
+    }
+    return this.medicineBrand;
+  }
+  getNewData() {
+    this.medicineService.GetMedicinesByCode(this.medicineForm.controls['code'].value).subscribe(retVal => {
+      let objs = retVal.find(x => x.code == this.medicineForm.controls['code'].value)
+      this.medicineId = objs?.id ?? 0;
+      if(this.isForSaving){
+        this.medicineService.postMedicineBrand(this.getMedicineBrand(this.medicineId)).subscribe()
+      } else if (this.isForUpdating) {
+        this.medicineService.getMedicineBrandById(this.medicineId).subscribe(retVal => {
+          let obj = retVal.find(x => x.medicineId == this.medicineId)
+          this.medicineBrandId = obj?.id ?? 0;
+          this.medicineService.putMedicineBrand(this.medicineBrandId, this.getMedicineBrand(this.medicineId)).subscribe();
+        });
+      }
+    });
   }
 
   getData(): Medicine {
@@ -96,7 +157,7 @@ export class PopupMedicineComponent implements OnInit {
     this.medicine.genericName = this.medicineForm.controls['genericName'].value;
     this.medicine.cost = this.medicineForm.controls['cost'].value;
     this.medicine.price = this.medicineForm.controls['price'].value;
-    this.medicine.categoryId = this.selectedMC.id;
+    this.medicine.categoryId = this.medicineForm.controls['categoryId'].value;
     this.medicine.activeInActiveStatus = this.medicineForm.controls['activeInActiveStatus'].value;
     this.medicine.createdBy = '';
     this.medicine.createdDateTime = new Date();
@@ -110,7 +171,7 @@ export class PopupMedicineComponent implements OnInit {
     data.genericName = this.medicineForm.controls['genericName'].value;
     data.cost = this.medicineForm.controls['cost'].value;
     data.price = this.medicineForm.controls['price'].value;
-    data.categoryId = this.selectedMC.id;
+    data.categoryId = this.medicineForm.controls['categoryId'].value;
     data.activeInActiveStatus = this.medicineForm.controls['activeInActiveStatus'].value;
     data.modifiedBy = '';
     data.modifiedDateTime = new Date();
@@ -118,6 +179,7 @@ export class PopupMedicineComponent implements OnInit {
       this.medicineService.update(data.id, data).subscribe({
         next: (result: Medicine) => {
           data = result;
+          this.getNewData();
           this.ClosePopUp(result);
         },
         error: (err) => {
@@ -128,9 +190,5 @@ export class PopupMedicineComponent implements OnInit {
         }
       });
     }
-
   }
-
-
-
 }

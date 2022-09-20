@@ -2,7 +2,11 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AncillaryDepartment } from 'src/app/models/ancillarydepartment.model';
+import { AncillarySection } from 'src/app/models/ancillarysection.model';
 import { Laboratory } from 'src/app/models/laboratory.model';
+import { AncillarydepartmentService } from 'src/app/services/ancillarydepartment.service';
+import { AncillarysectionService } from 'src/app/services/ancillarysection.service';
 import { LaboratoryService } from 'src/app/services/laboratory.service';
 import { ToastService } from 'src/app/services/toast.service';
 
@@ -18,6 +22,10 @@ export class PopupLaboratoryComponent implements OnInit {
   formBuilder: FormBuilder;
   arrLaboratory: Laboratory[] = [];
   laboratoryList: Laboratory[];
+  ancillarydepartment: AncillaryDepartment[];
+  ancillarysection: AncillarySection[];
+  specializationCode: string;
+  departmentCode: string;
   id: number = 0;
 
   isActiveStatus = false;
@@ -25,6 +33,8 @@ export class PopupLaboratoryComponent implements OnInit {
   isForUpdating = false;
   constructor(private ref: DynamicDialogRef,
     private config: DynamicDialogConfig,
+    private ancillarydepartmentService: AncillarydepartmentService,
+    private ancillarysectionService: AncillarysectionService,
     private laboratoryService: LaboratoryService,
     private datePipe: DatePipe,
     private toastService: ToastService) { }
@@ -35,6 +45,40 @@ export class PopupLaboratoryComponent implements OnInit {
 
     this.buildFormGroup();
     this.laboratoryForm.patchValue(this.config.data.laboratory);
+    this.loadData();
+    this.onValueChanges();
+  }
+
+  loadData(): void {
+    this.ancillarydepartmentService.getAncillaryDepartment().subscribe(retVal => { this.ancillarydepartment = retVal; });
+    this.ancillarysectionService.getAncillarySection().subscribe(retVal => { this.ancillarysection = retVal; });
+  }
+
+  onValueChanges(): void {
+    this.laboratoryForm.valueChanges.subscribe(value => {
+      value.departmentCode = this.ancillarydepartment.find(t => t.id == value.ancillaryDepartmentId)?.code ?? null;
+      value.specializationCode = this.ancillarysection.find(t => t.ancillaryDepartmentId == value.ancillaryDepartmentId)?.code ?? null;
+      this.departmentCode = value.departmentCode;
+      this.specializationCode = value.specializationCode;
+      this.setValueChanges();
+    });
+  }
+  setValueChanges(): void {
+
+    this.laboratoryForm.get('ancillaryDepartmentId')?.valueChanges.subscribe(ancillaryDeptID => {
+      if (ancillaryDeptID == null) {
+        this.laboratoryForm.patchValue({
+          ancillaryDepartmentId: null,
+          ancillarySpecializationId: null
+        });
+        this.ancillarydepartment = [];
+        this.ancillarysection = [];
+        return;
+      }
+      this.ancillarysectionService.GetAncillarySectionByAncillaryDepartmentId(ancillaryDeptID).subscribe(retVal => {
+        this.ancillarysection = retVal;
+      })
+    });
   }
   buildFormGroup(): void {
     this.formBuilder = new FormBuilder();
@@ -47,8 +91,8 @@ export class PopupLaboratoryComponent implements OnInit {
         lowestPrice: [''],
         priceReferenceIndex: [''],
         diagnosisRemarks: [''],
-        departmentCode: [''],
-        specializationCode: ['']
+        ancillaryDepartmentId: [''],
+        ancillarySpecializationId: ['']
       });
   }
   ClosePopUp(data: Laboratory) {
@@ -67,9 +111,12 @@ export class PopupLaboratoryComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Code already Exist!');
         } else {
-          this.laboratoryService.postLaboratory(this.getValue()).subscribe(result => {
-
-            this.ClosePopUp(result);
+          this.laboratoryService.postLaboratory(this.getValue()).subscribe({
+            next: result => {
+              this.ClosePopUp(result);
+            }, complete: () => {
+              this.toastService.showSuccess('Successfully Updated.');
+            }
           });
         }
       });
@@ -85,8 +132,10 @@ export class PopupLaboratoryComponent implements OnInit {
     obj.lowestPrice = this.laboratoryForm.controls['lowestPrice'].value;
     obj.priceReferenceIndex = this.laboratoryForm.controls['priceReferenceIndex'].value;
     obj.diagnosisRemarks = this.laboratoryForm.controls['diagnosisRemarks'].value;
-    obj.departmentCode = this.laboratoryForm.controls['departmentCode'].value;
-    obj.specializationCode = this.laboratoryForm.controls['specializationCode'].value;
+    obj.departmentCode = this.departmentCode ?? "";
+    obj.specializationCode = this.specializationCode ?? "";
+    obj.ancillaryDepartmentId = this.laboratoryForm.controls['ancillaryDepartmentId'].value;
+    obj.ancillarySpecializationId = this.laboratoryForm.controls['ancillarySpecializationId'].value;
     obj.modifiedBy = 'Fox';
     obj.modifiedDateTime = this.datePipe.transform(
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
@@ -117,8 +166,10 @@ export class PopupLaboratoryComponent implements OnInit {
     this.laboratory.lowestPrice = this.laboratoryForm.controls['lowestPrice'].value;
     this.laboratory.priceReferenceIndex = this.laboratoryForm.controls['priceReferenceIndex'].value;
     this.laboratory.diagnosisRemarks = this.laboratoryForm.controls['diagnosisRemarks'].value;
-    this.laboratory.departmentCode = this.laboratoryForm.controls['departmentCode'].value;
-    this.laboratory.specializationCode = this.laboratoryForm.controls['specializationCode'].value;
+    this.laboratory.departmentCode = this.departmentCode ?? "";
+    this.laboratory.specializationCode = this.specializationCode ?? "";
+    this.laboratory.ancillaryDepartmentId = this.laboratoryForm.controls['ancillaryDepartmentId'].value;
+    this.laboratory.ancillarySpecializationId = this.laboratoryForm.controls['ancillarySpecializationId'].value;
     return this.laboratory;
   }
 }

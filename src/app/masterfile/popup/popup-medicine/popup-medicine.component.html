@@ -16,8 +16,18 @@
         <div class="grid mb-1">
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
-                    <input type="text" id="code" formControlName="code" pInputText style="font-weight: bold;" >
+                    <input type="text" id="code" formControlName="code" pInputText  >
                     <label for="code">Code</label>
+                </span>
+            </div>
+            <div class="col-4 p-fluid">
+                <span class="p-float-label">
+                    <p-dropdown inputId="rcbBrand" [options]="brandList" formControlName="BrandData"
+                    [showClear]="true" [autoDisplayFirst]="false" styleClass="dropdown-custom"
+                    (onChange)="selectedItem($event)"
+                    optionLabel="description">
+                </p-dropdown>
+                <label>Brand <span style="color: red; font-weight: 1000">*</span></label>
                 </span>
             </div>
             <div class="col-4 p-fluid" style="align-self: center;" *ngIf="isForUpdating">
@@ -28,7 +38,7 @@
         <div class="grid mb-1">
             <div class="col-12 p-fluid">
                 <span class="p-float-label">
-                    <input type="text" id="description" formControlName="description" pInputText style="font-weight: bold;">
+                    <input type="text" id="description" formControlName="description" pInputText >
                     <label for="description">Description</label>
                 </span>
             </div>
@@ -36,7 +46,7 @@
         <div class="grid mb-1">
             <div class="col-12 p-fluid">
                 <span class="p-float-label">
-                    <input type="text" id="genericName" formControlName="genericName" pInputText style="font-weight: bold;">
+                    <input type="text" id="genericName" formControlName="genericName" pInputText >
                     <label for="genericName">Generic Name</label>
                 </span>
             </div>
@@ -44,22 +54,28 @@
         <div class="grid mb-1">
             <div class="col-3 p-fluid">
                 <span class="p-float-label">
-                    <p-inputNumber inputid="cost" formControlName="cost" pInputText style="font-weight: bold;"
+                    <!-- <p-inputNumber inputid="cost" formControlName="cost" pInputText 
                     mode="currency" currency="PHP" locale="en-US" > </p-inputNumber>
-                    <label for="cost" style="align-self: center;"> Cost</label>
+                    <label for="cost" style="align-self: center;"> Cost</label> -->
+                    <p-inputNumber inputId="cost" formControlName="cost" mode="currency" currency="PHP" locale="en-US">
+                    </p-inputNumber>
+                    <label for="cost">Cost</label>
                 </span>
             </div>  
             <div class="col-3 p-fluid" >
                 <span class="p-float-label">
-                    <p-inputNumber inputid="price" formControlName="price" pInputText style="font-weight: bold;"
+                    <!-- <p-inputNumber inputid="price" formControlName="price" pInputText 
                     mode="currency" currency="PHP" locale="en-US"> </p-inputNumber>
-                    <label for="price" style="align-self: center;"> Price</label>
+                    <label for="price" style="align-self: center;"> Price</label> -->
+                    <p-inputNumber inputId="price" formControlName="price" mode="currency" currency="PHP" locale="en-US">
+                    </p-inputNumber>
+                    <label for="price">Price</label>
                 </span>
             </div>  
             <div class="col-3 p-fluid">
                 <span class="p-float-label">
                     <p-dropdown id="categoryId" formControlName="categoryId" 
-                    [options]="mcList" optionLabel="description" placeholder=" " [(ngModel)]="selectedMC"></p-dropdown>
+                    [options]="mcList" optionLabel="description" placeholder="" optionValue="id"></p-dropdown>
                     <label for="categoryId">Category</label>
                 </span>
             </div>

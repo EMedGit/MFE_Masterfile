@@ -1,12 +1,12 @@
 <div class="card">
-    <div class="flex-initial flex align-items-center justify-content-center bg-blue-500 font-bold text-white m-2 px-5 py-3 border-round">
-        <label style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: 900;">BARANGAY</label>
+    <div class="col-12" style="text-align:center">
+        <h2> REGION</h2>
     </div>
 
     <p-toolbar styleClass="p-mb-4">
         <ng-template pTemplate="left" class="flex">
-            <button pButton pRipple label="NEW" icon="pi pi-plus-circle" class="p-button-success mr-2" (click)="addRegionPopup()"></button>
-            <button pButton pRipple label="REMOVE" icon="pi pi-trash" class="p-button-danger" (click)="batchdeleteRegion()" [disabled]="!selectedRegion || !selectedRegion.length" ></button>
+            <!-- <button pButton pRipple label="NEW" icon="pi pi-plus-circle" class="p-button-success mr-2" (click)="addRegionPopup()"></button>
+            <button pButton pRipple label="REMOVE" icon="pi pi-trash" class="p-button-danger" (click)="batchdeleteRegion()" [disabled]="!selectedRegion || !selectedRegion.length" ></button> -->
         </ng-template>
 
         <ng-template pTemplate="right">
