@@ -23,26 +23,19 @@
             <div class="col-4 p-fluid" style="align-self: center;" *ngIf="isForUpdating">
                 <i class="pi pi-check-circle" style="font-size: 2rem" pTooltip="Active Record" *ngIf="isActiveStatus"></i>
                 <i class="pi pi-times-circle" style="font-size: 2rem" pTooltip="Inactive Record"  *ngIf="!isActiveStatus"></i>
-            </div>
-        </div>
-        <div class="grid mb-1">            
-            <div class="col-4 p-fluid">
-                <span class="p-float-label">
-                    <p-dropdown id="healthFacilityId" formControlName="healthFacilityId" 
-                    [options]="hfList" optionLabel="name" [(ngModel)]="selectedHF" placeholder=" " (onChange)="changeHF()"></p-dropdown>
-                    <label for="healthFacilityId">Health Facility</label>
-                </span>
-            </div>
-            <div class="col-4 p-fluid">
-                <span class="p-float-label">
-                    <p-dropdown id="departmentId" formControlName="departmentId" 
-                    [options]="ddDepartmentList" optionLabel="description" [(ngModel)]="selectedDepartment" placeholder=" "></p-dropdown>
-                    <label for="departmentId">Department</label>
-                </span>
-            </div>
+            </div>        
         </div>
         <div class="grid mb-1">
-            <div class="col-12 p-fluid">
+            <div class="col-4 p-fluid">
+                <span class="p-float-label">
+                    <p-dropdown inputId="rcbHealthFacility" [options]="departmentList"
+                    formControlName="departmentID" [showClear]="true" [autoDisplayFirst]="false"
+                    styleClass="dropdown-custom" optionLabel="description" optionValue="id" >
+                    </p-dropdown>
+                    <label for="departmentID">Department </label>
+                </span>
+            </div>
+            <div class="col-8 p-fluid">
                 <span class="p-float-label">
                     <input type="text" id="description" formControlName="description" pInputText style="font-weight: bold;">
                     <label for="description">Description</label>

@@ -72,7 +72,7 @@ export class PopupZscoreComponent implements OnInit {
     this.zScore = new ZScore();
     this.zScore.resultCode = this.zScoreForm.controls['resultCode'].value;
     this.zScore.zScoreType = this.zScoreForm.controls['zScoreType'].value;
-    this.zScore.gender = this.zScoreForm.controls['gender'].value.code;
+    this.zScore.gender = this.zScoreForm.controls['gender'].value;
     this.zScore.length = this.zScoreForm.controls['length'].value;
     this.zScore.weight = this.zScoreForm.controls['weight'].value;
     this.zScore.months = this.zScoreForm.controls['months'].value;
@@ -85,7 +85,7 @@ export class PopupZscoreComponent implements OnInit {
     let data = this.config.data.zScore;
     data.resultCode = this.zScoreForm.controls['resultCode'].value;
     data.zScoreType = this.zScoreForm.controls['zScoreType'].value;
-    data.gender = this.zScoreForm.controls['gender'].value.code;
+    data.gender = this.zScoreForm.controls['gender'].value;
     data.length = this.zScoreForm.controls['length'].value;
     data.weight = this.zScoreForm.controls['weight'].value;
     data.months = this.zScoreForm.controls['months'].value;

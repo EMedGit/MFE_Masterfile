@@ -96,10 +96,11 @@
             </div>
             <div class="col-3 p-fluid">
                 <span class="p-float-label">
-                    <p-dropdown inputId="procedureType" formControlName="procedureType" [options]="specialProcedures" 
-                    [(ngModel)]="selectedSpecialProcedure" optionLabel="name" placeholder=" "
-	                [showClear]="true"></p-dropdown>
-                    <label for="procedureType">Procedure Type</label>
+                    <p-dropdown inputId="rcbProcedureType" [options]="specialProcedures"
+                                formControlName="procedureType" [showClear]="true" [autoDisplayFirst]="false"
+                                styleClass="dropdown-custom" optionLabel="name" optionValue="name">
+                            </p-dropdown>
+                            <label for="procedureType">PROCEDURE TYPE </label>
                 </span>
                 
             </div>

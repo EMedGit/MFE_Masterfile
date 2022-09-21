@@ -20,18 +20,11 @@ export class PopupSectionComponent implements OnInit {
   formBuilder: FormBuilder;
 
   section: Section;
+  departmentList: Department[];
 
   isActiveStatus = false;
   isForSaving = false;
   isForUpdating = false;
-
-  hfList: HealthFacility[];
-  ddHFList: HealthFacility[];
-  selectedHF: HealthFacility;
-
-  departmentList: Department[];
-  ddDepartmentList: Department[];
-  selectedDepartment: Department;
 
   constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private sectionService: SectionService,
     private departmentService: DepartmentService, private hfService: HealthFacilityService, private toastService: ToastService) { }
@@ -43,6 +36,10 @@ export class PopupSectionComponent implements OnInit {
 
     this.buildFormGroup();
     this.sectionForm.patchValue(this.config.data.section)
+    this.loadData();
+  }
+  loadData(): void {
+    this.departmentService.getDepartments('', '', 0, 0, 100).subscribe(retVal => { this.departmentList = retVal });
   }
 
   buildFormGroup(): void {
@@ -51,38 +48,8 @@ export class PopupSectionComponent implements OnInit {
       {
         code: [''],
         description: [''],
-        departmentId: [''],
-        healthFacilityId: [''],
+        departmentID: ['']
       });
-
-    this.hfService.getHealthFacility().subscribe({
-      next: (result: HealthFacility[]) => {
-        this.hfList = result;
-        this.ddHFList = this.hfList.filter(x => x.status);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('dropdown hf complete');
-        console.log(this.hfList);
-      }
-    });
-
-    this.departmentService.getDepartments('', '', 0, 0, 100).subscribe({
-      next: (result: Department[]) => {
-        this.departmentList = result;
-        this.departmentList = this.departmentList.filter(x => x.status);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('dropdown departmentlist complete');
-        console.log(this.departmentList);
-      }
-    });
-
   }
 
   ClosePopUp(data: Section) {
@@ -110,12 +77,10 @@ export class PopupSectionComponent implements OnInit {
   }
 
   updateData() {
-    let dp = Object.assign(this.selectedDepartment, this.sectionForm.controls['departmentId'].value);
-
     let data = this.config.data.section;
     data.code = this.sectionForm.controls['code'].value;
     data.description = this.sectionForm.controls['description'].value;
-    data.departmentID = dp.id;
+    data.departmentID = this.sectionForm.controls['departmentID'].value;
     data.modifiedBy = '';
     data.modifiedDateTime = new Date();
     if (this.isForUpdating) {
@@ -136,13 +101,10 @@ export class PopupSectionComponent implements OnInit {
   }
 
   getData(): Section {
-    let dp = Object.assign(this.selectedDepartment, this.sectionForm.controls['departmentId'].value);
-
     this.section = new Section();
     this.section.code = this.sectionForm.controls['code'].value;
     this.section.description = this.sectionForm.controls['description'].value;
-    this.section.departmentID = dp.id;
-
+    this.section.departmentID = this.sectionForm.controls['departmentID'].value;
     this.section.createdBy = '';
     this.section.createdDateTime = new Date();
 
@@ -150,10 +112,5 @@ export class PopupSectionComponent implements OnInit {
 
   }
 
-  changeHF() {
-    console.log(this.selectedHF.id);
-    this.ddDepartmentList = this.departmentList.filter(x => x.status && x.healthFacilityId == this.selectedHF.id);
-    console.log(this.ddDepartmentList);
-  }
 
 }

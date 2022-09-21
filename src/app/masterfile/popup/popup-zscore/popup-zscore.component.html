@@ -35,8 +35,11 @@
             
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
-                    <p-dropdown id="gender" optionLabel="description" placeholder=" " [options]="genderList" formControlName="gender"></p-dropdown>
-                    <label for="gender">Gender</label>
+                    <p-dropdown inputId="rcbGender" [options]="genderList"
+                                formControlName="gender" [showClear]="true" [autoDisplayFirst]="false"
+                                styleClass="dropdown-custom" optionLabel="description" optionValue="code">
+                            </p-dropdown>
+                            <label for="gender">GENDER </label>
                 </span>
             </div>
         </div>

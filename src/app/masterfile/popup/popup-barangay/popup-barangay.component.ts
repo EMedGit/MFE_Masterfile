@@ -65,9 +65,6 @@ export class PopupBarangayComponent implements OnInit {
     this.addressService.GetProvinceByCode('').subscribe(retVal => {
       this.province = retVal;
     });
-    this.barangayForm.patchValue({
-      zipcode : data.zipCode ?? '0000' 
-    });
   }
   emit(): void {
     this.outputAddressForm.emit(this.barangayForm);
@@ -133,7 +130,6 @@ export class PopupBarangayComponent implements OnInit {
       value.municipalityName = this.municipality.find(t => t.municipalityCode == value.municipalityCode)?.municipalityName ?? null;
       this.address.next(Object.assign(value));
     });
-    console.log(this.barangayForm.get('provinceCode'),' test')
     this.barangayForm.get('provinceCode')?.valueChanges.subscribe(provinceCode => {
       if (provinceCode == null) {
         this.barangayForm.patchValue({

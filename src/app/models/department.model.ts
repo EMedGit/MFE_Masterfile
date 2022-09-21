@@ -3,6 +3,7 @@ export class Department {
     code : string;
     description : string;
     healthFacilityId: number
+    healthFacilityCode: string;
     status : boolean;
     createdBy:string;
     createdDateTime: Date;

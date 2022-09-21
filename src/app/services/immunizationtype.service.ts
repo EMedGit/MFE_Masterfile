@@ -19,19 +19,6 @@ export class ImmunizationTypeService {
 
     public getImmunizationType() : Observable<ImmunizationType[]> 
     {
-        // let params = new HttpParams();
-        // params = params.append('Code', code);
-        // params = params.append('Description', description);
-        // params = params.append('Page', page);
-        // params = params.append('ItemsPerPage', itemsPerPage);
-
-        // return this.http
-        // .get<ImmunizationType[]>(`${environment.masterfileAPI}/immunizationType`, {params})
-        // .pipe(
-        //     map((result) => {
-        //     return result;
-        //     })
-        // );
         const params = new HttpParams()
         .set('Page', 0)
         .set('ItemsPerPage', 9999)

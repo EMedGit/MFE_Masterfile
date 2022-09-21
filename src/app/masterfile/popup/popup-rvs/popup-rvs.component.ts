@@ -22,7 +22,6 @@ export class PopupRvsComponent implements OnInit {
   isForUpdating = false;
 
   specialProcedures: SpecialProcedure[];
-  selectedSpecialProcedure: SpecialProcedure;
 
   constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private rvsService: RVSService, private toastService: ToastService) {
 
@@ -94,11 +93,6 @@ export class PopupRvsComponent implements OnInit {
   }
 
   updateData() {
-    let specialProcedure = new String();
-    if (this.selectedSpecialProcedure != undefined) {
-      specialProcedure = this.selectedSpecialProcedure.name || '';
-    }
-
     let data = this.config.data.rvs;
     data.category = this.rvsForm.controls['category'].value;
     data.code = this.rvsForm.controls['code'].value;
@@ -110,7 +104,7 @@ export class PopupRvsComponent implements OnInit {
     data.hospitalFee2 = this.rvsForm.controls['hospitalFee2'].value;
     data.professionalFee2 = this.rvsForm.controls['professionalFee2'].value;
     data.specialProcedure = this.rvsForm.controls['specialProcedure'].value;
-    data.procedureType = specialProcedure;
+    data.procedureType = this.rvsForm.controls['procedureType'].value;
     data.allowSingleConfinement = this.rvsForm.controls['allowSingleConfinement'].value;
     data.noOfDays = this.rvsForm.controls['noOfDays'].value;
     data.modifiedBy = '';
@@ -145,7 +139,7 @@ export class PopupRvsComponent implements OnInit {
     this.rvs.hospitalFee2 = this.rvsForm.controls['hospitalFee2'].value;
     this.rvs.professionalFee2 = this.rvsForm.controls['professionalFee2'].value;
     this.rvs.specialProcedure = this.rvsForm.controls['specialProcedure'].value;
-    this.rvs.procedureType = this.selectedSpecialProcedure.name || '';
+    this.rvs.procedureType = this.rvsForm.controls['procedureType'].value;
     this.rvs.allowSingleConfinement = this.rvsForm.controls['allowSingleConfinement'].value;
     this.rvs.noOfDays = this.rvsForm.controls['noOfDays'].value;
     this.rvs.createdBy = '';

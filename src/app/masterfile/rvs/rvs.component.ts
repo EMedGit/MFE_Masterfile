@@ -35,7 +35,7 @@ export class RvsComponent implements OnInit {
     this.newRVSList = filter;
   }
   getData() {
-    this.rvsService.get('','',0,100).subscribe({
+    this.rvsService.getRVS().subscribe({
       next: (result: RVS[]) => {
         this.rvsList = result;
         this.newRVSList = this.rvsList.filter(x => x.status);
@@ -95,7 +95,7 @@ export class RvsComponent implements OnInit {
     })
   }
 
-  remove(rvs : RVS) {
+  removeRVS(rvs : RVS) {
     this.rvsService.delete(rvs.id).subscribe({
       next : (result : boolean) => {
         result;
@@ -115,6 +115,4 @@ export class RvsComponent implements OnInit {
       }
     });
   }
-
-
 }

@@ -33,7 +33,6 @@ export class ImmunizationComponent implements OnInit {
         console.log(err);
       },
       complete: () => {
-        console.log('getdata complete');
       }
     })
   }
@@ -41,19 +40,17 @@ export class ImmunizationComponent implements OnInit {
   filter() {
     console.log(this.selectedImmunizationList)
     let filter: any[] = [];
-    this.newImmunizationList.forEach(val => {
+    this.immunizationList.forEach(val => {
       console.log(val)
       if (val.description.toUpperCase().includes(this.searchkey.toUpperCase()) && val.status) {
         filter.push(val);
       }
-
     });
-    console.log(filter)
     this.newImmunizationList = filter;
   }
 
   addImmunizationPopup(){
-      this.dialogService.open(PopupImmunizationComponent, {
+    this.ref = this.dialogService.open(PopupImmunizationComponent, {
       width: '1000px',
       height: '500px',
       showHeader: true,
@@ -74,7 +71,7 @@ export class ImmunizationComponent implements OnInit {
   }
 
   updateImmunizationPopUp(immunization : Immunization){
-    this.dialogService.open(PopupImmunizationComponent, {
+    this.ref = this.dialogService.open(PopupImmunizationComponent, {
       width: '1000px',
       height: '500px',
       showHeader: true,

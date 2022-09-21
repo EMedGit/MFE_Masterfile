@@ -14,31 +14,15 @@ const httpOptions = {
 export class RVSService {
     RVS: RVS
     constructor(private http: HttpClient) { }
-    
-    getRVS() {
-        return this.http.get<any>('assets/rvs.json')
-        .toPromise()
-        .then(res => <RVS[]>res.data)
-        .then(data => { return data; });
-    }
-    
-    public get(code: string, description: string, page: number, itemsPerPage: number) 
-    : Observable<RVS[]> 
+      
+    getRVS() : Observable<RVS[]>
     {
-        let params = new HttpParams();
-        params = params.append('Code', code);
-        params = params.append('Description', description);
-        params = params.append('Page', page);
-        params = params.append('ItemsPerPage', itemsPerPage);
-
-        return this.http
-        .get<RVS[]>(`${environment.masterfileAPI}/rvs`, {params})
-        .pipe(
-            map((result) => {
-            return result;
-            })
-        );
+        const params = new HttpParams()
+        .set('Page', 0)
+        .set('ItemsPerPage', 9999)
+        return this.http.get<RVS[]>(`${environment.masterfileAPI}/rvs`, { params })
     }
+
     GetRVSByCode(HF_CODE: string): Observable<RVS[]> {
         const params = new HttpParams()
             .set('Code', HF_CODE)

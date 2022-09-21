@@ -39,6 +39,7 @@
                 <th pSortableColumn="professionalFee">Professional Fee<p-sortIcon field="professionalFee"></p-sortIcon></th>
                 <!-- <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th> -->
                 <th></th>
+                <th></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rvs>
@@ -57,7 +58,7 @@
                 </td>
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" (click)="updateRVSPopUp(rvs)"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="removeRVS(rvs)"></button>
                 </td>
             </tr>
         </ng-template>

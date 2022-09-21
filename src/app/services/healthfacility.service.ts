@@ -18,18 +18,6 @@ export class HealthFacilityService {
 
     public getHealthFacility() : Observable<HealthFacility[]> 
     {
-        // let params = new HttpParams();
-        // params = params.append('Code', code);
-        // params = params.append('Name', name);
-        // params = params.append('Page', 0);
-        // params = params.append('ItemsPerPage', 999999);
-        // return this.http
-        // .get<HealthFacility[]>(`${environment.masterfileAPI}/healthFacility`, {params})
-        // .pipe(
-        //     map((result) => {
-        //     return result;
-        //     })
-        // );
         const params = new HttpParams()
         .set('Page', 0)
         .set('ItemsPerPage', 9999)
@@ -41,6 +29,9 @@ export class HealthFacilityService {
         .set('Page', 0)
         .set('ItemsPerPage', 999);
       return this.http.get<HealthFacility[]>(`${environment.masterfileAPI}/healthfacility`, { params });
+    }
+    public getHealthFacilityById(id : number): Observable<HealthFacility> {
+        return this.http.get<HealthFacility>(`${environment.masterfileAPI}/healthFacility/${id}`);
     }
     insert(data: HealthFacility) : Observable<HealthFacility>  {
         const url = `${environment.masterfileAPI}/healthfacility`;

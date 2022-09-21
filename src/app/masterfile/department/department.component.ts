@@ -74,7 +74,7 @@ export class DepartmentComponent implements OnInit {
   }
 
   updateDepartmentPopup(department : Department) {
-    this.dialogService.open(PopupDepartmentComponent, {
+    this.ref = this.dialogService.open(PopupDepartmentComponent, {
       width: '1000px',
       height: '500px',
       showHeader: true,
@@ -90,6 +90,8 @@ export class DepartmentComponent implements OnInit {
           if (val.id == data.id) {
             val.code = data.code;
             val.description = data.description;
+            val.healthFacilityId = data.healthFacilityId;
+            val.healthFacilityCode = data.healthFacilityCode;
             val.status = data.status;
             val.createdBy = data.createdBy;
             val.createdDateTime = data.createdDateTime;

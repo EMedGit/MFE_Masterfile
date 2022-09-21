@@ -8,5 +8,5 @@ export class Section {
     modifiedBy: string;
     modifiedDateTime: Date | null;
 
-    departmentID? : number;
+    departmentID : number;
 }

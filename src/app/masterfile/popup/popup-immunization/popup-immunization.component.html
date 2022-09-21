@@ -38,9 +38,13 @@
         <div class="grid mb-1">
             <div class="col-12 p-fluid">
                 <span class="p-float-label">
-                    <p-dropdown id="immunizationTypeId" formControlName="immunizationTypeId" 
-                    [options]="itList" optionLabel="description" [(ngModel)]="selectedIT" placeholder=""></p-dropdown>
-                    <label for="immunizationTypeId">Immunization Type</label>
+                    <p-dropdown inputId="rcbImmunization" [options]="immunizationList"
+                        formControlName="immunizationTypeId" [showClear]="true" [autoDisplayFirst]="false"
+                        styleClass="dropdown-custom" optionLabel="description" optionValue="id"
+                        [ngClass]="{ 'ng-invalid ng-dirty': (this.immunizationForm.controls['immunizationTypeId'].errors)}">
+                    </p-dropdown>
+                    <label for="healthFacilityId">Health Facility <span
+                            style="color: red; font-weight: 1000">*</span></label>
                 </span>
             </div>
         </div>

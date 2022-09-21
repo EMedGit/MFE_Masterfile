@@ -93,6 +93,7 @@ export class PopupDiagnosticcenterComponent implements OnInit {
     this.diagnosticCenter = new DiagnosticCenter();
     this.diagnosticCenter.code = this.diagnosticCenterForm.controls['code'].value;
     this.diagnosticCenter.description = this.diagnosticCenterForm.controls['description'].value;
+    this.diagnosticCenter.createdBy = '';
     return this.diagnosticCenter;
   }
 }
