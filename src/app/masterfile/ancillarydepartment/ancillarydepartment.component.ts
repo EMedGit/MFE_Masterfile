@@ -29,7 +29,6 @@ export class AncillarydepartmentComponent implements OnInit {
       next: (result: AncillaryDepartment[]) => {
         this.ancillarydepartmentList = result;
         this.prevAncillaryDepartmentList = this.ancillarydepartmentList.filter(x => x.status);
-        console.log('yati', this.prevAncillaryDepartmentList)
       },
       error: (err) => {
         console.log(err);

@@ -59,8 +59,7 @@ export class SectionComponent implements OnInit {
     this.ref.onClose.subscribe((data: Section) => {
       if (data != undefined) {
         this.sections.push(data);
-        this.newSectionsList = this.sections.filter(x => x.status);
-  
+        this.newSectionsList = this.sections.filter(x => x.status);  
       }
     });
   }

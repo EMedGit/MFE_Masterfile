@@ -53,7 +53,6 @@ export class PopupSectionComponent implements OnInit {
   }
 
   ClosePopUp(data: Section) {
-    console.log(this.ref);
     this.ref.close(data);
   }
 
@@ -70,7 +69,7 @@ export class PopupSectionComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Code already Exist!');
         } else {
-          this.sectionService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
+          this.sectionService.insert(this.getData()).subscribe(retval => this.ClosePopUp(retval));
         }
       });
     }
