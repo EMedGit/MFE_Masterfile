@@ -19,6 +19,9 @@ export class LaboratoryComponent implements OnInit {
   prevLaboratory: Laboratory[];
   laboratoryList: Laboratory[];
   selectedLaboratory: Laboratory[];
+  responsemessage: string;
+  headermessage: string;
+  displayResponsive: boolean = false;
 
   constructor(private laboratoryService: LaboratoryService, private dialogService: DialogService, private confirmationService: ConfirmationService, private datePipe: DatePipe) { }
 
@@ -103,13 +106,13 @@ export class LaboratoryComponent implements OnInit {
     })
   }
   removeLaboratoryRecord(laboratory: Laboratory) {
-    // console.log(laboratory, 'remove')
-    // if (laboratory != undefined) {
-    //   this.confirmationService.confirm({
-    //     message: `Are you sure you want to delete the record?`,
-    //     header: 'Confirm',
-    //     icon: 'pi pi-exclamation-triangle',
-    //     accept: () => {
+    console.log(laboratory, 'remove')
+    if (laboratory != undefined) {
+      this.confirmationService.confirm({
+        message: `Are you sure you want to delete the record?`,
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
           this.laboratoryService.deleteLaboratory(laboratory.id).subscribe({
             next: (result: boolean) => {
               result;
@@ -127,9 +130,9 @@ export class LaboratoryComponent implements OnInit {
               this.prevLaboratory = this.laboratoryList.filter(x => x.status);
             }
           });
-    //     }
-    //   });
-    // }
+        }
+      });
+    }
   }
   batchdeleteLaboratory() {
     if (this.selectedLaboratory.length > 0) {
