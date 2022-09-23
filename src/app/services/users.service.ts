@@ -4,7 +4,7 @@ import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Users } from '../models/user.model';
 import { Claim, UserClaim } from '../models/userclaims.model';
-import { UserHealthFacility } from '../models/userhealthfacility.model';
+import { BulkUserHealthFacility, UserHealthFacility } from '../models/userhealthfacility.model';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
@@ -81,5 +81,13 @@ export class UsersService {
   registerUserHealthFacility(data : UserHealthFacility[]): Observable<UserHealthFacility[]> {
     const url = `${environment.authAPI}/identity/userhealthfacility`;
     return this.http.post<UserHealthFacility[]>(url, data, httpOptions);
+  }
+  bulkUpdateUserHealthFacility(data: BulkUserHealthFacility) : Observable<boolean> {
+    const url = `${environment.authAPI}/identity/updateBulkUserhealthfacility`;
+    return this.http.post<boolean>(url, data, httpOptions);
+  }
+  bulkDeleteUserHealthFacility(data: BulkUserHealthFacility) : Observable<boolean> {
+    const url = `${environment.authAPI}/identity/deleteBulkUserhealthfacility`;
+    return this.http.post<boolean>(url, data, httpOptions);
   }
 }

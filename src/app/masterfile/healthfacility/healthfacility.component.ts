@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { HealthFacility } from 'src/app/models/healthfacility.model';
+import { BulkUserHealthFacility } from 'src/app/models/userhealthfacility.model';
 import { HealthFacilityService } from 'src/app/services/healthfacility.service';
+import { ToastService } from 'src/app/services/toast.service';
+import { UsersService } from 'src/app/services/users.service';
 import { PopupHealthfacilityComponent } from '../popup/popup-healthfacility/popup-healthfacility.component';
 
 @Component({
@@ -17,8 +20,12 @@ export class HealthfacilityComponent implements OnInit {
   healthFacilities: HealthFacility[];
   selectedHealthFacilities: HealthFacility[];
   newHealthFacilityList: HealthFacility[];
+  bulkUserHealthFacility: BulkUserHealthFacility;
 
-  constructor(private HealthFacilityService: HealthFacilityService, private dialogService: DialogService) { }
+  constructor(private HealthFacilityService: HealthFacilityService, 
+    private usersService: UsersService, 
+    private toastService: ToastService,
+    private dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.getData();
@@ -91,13 +98,11 @@ export class HealthfacilityComponent implements OnInit {
           }
         });
         this.newHealthFacilityList = this.healthFacilities.filter(x => x.status);
-        console.log(this.newHealthFacilityList,'heysss')
       }
     })
   }
 
   removeHealthFacility(healthFacility: HealthFacility) {
-    console.log(healthFacility);
     this.HealthFacilityService.delete(healthFacility.id).subscribe({
       next: (result: boolean) => {
         result;
@@ -111,11 +116,22 @@ export class HealthfacilityComponent implements OnInit {
         console.log(err);
       },
       complete: () => {
-        console.log('complete');
         this.newHealthFacilityList = this.healthFacilities.filter(x => x.status);
+        this.usersService.bulkDeleteUserHealthFacility(this.getUserHealthFacility(healthFacility)).subscribe({
+          next: (retVal) => {
+          }, error: (err) => {
+            this.toastService.showError(err.error.messages);
+          }, complete: () => {
+            this.toastService.showSuccess('Successfully Deleted.');
+          }
+        });
       }
     });
   }
-
-
+  getUserHealthFacility(healthFacility : HealthFacility): BulkUserHealthFacility {
+    this.bulkUserHealthFacility = new BulkUserHealthFacility();
+    this.bulkUserHealthFacility.healthFacilityId = healthFacility.id;
+    this.bulkUserHealthFacility.type = 'HealthFacility';
+    return this.bulkUserHealthFacility;
+  }
 }

@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { HealthFacility } from 'src/app/models/healthfacility.model';
+import { BulkUserHealthFacility, UserHealthFacility } from 'src/app/models/userhealthfacility.model';
 import { HealthFacilityService } from 'src/app/services/healthfacility.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-popup-healthfacility',
@@ -16,21 +18,24 @@ export class PopupHealthfacilityComponent implements OnInit {
   formBuilder: FormBuilder;
 
   healthFacility: HealthFacility;
+  bulkUserHealthFacility: BulkUserHealthFacility;
 
-  isActiveStatus=  false;
-  isForSaving= false;
-  isForUpdating= false;
-  
-  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private healthFacilityService : HealthFacilityService, private toastService: ToastService) { }
+  isActiveStatus = false;
+  isForSaving = false;
+  isForUpdating = false;
+
+  constructor(private ref: DynamicDialogRef,
+    private config: DynamicDialogConfig,
+    private healthFacilityService: HealthFacilityService,
+    private usersService: UsersService,
+    private toastService: ToastService) { }
 
   ngOnInit(): void {
-    this.isForUpdating= this.config.data.isForUpdating;
+    this.isForUpdating = this.config.data.isForUpdating;
     this.isForSaving = this.config.data.isForSaving;
-    
     this.buildFormGroup();
-    this.healthFacilityForm.patchValue(this.config.data.healthFacility)    
+    this.healthFacilityForm.patchValue(this.config.data.healthFacility)
   }
-
   buildFormGroup(): void {
     this.formBuilder = new FormBuilder();
     this.healthFacilityForm = this.formBuilder.group(
@@ -41,38 +46,31 @@ export class PopupHealthfacilityComponent implements OnInit {
       });
 
   }
-
-  ClosePopUp(data: HealthFacility){
+  ClosePopUp(data: HealthFacility) {
     this.ref.close(data);
   }
-
   ngOnDestroy() {
     if (this.ref) {
       this.ref.close();
     }
   }
-
-  saveData(){
-    if(this.isForSaving) {
+  saveData() {
+    if (this.isForSaving) {
       this.healthFacilityService.GetHealthFacilityByHealthFacilityCode(this.healthFacilityForm.controls['code'].value).subscribe(retVal => {
-        // let obj = retVal.find(x => x.code.toUpperCase() == this.healthFacilityForm.controls['code'].value.toUpperCase())
-        // if(obj != undefined) {
-        //   this.toastService.showError('Code already Exist!');
-        // } return 
-        if(retVal)
-          this.healthFacilityService.insert(this.getData()).subscribe({ 
-            next: result => { this.ClosePopUp(result); 
-          }, error : (err) => {
-            this.toastService.showError(err.error.messages);
-          }, complete: () => {
-            this.toastService.showSuccess('Successfully Updated.');
-          }
-        });     
-    })
+        if (retVal)
+          this.healthFacilityService.insert(this.getData()).subscribe({
+            next: result => {
+              this.ClosePopUp(result);
+            }, error: (err) => {
+              this.toastService.showError(err.error.messages);
+            }, complete: () => {
+              this.toastService.showSuccess('Successfully Saved.');
+            }
+          });
+      })
     }
   }
-
-  updateData(){    
+  updateData() {
     let data = this.config.data.healthFacility;
     let obj = new HealthFacility();
     obj.code = this.healthFacilityForm.controls['code'].value;
@@ -80,24 +78,39 @@ export class PopupHealthfacilityComponent implements OnInit {
     obj.facilityAddress = this.healthFacilityForm.controls['facilityAddress'].value;
     obj.modifiedBy = '';
     obj.modifiedDateTime = new Date();
-    if(this.isForUpdating){
+    if (this.isForUpdating) {
       this.healthFacilityService.update(data.id, obj).subscribe({
-      next: (result : HealthFacility) => {
-        obj = result;
-          this.ClosePopUp(result); 
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {        
-        console.log('complete');
-      }
+        next: (result: HealthFacility) => {
+          obj = result;
+          this.ClosePopUp(result);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          this.usersService.bulkUpdateUserHealthFacility(this.getUserHealthFacility()).subscribe({
+            next: (retVal) => {
+            }, error: (err) => {
+              this.toastService.showError(err.error.messages);
+            }, complete: () => {
+              this.toastService.showSuccess('Successfully Updated.');
+            }
+          });
+        }
       });
     }
-
   }
-
-  getData() : HealthFacility {
+  getUserHealthFacility(): BulkUserHealthFacility {
+    let data = this.config.data.healthFacility;
+    this.bulkUserHealthFacility = new BulkUserHealthFacility();
+    this.bulkUserHealthFacility.healthFacilityId = data.id;
+    this.bulkUserHealthFacility.code = this.healthFacilityForm.controls['code'].value;
+    this.bulkUserHealthFacility.healthFacilityName = this.healthFacilityForm.controls['name'].value;
+    this.bulkUserHealthFacility.facilityAddress = this.healthFacilityForm.controls['facilityAddress'].value;
+    this.bulkUserHealthFacility.type = 'HealthFacility';
+    return this.bulkUserHealthFacility;
+  }
+  getData(): HealthFacility {
     this.healthFacility = new HealthFacility();
     this.healthFacility.code = this.healthFacilityForm.controls['code'].value;
     this.healthFacility.name = this.healthFacilityForm.controls['name'].value;
@@ -106,6 +119,4 @@ export class PopupHealthfacilityComponent implements OnInit {
     this.healthFacility.createdDateTime = new Date();
     return this.healthFacility;
   }
-
-
 }

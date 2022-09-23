@@ -11,4 +11,18 @@ export class UserHealthFacility {
     healthFacilityName: string;
     code: string;
     facilityAddress: string;
+    type: string;
+}
+
+export class BulkUserHealthFacility {
+    healthFacilityId: number;
+    departmentId: number;
+    departmentName: string;
+    sectionId: number;
+    sectionName: string;
+    status: boolean;
+    healthFacilityName: string;
+    code: string;
+    facilityAddress: string;
+    type: string;
 }

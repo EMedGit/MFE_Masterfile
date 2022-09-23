@@ -3,9 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Department } from 'src/app/models/department.model';
 import { HealthFacility } from 'src/app/models/healthfacility.model';
+import { BulkUserHealthFacility } from 'src/app/models/userhealthfacility.model';
 import { DepartmentService } from 'src/app/services/department.service';
 import { HealthFacilityService } from 'src/app/services/healthfacility.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-popup-department',
@@ -26,9 +28,10 @@ export class PopupDepartmentComponent implements OnInit {
   healthFacilityId: number;
   healthfacility: HealthFacility;
   healthFacilityList: HealthFacility[];
+  bulkUserHealthFacility: BulkUserHealthFacility;
 
   constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private departmentService: DepartmentService,
-    private hfService: HealthFacilityService, private toastService: ToastService) { }
+    private usersService: UsersService, private hfService: HealthFacilityService, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isActiveStatus = this.config.data.department.status;
@@ -96,11 +99,26 @@ export class PopupDepartmentComponent implements OnInit {
             console.log(err);
           },
           complete: () => {
-            console.log('complete');
+            this.usersService.bulkUpdateUserHealthFacility(this.getUserHealthFacility()).subscribe({
+              next: (retVal) => {
+              }, error: (err) => {
+                this.toastService.showError(err.error.messages);
+              }, complete: () => {
+                this.toastService.showSuccess('Successfully Updated.');
+              }
+            });
           }
         });
       });
     }
+  }
+  getUserHealthFacility(): BulkUserHealthFacility {
+    let data = this.config.data.department;
+    this.bulkUserHealthFacility = new BulkUserHealthFacility();
+    this.bulkUserHealthFacility.departmentId = data.id;
+    this.bulkUserHealthFacility.departmentName = this.departmentForm.controls['name'].value;
+    this.bulkUserHealthFacility.type = 'Department';
+    return this.bulkUserHealthFacility;
   }
   getData(): Department {
     this.department = new Department();

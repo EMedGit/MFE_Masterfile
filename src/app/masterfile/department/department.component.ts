@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Department } from 'src/app/models/department.model';
+import { BulkUserHealthFacility } from 'src/app/models/userhealthfacility.model';
 import { DepartmentService } from 'src/app/services/department.service';
+import { ToastService } from 'src/app/services/toast.service';
+import { UsersService } from 'src/app/services/users.service';
 import { PopupDepartmentComponent } from '../popup/popup-department/popup-department.component';
 
 @Component({
@@ -17,8 +20,9 @@ export class DepartmentComponent implements OnInit {
   departments: Department[];
   selectedDepartments: Department[];
   newDepartmentsList: Department[];
+  bulkUserHealthFacility: BulkUserHealthFacility;
 
-  constructor(private departmentService : DepartmentService, private dialogService: DialogService) { }
+  constructor(private departmentService : DepartmentService, private usersService: UsersService, private toastService: ToastService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.getData();
@@ -117,11 +121,23 @@ export class DepartmentComponent implements OnInit {
         console.log(err);
       },
       complete: () => {
-        console.log('complete');
         this.newDepartmentsList = this.departments.filter(x => x.status);
+        this.usersService.bulkDeleteUserHealthFacility(this.getUserHealthFacility(department)).subscribe({
+          next: (retVal) => {
+          }, error: (err) => {
+            this.toastService.showError(err.error.messages);
+          }, complete: () => {
+            this.toastService.showSuccess('Successfully Deleted.');
+          }
+        });
       }
     });
   }
-
+  getUserHealthFacility(department : Department): BulkUserHealthFacility {
+    this.bulkUserHealthFacility = new BulkUserHealthFacility();
+    this.bulkUserHealthFacility.departmentId = department.id;
+    this.bulkUserHealthFacility.type = 'HealthFacility';
+    return this.bulkUserHealthFacility;
+  }
 
 }
