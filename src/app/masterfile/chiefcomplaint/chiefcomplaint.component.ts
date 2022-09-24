@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 import { ChiefComplaint } from 'src/app/models/chiefcomplaint.model';
@@ -10,27 +11,30 @@ import { PopupChiefcomplaintComponent } from '../popup/popup-chiefcomplaint/popu
   selector: 'app-chiefcomplaint',
   templateUrl: './chiefcomplaint.component.html',
   styleUrls: ['./chiefcomplaint.component.css'],
-  providers: [DialogService]
+  providers: [DialogService, ConfirmationService]
 })
 export class ChiefcomplaintComponent implements OnInit {
   searchkey: ""
   ref: DynamicDialogRef;
-  chiefcomplaint : ChiefComplaint;
-  prevChiefComplaint : ChiefComplaint[];
-  chiefcomplaintList : ChiefComplaint[];
-  selectedChiefComplaint : ChiefComplaint[];
+  chiefcomplaint: ChiefComplaint;
+  prevChiefComplaint: ChiefComplaint[];
+  chiefcomplaintList: ChiefComplaint[];
+  selectedChiefComplaint: ChiefComplaint[];
+  responsemessage: string;
+  headermessage: string;
+  displayResponsive: boolean = false;
 
-  constructor(private chiefcomplaintService : ChiefcomplaintService, private dialogService : DialogService, private datePipe : DatePipe) { }
+  constructor(private chiefcomplaintService: ChiefcomplaintService, private confirmationService: ConfirmationService, private dialogService: DialogService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.fetchData();
   }
-  fetchData(){
+  fetchData() {
     console.log('hello');
     this.chiefcomplaintService.getChiefcomplaint().subscribe({
       next: (result: ChiefComplaint[]) => {
         this.chiefcomplaintList = result;
-        this.prevChiefComplaint = this.chiefcomplaintList.filter(x => x.status);``
+        this.prevChiefComplaint = this.chiefcomplaintList.filter(x => x.status); ``
       },
       error: (err) => {
         console.log(err);
@@ -96,24 +100,33 @@ export class ChiefcomplaintComponent implements OnInit {
     })
   }
   removeChiefComplaintRecord(chiefcomplaint: ChiefComplaint) {
-    this.chiefcomplaintService.deleteChiefcomplaint(chiefcomplaint.id).subscribe({
-      next: (result: boolean) => {
-        result;
-        this.chiefcomplaintList.forEach(element => {
-          if (chiefcomplaint.id == element.id) {
-            element.status = false;
-          }
+    if (chiefcomplaint != undefined) {
+      this.confirmationService.confirm({
+        message: `Are you sure you want to delete the record?`,
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.chiefcomplaintService.deleteChiefcomplaint(chiefcomplaint.id).subscribe({
+            next: (result: boolean) => {
+              result;
+              this.chiefcomplaintList.forEach(element => {
+                if (chiefcomplaint.id == element.id) {
+                  element.status = false;
+                }
 
-        });
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('complete');
-        this.prevChiefComplaint = this.chiefcomplaintList.filter(x => x.status);
-      }
-    });
+              });
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+            complete: () => {
+              console.log('complete');
+              this.prevChiefComplaint = this.chiefcomplaintList.filter(x => x.status);
+            }
+          });
+        }
+      });
+    }
   }
   batchdeleteChiefComplaint() {
     if (this.selectedChiefComplaint.length > 0) {

@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Medicinecategory } from 'src/app/models/medicinecategory.model';
 import { MedicinecategoryService } from 'src/app/services/medicinecategory.service';
@@ -9,17 +10,20 @@ import { PopupMedicinecategoryComponent } from '../popup/popup-medicinecategory/
   selector: 'app-medicinecategory',
   templateUrl: './medicinecategory.component.html',
   styleUrls: ['./medicinecategory.component.css'],
-  providers: [DialogService]
+  providers: [DialogService, ConfirmationService]
 })
 export class MedicinecategoryComponent implements OnInit {
   searchkey: ""
   ref: DynamicDialogRef;
-  medicinecategory : Medicinecategory;
-  prevMedicineCategoryList : Medicinecategory[];
-  medicinecategoryList : Medicinecategory[];
-  selectedMedicineCategory : Medicinecategory[];
+  medicinecategory: Medicinecategory;
+  prevMedicineCategoryList: Medicinecategory[];
+  medicinecategoryList: Medicinecategory[];
+  selectedMedicineCategory: Medicinecategory[];
+  responsemessage: string;
+  headermessage: string;
+  displayResponsive: boolean = false;
 
-  constructor(private medicinecategoryService : MedicinecategoryService, private dialogService : DialogService, private datePipe : DatePipe) { }
+  constructor(private medicinecategoryService: MedicinecategoryService, private dialogService: DialogService, private confirmationService: ConfirmationService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.fetchData();
@@ -96,23 +100,32 @@ export class MedicinecategoryComponent implements OnInit {
     })
   }
   removeMedicineCategoryRecord(medicineCategory: Medicinecategory) {
-    this.medicinecategoryService.deleteMedicineCategory(medicineCategory.id).subscribe({
-      next: (result: boolean) => {
-        result;
-        this.medicinecategoryList.forEach(element => {
-          if (medicineCategory.id == element.id) {
-            element.status = false;
-          }
-        });
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('complete');
-        this.prevMedicineCategoryList = this.medicinecategoryList.filter(x => x.status);
-      }
-    });
+    if (medicineCategory != undefined) {
+      this.confirmationService.confirm({
+        message: `Are you sure you want to delete the record?`,
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.medicinecategoryService.deleteMedicineCategory(medicineCategory.id).subscribe({
+            next: (result: boolean) => {
+              result;
+              this.medicinecategoryList.forEach(element => {
+                if (medicineCategory.id == element.id) {
+                  element.status = false;
+                }
+              });
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+            complete: () => {
+              console.log('complete');
+              this.prevMedicineCategoryList = this.medicinecategoryList.filter(x => x.status);
+            }
+          });
+        }
+      });
+    }
   }
   batchdeleteMedicineCategory() {
     if (this.selectedMedicineCategory.length > 0) {

@@ -106,7 +106,6 @@ export class LaboratoryComponent implements OnInit {
     })
   }
   removeLaboratoryRecord(laboratory: Laboratory) {
-    console.log(laboratory, 'remove')
     if (laboratory != undefined) {
       this.confirmationService.confirm({
         message: `Are you sure you want to delete the record?`,

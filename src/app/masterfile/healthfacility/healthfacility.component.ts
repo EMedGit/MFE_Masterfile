@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { HealthFacility } from 'src/app/models/healthfacility.model';
 import { BulkUserHealthFacility } from 'src/app/models/userhealthfacility.model';
@@ -11,7 +12,7 @@ import { PopupHealthfacilityComponent } from '../popup/popup-healthfacility/popu
   selector: 'app-healthfacility',
   templateUrl: './healthfacility.component.html',
   styleUrls: ['./healthfacility.component.css'],
-  providers: [DialogService]
+  providers: [DialogService, ConfirmationService]
 })
 export class HealthfacilityComponent implements OnInit {
   searchkey: ""
@@ -21,9 +22,13 @@ export class HealthfacilityComponent implements OnInit {
   selectedHealthFacilities: HealthFacility[];
   newHealthFacilityList: HealthFacility[];
   bulkUserHealthFacility: BulkUserHealthFacility;
+  responsemessage: string;
+  headermessage: string;
+  displayResponsive: boolean = false;
 
-  constructor(private HealthFacilityService: HealthFacilityService, 
-    private usersService: UsersService, 
+  constructor(private HealthFacilityService: HealthFacilityService,
+    private confirmationService: ConfirmationService,
+    private usersService: UsersService,
     private toastService: ToastService,
     private dialogService: DialogService) { }
 
@@ -103,32 +108,41 @@ export class HealthfacilityComponent implements OnInit {
   }
 
   removeHealthFacility(healthFacility: HealthFacility) {
-    this.HealthFacilityService.delete(healthFacility.id).subscribe({
-      next: (result: boolean) => {
-        result;
-        this.healthFacilities.forEach(element => {
-          if (healthFacility.id == element.id) {
-            element.status = false;
-          }
-        });
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        this.newHealthFacilityList = this.healthFacilities.filter(x => x.status);
-        this.usersService.bulkDeleteUserHealthFacility(this.getUserHealthFacility(healthFacility)).subscribe({
-          next: (retVal) => {
-          }, error: (err) => {
-            this.toastService.showError(err.error.messages);
-          }, complete: () => {
-            this.toastService.showSuccess('Successfully Deleted.');
-          }
-        });
-      }
-    });
+    if (healthFacility != undefined) {
+      this.confirmationService.confirm({
+        message: `Are you sure you want to delete the record?`,
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.HealthFacilityService.delete(healthFacility.id).subscribe({
+            next: (result: boolean) => {
+              result;
+              this.healthFacilities.forEach(element => {
+                if (healthFacility.id == element.id) {
+                  element.status = false;
+                }
+              });
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+            complete: () => {
+              this.newHealthFacilityList = this.healthFacilities.filter(x => x.status);
+              this.usersService.bulkDeleteUserHealthFacility(this.getUserHealthFacility(healthFacility)).subscribe({
+                next: (retVal) => {
+                }, error: (err) => {
+                  this.toastService.showError(err.error.messages);
+                }, complete: () => {
+                  this.toastService.showSuccess('Successfully Deleted.');
+                }
+              });
+            }
+          });
+        }
+      });
+    }
   }
-  getUserHealthFacility(healthFacility : HealthFacility): BulkUserHealthFacility {
+  getUserHealthFacility(healthFacility: HealthFacility): BulkUserHealthFacility {
     this.bulkUserHealthFacility = new BulkUserHealthFacility();
     this.bulkUserHealthFacility.healthFacilityId = healthFacility.id;
     this.bulkUserHealthFacility.type = 'HealthFacility';

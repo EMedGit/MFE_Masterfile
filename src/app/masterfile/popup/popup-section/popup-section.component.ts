@@ -4,10 +4,12 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Department } from 'src/app/models/department.model';
 import { HealthFacility } from 'src/app/models/healthfacility.model';
 import { Section } from 'src/app/models/section.model';
+import { BulkUserHealthFacility } from 'src/app/models/userhealthfacility.model';
 import { DepartmentService } from 'src/app/services/department.service';
 import { HealthFacilityService } from 'src/app/services/healthfacility.service';
 import { SectionService } from 'src/app/services/section.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-popup-section',
@@ -21,12 +23,13 @@ export class PopupSectionComponent implements OnInit {
 
   section: Section;
   departmentList: Department[];
+  bulkUserHealthFacility: BulkUserHealthFacility;
 
   isActiveStatus = false;
   isForSaving = false;
   isForUpdating = false;
 
-  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private sectionService: SectionService,
+  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private sectionService: SectionService, private usersService: UsersService,
     private departmentService: DepartmentService, private hfService: HealthFacilityService, private toastService: ToastService) { }
 
   ngOnInit(): void {
@@ -48,7 +51,7 @@ export class PopupSectionComponent implements OnInit {
       {
         code: [''],
         description: [''],
-        departmentID: ['']
+        departmentID: [null]
       });
   }
 
@@ -92,13 +95,26 @@ export class PopupSectionComponent implements OnInit {
           console.log(err);
         },
         complete: () => {
-          console.log('complete');
+          this.usersService.bulkUpdateUserHealthFacility(this.getUserHealthFacility()).subscribe({
+            next: (retVal) => {
+            }, error: (err) => {
+              this.toastService.showError(err.error.messages);
+            }, complete: () => {
+              this.toastService.showSuccess('Successfully Updated.');
+            }
+          });
         }
       });
     }
-
   }
-
+  getUserHealthFacility(): BulkUserHealthFacility {
+    let data = this.config.data.section;
+    this.bulkUserHealthFacility = new BulkUserHealthFacility();
+    this.bulkUserHealthFacility.sectionId = data.id;
+    this.bulkUserHealthFacility.sectionName = this.sectionForm.controls['description'].value;
+    this.bulkUserHealthFacility.type = 'Section';
+    return this.bulkUserHealthFacility;
+  }
   getData(): Section {
     this.section = new Section();
     this.section.code = this.sectionForm.controls['code'].value;
@@ -106,9 +122,7 @@ export class PopupSectionComponent implements OnInit {
     this.section.departmentID = this.sectionForm.controls['departmentID'].value;
     this.section.createdBy = '';
     this.section.createdDateTime = new Date();
-
     return this.section;
-
   }
 
 

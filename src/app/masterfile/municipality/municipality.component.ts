@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Municipality } from 'src/app/models/municipality.model';
 import { AddressService } from 'src/app/services/address.service';
@@ -9,17 +10,20 @@ import { PopupMunicipalityComponent } from '../popup/popup-municipality/popup-mu
   selector: 'app-municipality',
   templateUrl: './municipality.component.html',
   styleUrls: ['./municipality.component.css'],
-  providers:[DialogService]
+  providers: [DialogService, ConfirmationService]
 })
 export class MunicipalityComponent implements OnInit {
   searchkey: ""
   ref: DynamicDialogRef;
-  municipality : Municipality;
-  prevMunicipalityList : Municipality[]=[];
-  municipalityList : Municipality[];
-  selectedMunicipality : Municipality[];
+  municipality: Municipality;
+  prevMunicipalityList: Municipality[] = [];
+  municipalityList: Municipality[];
+  selectedMunicipality: Municipality[];
+  responsemessage: string;
+  headermessage: string;
+  displayResponsive: boolean = false;
 
-  constructor(private addressService : AddressService, private dialogService : DialogService, private datePipe : DatePipe) { }
+  constructor(private addressService: AddressService, private dialogService: DialogService, private confirmationService: ConfirmationService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.fetchData();
@@ -50,7 +54,7 @@ export class MunicipalityComponent implements OnInit {
     console.log(filter)
     this.prevMunicipalityList = filter;
   }
-  addMunicipalityPopup(){
+  addMunicipalityPopup() {
     this.ref = this.dialogService.open(PopupMunicipalityComponent, {
       width: '1200px',
       height: '530px',
@@ -67,7 +71,7 @@ export class MunicipalityComponent implements OnInit {
       }
     })
   }
-  batchdeleteMunicipality(){
+  batchdeleteMunicipality() {
     if (this.selectedMunicipality.length > 0) {
       this.selectedMunicipality.forEach(val => {
         val.modifiedBy = '';
@@ -97,7 +101,7 @@ export class MunicipalityComponent implements OnInit {
       });
     }
   }
-  updateMunicipalityPopUp(municipality : Municipality){
+  updateMunicipalityPopUp(municipality: Municipality) {
     this.ref = this.dialogService.open(PopupMunicipalityComponent, {
       width: '1200px',
       height: '530px',
@@ -125,24 +129,32 @@ export class MunicipalityComponent implements OnInit {
       }
     })
   }
-  removeMunicipalityRecord(municipality : Municipality){
-    this.addressService.deleteMunicipality(municipality.id).subscribe({
-      next: (result: boolean) => {
-        result;
-        this.municipalityList.forEach(element => {
-          if (municipality.id == element.id) {
-            element.status = false;
-          }
-
-        });
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('complete');
-        this.prevMunicipalityList = this.municipalityList.filter(x => x.status);
-      }
-    });
+  removeMunicipalityRecord(municipality: Municipality) {
+    if (municipality != undefined) {
+      this.confirmationService.confirm({
+        message: `Are you sure you want to delete the record?`,
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.addressService.deleteMunicipality(municipality.id).subscribe({
+            next: (result: boolean) => {
+              result;
+              this.municipalityList.forEach(element => {
+                if (municipality.id == element.id) {
+                  element.status = false;
+                }
+              });
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+            complete: () => {
+              console.log('complete');
+              this.prevMunicipalityList = this.municipalityList.filter(x => x.status);
+            }
+          });
+        }
+      });
+    }
   }
 }

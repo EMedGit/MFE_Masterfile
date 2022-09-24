@@ -45,7 +45,7 @@ export class PopupZscoreComponent implements OnInit {
       {
         resultCode: [''],
         zScoreType: [''],
-        gender: [''],
+        gender: null,
         length: null,
         weight: null,
         months: null

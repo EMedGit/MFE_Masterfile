@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ReferralCategory } from 'src/app/models/referralcategory.model';
 import { ReferralcategoryService } from 'src/app/services/referralcategory.service';
@@ -9,22 +10,25 @@ import { PopupReferralcategoryComponent } from '../popup/popup-referralcategory/
   selector: 'app-referralcategory',
   templateUrl: './referralcategory.component.html',
   styleUrls: ['./referralcategory.component.css'],
-  providers: [DialogService]
+  providers: [DialogService, ConfirmationService]
 })
 export class ReferralcategoryComponent implements OnInit {
   searchkey: ""
   ref: DynamicDialogRef;
-  referralcategory : ReferralCategory;
-  prevReferralCategory : ReferralCategory[];
-  referralcategoryList : ReferralCategory[];
-  selectedReferralCategory : ReferralCategory[];
-  
-  constructor(private referralcategoryService : ReferralcategoryService, private dialogService : DialogService, private datePipe : DatePipe) { }
+  referralcategory: ReferralCategory;
+  prevReferralCategory: ReferralCategory[];
+  referralcategoryList: ReferralCategory[];
+  selectedReferralCategory: ReferralCategory[];
+  responsemessage: string;
+  headermessage: string;
+  displayResponsive: boolean = false;
+
+  constructor(private referralcategoryService: ReferralcategoryService, private dialogService: DialogService, private confirmationService: ConfirmationService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.fetchData();
   }
-  fetchData(){
+  fetchData() {
     this.referralcategoryService.getReferralcategory().subscribe({
       next: (result: ReferralCategory[]) => {
         this.referralcategoryList = result;
@@ -94,24 +98,32 @@ export class ReferralcategoryComponent implements OnInit {
     })
   }
   removeReferralCategoryRecord(referralcategory: ReferralCategory) {
-    this.referralcategoryService.deleteReferralcategory(referralcategory.id).subscribe({
-      next: (result: boolean) => {
-        result;
-        this.referralcategoryList.forEach(element => {
-          if (referralcategory.id == element.id) {
-            element.status = false;
-          }
-
-        });
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('complete');
-        this.prevReferralCategory = this.referralcategoryList.filter(x => x.status);
-      }
-    });
+    if (referralcategory != undefined) {
+      this.confirmationService.confirm({
+        message: `Are you sure you want to delete the record?`,
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.referralcategoryService.deleteReferralcategory(referralcategory.id).subscribe({
+            next: (result: boolean) => {
+              result;
+              this.referralcategoryList.forEach(element => {
+                if (referralcategory.id == element.id) {
+                  element.status = false;
+                }
+              });
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+            complete: () => {
+              console.log('complete');
+              this.prevReferralCategory = this.referralcategoryList.filter(x => x.status);
+            }
+          });
+        }
+      });
+    }
   }
   batchdeleteReferralCategory() {
     if (this.selectedReferralCategory.length > 0) {

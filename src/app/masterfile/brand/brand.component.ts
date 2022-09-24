@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Brand } from 'src/app/models/brand.model';
 import { CivilStatus } from 'src/app/models/civilstatus.model';
@@ -10,45 +11,48 @@ import { PopupBrandComponent } from '../popup/popup-brand/popup-brand.component'
   selector: 'app-brand',
   templateUrl: './brand.component.html',
   styleUrls: ['./brand.component.css'],
-  providers: [DialogService]
+  providers: [DialogService, ConfirmationService]
 })
 export class BrandComponent implements OnInit {
   searchkey: ""
   ref: DynamicDialogRef;
-  brand : Brand;
-  prevBrandList : Brand[];
-  brandList : Brand[];
-  selectedBrand : Brand[];
+  brand: Brand;
+  prevBrandList: Brand[];
+  brandList: Brand[];
+  selectedBrand: Brand[];
+  responsemessage: string;
+  headermessage: string;
+  displayResponsive: boolean = false;
 
-  constructor(private brandService : BrandService, private dialogService : DialogService, private datePipe : DatePipe) { }
+  constructor(private brandService: BrandService, private confirmationService: ConfirmationService, private dialogService: DialogService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.fetchData();
   }
-  fetchData(){
+  fetchData() {
     this.brandService.getBrandList().subscribe({
-      next: (result : Brand[]) => {
+      next: (result: Brand[]) => {
         this.brandList = result;
         this.prevBrandList = this.brandList.filter(x => x.status);
       },
-      error : (err) => {
+      error: (err) => {
         console.log(err);
       },
-      complete : () => {
+      complete: () => {
         console.log('complete');
       }
     })
   }
-  filter(){
-    let filter : any[] = [];
+  filter() {
+    let filter: any[] = [];
     this.brandList.forEach(val => {
-      if(val.description.toUpperCase().includes(this.searchkey.toUpperCase()) && val.status){
+      if (val.description.toUpperCase().includes(this.searchkey.toUpperCase()) && val.status) {
         filter.push(val);
       }
     });
     this.prevBrandList = filter;
   }
-  addBrandPopup(){
+  addBrandPopup() {
     this.ref = this.dialogService.open(PopupBrandComponent, {
       width: '1200px',
       height: '430px',
@@ -58,15 +62,15 @@ export class BrandComponent implements OnInit {
         isForSaving: true
       }
     });
-    this.ref.onClose.subscribe((data : CivilStatus) => {
-        if(data != undefined){
-          this.brandList.push(data);
-          this.prevBrandList = this.brandList.filter(x => x.status);
-        }
+    this.ref.onClose.subscribe((data: CivilStatus) => {
+      if (data != undefined) {
+        this.brandList.push(data);
+        this.prevBrandList = this.brandList.filter(x => x.status);
+      }
     });
   }
 
-  updateBrandPopUp(brand : Brand){
+  updateBrandPopUp(brand: Brand) {
     this.ref = this.dialogService.open(PopupBrandComponent, {
       width: '1200px',
       height: '430px',
@@ -77,10 +81,10 @@ export class BrandComponent implements OnInit {
         isForUpdating: true
       }
     });
-    this.ref.onClose.subscribe((data : Brand) => {
-      if(data != undefined){
+    this.ref.onClose.subscribe((data: Brand) => {
+      if (data != undefined) {
         this.brandList.forEach(val => {
-          if(val.id == data.id) {
+          if (val.id == data.id) {
             val.code = data.code;
             val.description = data.description;
             val.status = data.status;
@@ -91,27 +95,36 @@ export class BrandComponent implements OnInit {
       }
     });
   }
-  removeBrandRecord(brand : Brand){
-    this.brandService.deleteBrand(brand.id).subscribe({
-      next : (result : boolean) => {
-        result;
-        this.brandList.forEach(element => {
-          if(brand.id == element.id){
-            element.status = false;
-          }
-        });
-      },
-      error : (err : any) => {
-        console.log(err);
-      },
-      complete : () => {
-        console.log('complete');
-        this.prevBrandList = this.brandList.filter(x => x.status);
-      }
-    });
+  removeBrandRecord(brand: Brand) {
+    if (brand != undefined) {
+      this.confirmationService.confirm({
+        message: `Are you sure you want to delete the record?`,
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.brandService.deleteBrand(brand.id).subscribe({
+            next: (result: boolean) => {
+              result;
+              this.brandList.forEach(element => {
+                if (brand.id == element.id) {
+                  element.status = false;
+                }
+              });
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+            complete: () => {
+              console.log('complete');
+              this.prevBrandList = this.brandList.filter(x => x.status);
+            }
+          });
+        }
+      });
+    }
   }
-  batchdeleteBrand(){
-    if(this.selectedBrand.length > 0) {
+  batchdeleteBrand() {
+    if (this.selectedBrand.length > 0) {
       this.selectedBrand.forEach(val => {
         val.modifiedBy = '';
         val.modifiedDateTime = this.datePipe.transform(
@@ -120,20 +133,20 @@ export class BrandComponent implements OnInit {
         val.status = false;
       });
       this.brandService.batchdeleteBrand(this.selectedBrand).subscribe({
-        next : (result : boolean) => {
-          if(result) {
+        next: (result: boolean) => {
+          if (result) {
             this.brandList.forEach(val => {
               let x = this.selectedBrand.find(x => x.id == val.id);
-              if(x != undefined && x != null){
+              if (x != undefined && x != null) {
                 val.status = false;
               }
             });
           }
         },
-        error : (err : any) => {
+        error: (err: any) => {
           console.log(err);
         },
-        complete : () => {
+        complete: () => {
           console.log('complete');
           this.prevBrandList = this.brandList.filter(x => x.status);
         }

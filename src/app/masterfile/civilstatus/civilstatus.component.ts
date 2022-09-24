@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CivilStatus } from 'src/app/models/civilstatus.model';
 import { CivilstatusService } from 'src/app/services/civilstatus.service';
@@ -10,7 +11,7 @@ import { PopupCivilstatusComponent } from '../popup/popup-civilstatus/popup-civi
   selector: 'app-civilstatus',
   templateUrl: './civilstatus.component.html',
   styleUrls: ['./civilstatus.component.css'],
-  providers: [DialogService]
+  providers: [DialogService, ConfirmationService]
 })
 export class CivilstatusComponent implements OnInit {
   searchkey: ""
@@ -19,8 +20,11 @@ export class CivilstatusComponent implements OnInit {
   prevCivilStatusList: CivilStatus[];
   civilstatusList: CivilStatus[];
   selectedCivilStatus: CivilStatus[];
+  responsemessage: string;
+  headermessage: string;
+  displayResponsive: boolean = false;
 
-  constructor(private civilstatusService: CivilstatusService, private dialogService: DialogService, private datePipe: DatePipe) { }
+  constructor(private civilstatusService: CivilstatusService, private dialogService: DialogService, private confirmationService: ConfirmationService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.fetchData();
@@ -101,24 +105,32 @@ export class CivilstatusComponent implements OnInit {
     })
   }
   removeCivilStatusRecord(civilStatus: CivilStatus) {
-    this.civilstatusService.deleteCivilStatus(civilStatus.id).subscribe({
-      next: (result: boolean) => {
-        result;
-        this.civilstatusList.forEach(element => {
-          if (civilStatus.id == element.id) {
-            element.status = false;
-          }
-
-        });
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('complete');
-        this.prevCivilStatusList = this.civilstatusList.filter(x => x.status);
-      }
-    });
+    if (civilStatus != undefined) {
+      this.confirmationService.confirm({
+        message: `Are you sure you want to delete the record?`,
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.civilstatusService.deleteCivilStatus(civilStatus.id).subscribe({
+            next: (result: boolean) => {
+              result;
+              this.civilstatusList.forEach(element => {
+                if (civilStatus.id == element.id) {
+                  element.status = false;
+                }
+              });
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+            complete: () => {
+              console.log('complete');
+              this.prevCivilStatusList = this.civilstatusList.filter(x => x.status);
+            }
+          });
+        }
+      });
+    }
   }
   batchdeleteCivilStatus() {
     if (this.selectedCivilStatus.length > 0) {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PhysicalExaminationType } from 'src/app/models/physicalexaminationtype.model';
 import { PhysicalExaminationTypeService } from 'src/app/services/physicalexaminationtype.service';
@@ -8,7 +9,7 @@ import { PopupPhysicalexaminationtypeComponent } from '../popup/popup-physicalex
   selector: 'app-physicalexaminationtype',
   templateUrl: './physicalexaminationtype.component.html',
   styleUrls: ['./physicalexaminationtype.component.css'],
-  providers: [DialogService]
+  providers: [DialogService, ConfirmationService]
 })
 export class PhysicalexaminationtypeComponent implements OnInit {
   searchkey: ""
@@ -17,15 +18,18 @@ export class PhysicalexaminationtypeComponent implements OnInit {
   physicalExaminationTypes: PhysicalExaminationType[];
   selectedphysicalExaminationTypes: PhysicalExaminationType[];
   newphysicalExaminationTypesList: PhysicalExaminationType[];
+  responsemessage: string;
+  headermessage: string;
+  displayResponsive: boolean = false;
 
-  constructor(private physicalExaminationTypeService : PhysicalExaminationTypeService, private dialogService: DialogService) { }
+  constructor(private physicalExaminationTypeService: PhysicalExaminationTypeService, private confirmationService: ConfirmationService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.getData();
   }
 
   getData() {
-    this.physicalExaminationTypeService.get('',0,100).subscribe({
+    this.physicalExaminationTypeService.get('', 0, 100).subscribe({
       next: (result: PhysicalExaminationType[]) => {
         this.physicalExaminationTypes = result;
         this.newphysicalExaminationTypesList = this.physicalExaminationTypes.filter(x => x.status);
@@ -53,8 +57,7 @@ export class PhysicalexaminationtypeComponent implements OnInit {
     this.newphysicalExaminationTypesList = filter;
   }
 
-  addPopup()
-  {
+  addPopup() {
     this.ref = this.dialogService.open(PopupPhysicalexaminationtypeComponent, {
       width: '1000px',
       height: '400px',
@@ -73,7 +76,7 @@ export class PhysicalexaminationtypeComponent implements OnInit {
     })
   }
 
-  updatePopup(physicalExaminationType : PhysicalExaminationType) {
+  updatePopup(physicalExaminationType: PhysicalExaminationType) {
     this.dialogService.open(PopupPhysicalexaminationtypeComponent, {
       width: '1000px',
       height: '400px',
@@ -98,26 +101,32 @@ export class PhysicalexaminationtypeComponent implements OnInit {
     })
   }
 
-  remove(physicalExaminationType : PhysicalExaminationType) {
-    this.physicalExaminationTypeService.delete(physicalExaminationType.id).subscribe({
-      next : (result : boolean) => {
-        result;
-        this.physicalExaminationTypes.forEach(element => {
-          if (physicalExaminationType.id == element.id)
-          {
-            element.status = false;
-          }
-        });
-      },
-      error : (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('complete');
-        this.newphysicalExaminationTypesList = this.physicalExaminationTypes.filter(x => x.status);
-      }
-    });
+  remove(physicalExaminationType: PhysicalExaminationType) {
+    if (physicalExaminationType != undefined) {
+      this.confirmationService.confirm({
+        message: `Are you sure you want to delete the record?`,
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.physicalExaminationTypeService.delete(physicalExaminationType.id).subscribe({
+            next: (result: boolean) => {
+              result;
+              this.physicalExaminationTypes.forEach(element => {
+                if (physicalExaminationType.id == element.id) {
+                  element.status = false;
+                }
+              });
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+            complete: () => {
+              console.log('complete');
+              this.newphysicalExaminationTypesList = this.physicalExaminationTypes.filter(x => x.status);
+            }
+          });
+        }
+      });
+    }
   }
-
-
 }

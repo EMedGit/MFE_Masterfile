@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PhysicalExaminationSketch } from 'src/app/models/physicalexaminationsketch.model';
 import { PhysicalExaminationSketchService } from 'src/app/services/physicalexaminationsketch.service';
@@ -8,7 +9,7 @@ import { PopupPhysicalexaminationsketchComponent } from '../popup/popup-physical
   selector: 'app-physicalexaminationsketch',
   templateUrl: './physicalexaminationsketch.component.html',
   styleUrls: ['./physicalexaminationsketch.component.css'],
-  providers: [DialogService]
+  providers: [DialogService, ConfirmationService]
 })
 export class PhysicalexaminationsketchComponent implements OnInit {
   searchkey: "";
@@ -17,16 +18,18 @@ export class PhysicalexaminationsketchComponent implements OnInit {
   pesList: PhysicalExaminationSketch[];
   selectedPESList: PhysicalExaminationSketch[];
   newPESList: PhysicalExaminationSketch[];
+  responsemessage: string;
+  headermessage: string;
+  displayResponsive: boolean = false;
 
-  constructor(private pesService: PhysicalExaminationSketchService, private dialogService: DialogService) { }
+  constructor(private pesService: PhysicalExaminationSketchService, private confirmationService: ConfirmationService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.getdate();
   }
 
-  getdate()
-  {
-    this.pesService.getList('',0,999999).subscribe({
+  getdate() {
+    this.pesService.getList('', 0, 999999).subscribe({
       next: (result: PhysicalExaminationSketch[]) => {
         this.pesList = result;
         this.newPESList = this.pesList.filter(x => x.status);
@@ -46,7 +49,7 @@ export class PhysicalexaminationsketchComponent implements OnInit {
     this.newPESList.forEach(val => {
       console.log(val)
       if (val.description.toUpperCase().includes(this.searchkey.toUpperCase()) && val.status) {
-        filter.push(val);      
+        filter.push(val);
       }
 
     });
@@ -82,7 +85,7 @@ export class PhysicalexaminationsketchComponent implements OnInit {
       data: {
         physicalExaminationSketch,
         isForUpdating: true
-      }      
+      }
     })
     this.ref.onClose.subscribe((data: PhysicalExaminationSketch) => {
       if (data != undefined) {
@@ -97,26 +100,31 @@ export class PhysicalexaminationsketchComponent implements OnInit {
   }
 
   removeItem(physicalExaminationSketch: PhysicalExaminationSketch) {
-    this.pesService.delete(physicalExaminationSketch.id).subscribe({
-      next : (result : boolean) => {
-        result;
-        this.pesList.forEach(element => {
-          if (physicalExaminationSketch.id == element.id)
-          {
-            element.status = false;
-          }
-        });
-      },
-      error : (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('complete');
-        this.newPESList = this.pesList.filter(x => x.status);
-      }
-    });
+    if (physicalExaminationSketch != undefined) {
+      this.confirmationService.confirm({
+        message: `Are you sure you want to delete the record?`,
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.pesService.delete(physicalExaminationSketch.id).subscribe({
+            next: (result: boolean) => {
+              result;
+              this.pesList.forEach(element => {
+                if (physicalExaminationSketch.id == element.id) {
+                  element.status = false;
+                }
+              });
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+            complete: () => {
+              console.log('complete');
+              this.newPESList = this.pesList.filter(x => x.status);
+            }
+          });
+        }
+      });
+    }
   }
-
-
-  
 }

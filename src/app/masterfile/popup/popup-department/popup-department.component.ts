@@ -116,7 +116,7 @@ export class PopupDepartmentComponent implements OnInit {
     let data = this.config.data.department;
     this.bulkUserHealthFacility = new BulkUserHealthFacility();
     this.bulkUserHealthFacility.departmentId = data.id;
-    this.bulkUserHealthFacility.departmentName = this.departmentForm.controls['name'].value;
+    this.bulkUserHealthFacility.departmentName = this.departmentForm.controls['description'].value;
     this.bulkUserHealthFacility.type = 'Department';
     return this.bulkUserHealthFacility;
   }

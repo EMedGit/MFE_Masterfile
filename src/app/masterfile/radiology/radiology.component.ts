@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Radiology } from 'src/app/models/radiology.model';
 import { RadiologyService } from 'src/app/services/radiology.service';
@@ -9,17 +10,20 @@ import { PopupRadiologyComponent } from '../popup/popup-radiology/popup-radiolog
   selector: 'app-radiology',
   templateUrl: './radiology.component.html',
   styleUrls: ['./radiology.component.css'],
-  providers : [DialogService]
+  providers: [DialogService, ConfirmationService]
 })
 export class RadiologyComponent implements OnInit {
   searchkey: ""
   ref: DynamicDialogRef;
-  radiology : Radiology;
-  prevRadiology : Radiology[];
-  radiologyList : Radiology[];
-  selectedRadiology : Radiology[];
+  radiology: Radiology;
+  prevRadiology: Radiology[];
+  radiologyList: Radiology[];
+  selectedRadiology: Radiology[];
+  responsemessage: string;
+  headermessage: string;
+  displayResponsive: boolean = false;
 
-  constructor(private radiologyService : RadiologyService, private dialogService : DialogService, private datePipe : DatePipe) { }
+  constructor(private radiologyService: RadiologyService, private dialogService: DialogService, private confirmationService: ConfirmationService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.fetchData();
@@ -66,7 +70,7 @@ export class RadiologyComponent implements OnInit {
       }
     })
   }
-  updateRadiologyPopUp(radiology : Radiology) {
+  updateRadiologyPopUp(radiology: Radiology) {
     this.ref = this.dialogService.open(PopupRadiologyComponent, {
       width: '1200px',
       height: '830px',
@@ -102,25 +106,33 @@ export class RadiologyComponent implements OnInit {
       }
     })
   }
-  removeRadiologyRecord(radiology : Radiology) {
-    this.radiologyService.deleteRadiology(radiology.id).subscribe({
-      next: (result: boolean) => {
-        result;
-        this.radiologyList.forEach(element => {
-          if (radiology.id == element.id) {
-            element.status = false;
-          }
-
-        });
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('complete');
-        this.prevRadiology = this.radiologyList.filter(x => x.status);
-      }
-    });
+  removeRadiologyRecord(radiology: Radiology) {
+    if (radiology != undefined) {
+      this.confirmationService.confirm({
+        message: `Are you sure you want to delete the record?`,
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.radiologyService.deleteRadiology(radiology.id).subscribe({
+            next: (result: boolean) => {
+              result;
+              this.radiologyList.forEach(element => {
+                if (radiology.id == element.id) {
+                  element.status = false;
+                }
+              });
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+            complete: () => {
+              console.log('complete');
+              this.prevRadiology = this.radiologyList.filter(x => x.status);
+            }
+          });
+        }
+      });
+    }
   }
   batchdeleteRadiology() {
     if (this.selectedRadiology.length > 0) {

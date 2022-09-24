@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DiagnosticCenter } from 'src/app/models/diagnosticcenter.model';
 import { DiagnosticcenterService } from 'src/app/services/diagnosticcenter.service';
@@ -9,17 +10,20 @@ import { PopupDiagnosticcenterComponent } from '../popup/popup-diagnosticcenter/
   selector: 'app-diagnosticcenter',
   templateUrl: './diagnosticcenter.component.html',
   styleUrls: ['./diagnosticcenter.component.css'],
-  providers: [DialogService]
+  providers: [DialogService, ConfirmationService]
 })
 export class DiagnosticcenterComponent implements OnInit {
-  searchkey : ""
-  ref : DynamicDialogRef;
-  diagnosticcenter : DiagnosticCenter;
-  prevDiagnosticCenter : DiagnosticCenter[];
-  diagnosticCenterList : DiagnosticCenter[];
-  selectedDiagnosticCenter : DiagnosticCenter[];
+  searchkey: ""
+  ref: DynamicDialogRef;
+  diagnosticcenter: DiagnosticCenter;
+  prevDiagnosticCenter: DiagnosticCenter[];
+  diagnosticCenterList: DiagnosticCenter[];
+  selectedDiagnosticCenter: DiagnosticCenter[];
+  responsemessage: string;
+  headermessage: string;
+  displayResponsive: boolean = false;
 
-  constructor(private diagnosticCenterService : DiagnosticcenterService, private dialogService : DialogService, private datePipe : DatePipe) { }
+  constructor(private diagnosticCenterService: DiagnosticcenterService, private dialogService: DialogService, private confirmationService: ConfirmationService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.fetchData();
@@ -66,7 +70,7 @@ export class DiagnosticcenterComponent implements OnInit {
       }
     })
   }
-  updateDiagnosticCenterPopUp(diagnosticcenter : DiagnosticCenter) {
+  updateDiagnosticCenterPopUp(diagnosticcenter: DiagnosticCenter) {
     this.ref = this.dialogService.open(PopupDiagnosticcenterComponent, {
       width: '1200px',
       height: '430px',
@@ -83,7 +87,7 @@ export class DiagnosticcenterComponent implements OnInit {
         this.diagnosticCenterList.forEach(val => {
           if (val.id == data.id) {
             val.code = data.code;
-            val.description = data.description;      
+            val.description = data.description;
             val.status = data.status;
             val.createdBy = data.createdBy;
             val.createdDateTime = data.createdDateTime;
@@ -93,25 +97,34 @@ export class DiagnosticcenterComponent implements OnInit {
       }
     })
   }
-  removeDiagnosticCenterRecord(diagnosticcenter : DiagnosticCenter) {
-    this.diagnosticCenterService.deleteDiagnosticCenter(diagnosticcenter.id).subscribe({
-      next: (result: boolean) => {
-        result;
-        this.diagnosticCenterList.forEach(element => {
-          if (diagnosticcenter.id == element.id) {
-            element.status = false;
-          }
+  removeDiagnosticCenterRecord(diagnosticcenter: DiagnosticCenter) {
+    if (diagnosticcenter != undefined) {
+      this.confirmationService.confirm({
+        message: `Are you sure you want to delete the record?`,
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.diagnosticCenterService.deleteDiagnosticCenter(diagnosticcenter.id).subscribe({
+            next: (result: boolean) => {
+              result;
+              this.diagnosticCenterList.forEach(element => {
+                if (diagnosticcenter.id == element.id) {
+                  element.status = false;
+                }
 
-        });
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('complete');
-        this.prevDiagnosticCenter = this.diagnosticCenterList.filter(x => x.status);
-      }
-    });
+              });
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+            complete: () => {
+              console.log('complete');
+              this.prevDiagnosticCenter = this.diagnosticCenterList.filter(x => x.status);
+            }
+          });
+        }
+      });
+    }
   }
   batchdeleteDiagnosticCenter() {
     if (this.selectedDiagnosticCenter.length > 0) {

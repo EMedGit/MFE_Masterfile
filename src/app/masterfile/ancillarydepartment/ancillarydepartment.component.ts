@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AncillaryDepartment } from 'src/app/models/ancillarydepartment.model';
 import { AncillarydepartmentService } from 'src/app/services/ancillarydepartment.service';
@@ -9,22 +10,25 @@ import { PopupAncillarydepartmentComponent } from '../popup/popup-ancillarydepar
   selector: 'app-ancillarydepartment',
   templateUrl: './ancillarydepartment.component.html',
   styleUrls: ['./ancillarydepartment.component.css'],
-  providers: [DialogService]
+  providers: [DialogService, ConfirmationService]
 })
 export class AncillarydepartmentComponent implements OnInit {
   searchkey: ""
   ref: DynamicDialogRef;
-  ancillarydepartment : AncillaryDepartment;
-  prevAncillaryDepartmentList : AncillaryDepartment[];
-  ancillarydepartmentList : AncillaryDepartment[];
-  selectedAncillaryDepartment : AncillaryDepartment[];
-  
-  constructor(private ancillarydepartmentService : AncillarydepartmentService, private dialogService : DialogService, private datePipe : DatePipe) { }
+  ancillarydepartment: AncillaryDepartment;
+  prevAncillaryDepartmentList: AncillaryDepartment[];
+  ancillarydepartmentList: AncillaryDepartment[];
+  selectedAncillaryDepartment: AncillaryDepartment[];
+  responsemessage: string;
+  headermessage: string;
+  displayResponsive: boolean = false;
+
+  constructor(private ancillarydepartmentService: AncillarydepartmentService, private confirmationService: ConfirmationService, private dialogService: DialogService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.fetchData();
   }
-  fetchData(){
+  fetchData() {
     this.ancillarydepartmentService.getAncillaryDepartment().subscribe({
       next: (result: AncillaryDepartment[]) => {
         this.ancillarydepartmentList = result;
@@ -93,22 +97,28 @@ export class AncillarydepartmentComponent implements OnInit {
     })
   }
   removeAncillaryDepartmentRecord(ancillarydepartment: AncillaryDepartment) {
-    this.ancillarydepartmentService.deleteAncillaryDepartment(ancillarydepartment.id).subscribe({
-      next: (result: boolean) => {
-        result;
-        this.ancillarydepartmentList.forEach(element => {
-          if (ancillarydepartment.id == element.id) {
-            element.status = false;
+    this.confirmationService.confirm({
+      message: `Are you sure you want to delete the record?`,
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.ancillarydepartmentService.deleteAncillaryDepartment(ancillarydepartment.id).subscribe({
+          next: (result: boolean) => {
+            result;
+            this.ancillarydepartmentList.forEach(element => {
+              if (ancillarydepartment.id == element.id) {
+                element.status = false;
+              }
+            });
+          },
+          error: (err: any) => {
+            console.log(err);
+          },
+          complete: () => {
+            console.log('complete');
+            this.prevAncillaryDepartmentList = this.ancillarydepartmentList.filter(x => x.status);
           }
-
         });
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('complete');
-        this.prevAncillaryDepartmentList = this.ancillarydepartmentList.filter(x => x.status);
       }
     });
   }

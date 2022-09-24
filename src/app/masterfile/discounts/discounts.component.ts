@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Discounts } from 'src/app/models/discounts.model';
 import { DiscountsService } from 'src/app/services/discounts.service';
@@ -9,46 +10,49 @@ import { PopupDiscountsComponent } from '../popup/popup-discounts/popup-discount
   selector: 'app-discounts',
   templateUrl: './discounts.component.html',
   styleUrls: ['./discounts.component.css'],
-  providers: [DialogService]
+  providers: [DialogService, ConfirmationService]
 })
 export class DiscountsComponent implements OnInit {
 
-  searchkey : ""
+  searchkey: ""
   ref: DynamicDialogRef;
-  discounts : Discounts;
-  prevDiscountsList : Discounts[];
-  discountsList : Discounts[];
-  selectedDiscounts : Discounts[];
+  discounts: Discounts;
+  prevDiscountsList: Discounts[];
+  discountsList: Discounts[];
+  selectedDiscounts: Discounts[];
+  responsemessage: string;
+  headermessage: string;
+  displayResponsive: boolean = false;
 
-  constructor(private discountsService : DiscountsService, private dialogService : DialogService, private datePipe: DatePipe) { }
+  constructor(private discountsService: DiscountsService, private dialogService: DialogService, private confirmationService: ConfirmationService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.fetchData();
   }
-  fetchData(){
-      this.discountsService.getDiscounts().subscribe({
-        next : (result : Discounts[]) => {        
-          this.discountsList = result;   
-          this.prevDiscountsList = this.discountsList.filter(x => x.status);
-        },
-        error : (err) => {
-          console.log(err);
-        },
-        complete : () => {     
-          console.log('complete');
-        }
-      });
+  fetchData() {
+    this.discountsService.getDiscounts().subscribe({
+      next: (result: Discounts[]) => {
+        this.discountsList = result;
+        this.prevDiscountsList = this.discountsList.filter(x => x.status);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('complete');
+      }
+    });
   }
-  filter(){
-    let filter : any[] = [];
+  filter() {
+    let filter: any[] = [];
     this.discountsList.forEach(val => {
-      if(val.patientTypeDescription?.toUpperCase().includes(this.searchkey.toUpperCase()) && val.status){
+      if (val.patientTypeDescription?.toUpperCase().includes(this.searchkey.toUpperCase()) && val.status) {
         filter.push(val);
       }
     });
     this.prevDiscountsList = filter;
   }
-  addDiscountsPopup(){
+  addDiscountsPopup() {
     this.ref = this.dialogService.open(PopupDiscountsComponent, {
       width: '1000px',
       height: '450px',
@@ -58,14 +62,14 @@ export class DiscountsComponent implements OnInit {
         isForSaving: true
       }
     });
-    this.ref.onClose.subscribe((data : Discounts) => {
-      if(data != undefined){
+    this.ref.onClose.subscribe((data: Discounts) => {
+      if (data != undefined) {
         this.discountsList.push(data);
         this.prevDiscountsList = this.discountsList.filter(x => x.status);
       }
     });
   }
-  updateDiscountsPopUp(discounts : Discounts){
+  updateDiscountsPopUp(discounts: Discounts) {
     this.ref = this.dialogService.open(PopupDiscountsComponent, {
       width: '1000px',
       height: '450px',
@@ -94,26 +98,35 @@ export class DiscountsComponent implements OnInit {
       }
     });
   }
-  removeDiscountsRecord(discounts : Discounts){
-    this.discountsService.deleteDiscounts(discounts.id).subscribe({
-      next: (result: boolean) => {
-        result;
-        this.discountsList.forEach(element => {
-          if (discounts.id == element.id) {
-            element.status = false;
-          }
-        });
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('complete');
-        this.prevDiscountsList = this.discountsList.filter(x => x.status);
-      }
-    });
+  removeDiscountsRecord(discounts: Discounts) {
+    if (discounts != undefined) {
+      this.confirmationService.confirm({
+        message: `Are you sure you want to delete the record?`,
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.discountsService.deleteDiscounts(discounts.id).subscribe({
+            next: (result: boolean) => {
+              result;
+              this.discountsList.forEach(element => {
+                if (discounts.id == element.id) {
+                  element.status = false;
+                }
+              });
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+            complete: () => {
+              console.log('complete');
+              this.prevDiscountsList = this.discountsList.filter(x => x.status);
+            }
+          });
+        }
+      });
+    }
   }
-  batchdeleteDiscounts(){
+  batchdeleteDiscounts() {
     if (this.selectedDiscounts.length > 0) {
       this.selectedDiscounts.forEach(val => {
         val.modifiedBy = '';

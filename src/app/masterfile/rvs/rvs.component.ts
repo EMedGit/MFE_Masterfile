@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { RVS } from 'src/app/models/rvs.model';
 import { RVSService } from 'src/app/services/rvs.service';
@@ -8,7 +9,7 @@ import { PopupRvsComponent } from '../popup/popup-rvs/popup-rvs.component';
   selector: 'app-rvs',
   templateUrl: './rvs.component.html',
   styleUrls: ['./rvs.component.css'],
-  providers: [DialogService]
+  providers: [DialogService, ConfirmationService]
 })
 export class RvsComponent implements OnInit {
   searchkey: ""
@@ -16,12 +17,14 @@ export class RvsComponent implements OnInit {
   rvs: RVS;
   rvsList: RVS[];
   selectedRVSList: RVS[];
-  newRVSList:  RVS[];
+  newRVSList: RVS[];
+  responsemessage: string;
+  headermessage: string;
+  displayResponsive: boolean = false;
 
-  constructor(private rvsService: RVSService, private dialogService: DialogService) { }
+  constructor(private rvsService: RVSService, private confirmationService: ConfirmationService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
-    //this.rvsService.getRVS().then(data => this.rvsList = data);
     this.getData();
   }
 
@@ -67,7 +70,7 @@ export class RvsComponent implements OnInit {
     })
   }
 
-  updateRVSPopUp(rvs: RVS){
+  updateRVSPopUp(rvs: RVS) {
     this.ref = this.dialogService.open(PopupRvsComponent, {
       width: '1000px',
       height: '620px',
@@ -77,7 +80,7 @@ export class RvsComponent implements OnInit {
         rvs,
         isForUpdating: true
       }
-      
+
     })
     this.ref.onClose.subscribe((data: RVS) => {
       if (data != undefined) {
@@ -95,24 +98,32 @@ export class RvsComponent implements OnInit {
     })
   }
 
-  removeRVS(rvs : RVS) {
-    this.rvsService.delete(rvs.id).subscribe({
-      next : (result : boolean) => {
-        result;
-        this.rvsList.forEach(element => {
-          if (rvs.id == element.id)
-          {
-            element.status = false;
-          }
-        });
-      },
-      error : (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('complete');
-        this.newRVSList = this.rvsList.filter(x => x.status);
-      }
-    });
+  removeRVS(rvs: RVS) {
+    if (rvs != undefined) {
+      this.confirmationService.confirm({
+        message: `Are you sure you want to delete the record?`,
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.rvsService.delete(rvs.id).subscribe({
+            next: (result: boolean) => {
+              result;
+              this.rvsList.forEach(element => {
+                if (rvs.id == element.id) {
+                  element.status = false;
+                }
+              });
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+            complete: () => {
+              console.log('complete');
+              this.newRVSList = this.rvsList.filter(x => x.status);
+            }
+          });
+        }
+      });
+    }
   }
 }

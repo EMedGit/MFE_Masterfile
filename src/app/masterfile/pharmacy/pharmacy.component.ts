@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Pharmacy } from 'src/app/models/pharmacy.model';
 import { PharmacyService } from 'src/app/services/pharmacy.service';
@@ -9,17 +10,20 @@ import { PopupPharmacyComponent } from '../popup/popup-pharmacy/popup-pharmacy.c
   selector: 'app-pharmacy',
   templateUrl: './pharmacy.component.html',
   styleUrls: ['./pharmacy.component.css'],
-  providers : [DialogService]
+  providers: [DialogService, ConfirmationService]
 })
 export class PharmacyComponent implements OnInit {
   searchkey: ""
-  ref : DynamicDialogRef;
-  pharmacy : Pharmacy;
-  prevPharmacy : Pharmacy[];
-  pharmacyList : Pharmacy[];
-  selectedPharmacy : Pharmacy[];
+  ref: DynamicDialogRef;
+  pharmacy: Pharmacy;
+  prevPharmacy: Pharmacy[];
+  pharmacyList: Pharmacy[];
+  selectedPharmacy: Pharmacy[];
+  responsemessage: string;
+  headermessage: string;
+  displayResponsive: boolean = false;
 
-  constructor(private pharmacyService : PharmacyService, private dialogService : DialogService, private datePipe : DatePipe) { }
+  constructor(private pharmacyService: PharmacyService, private dialogService: DialogService, private confirmationService: ConfirmationService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.fetchData();
@@ -66,7 +70,7 @@ export class PharmacyComponent implements OnInit {
       }
     })
   }
-  updatePharmacyPopUp(pharmacy : Pharmacy) {
+  updatePharmacyPopUp(pharmacy: Pharmacy) {
     this.ref = this.dialogService.open(PopupPharmacyComponent, {
       width: '1200px',
       height: '430px',
@@ -83,7 +87,7 @@ export class PharmacyComponent implements OnInit {
         this.pharmacyList.forEach(val => {
           if (val.id == data.id) {
             val.code = data.code;
-            val.description = data.description;     
+            val.description = data.description;
             val.status = data.status;
             val.createdBy = data.createdBy;
             val.createdDateTime = data.createdDateTime;
@@ -93,25 +97,33 @@ export class PharmacyComponent implements OnInit {
       }
     })
   }
-  removePharmacyRecord(pharmacy : Pharmacy) {
-    this.pharmacyService.deletePharmacyService(pharmacy.id).subscribe({
-      next: (result: boolean) => {
-        result;
-        this.pharmacyList.forEach(element => {
-          if (pharmacy.id == element.id) {
-            element.status = false;
-          }
-
-        });
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('complete');
-        this.prevPharmacy = this.pharmacyList.filter(x => x.status);
-      }
-    });
+  removePharmacyRecord(pharmacy: Pharmacy) {
+    if (pharmacy != undefined) {
+      this.confirmationService.confirm({
+        message: `Are you sure you want to delete the record?`,
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.pharmacyService.deletePharmacyService(pharmacy.id).subscribe({
+            next: (result: boolean) => {
+              result;
+              this.pharmacyList.forEach(element => {
+                if (pharmacy.id == element.id) {
+                  element.status = false;
+                }
+              });
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+            complete: () => {
+              console.log('complete');
+              this.prevPharmacy = this.pharmacyList.filter(x => x.status);
+            }
+          });
+        }
+      });
+    }
   }
   batchdeletePharmacy() {
     if (this.selectedPharmacy.length > 0) {

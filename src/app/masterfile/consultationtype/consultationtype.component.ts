@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Consultationtype } from 'src/app/models/consultationtype.model';
 import { ConsultationtypeService } from 'src/app/services/consultationtype.service';
@@ -9,17 +10,20 @@ import { PopupConsultationtypeComponent } from '../popup/popup-consultationtype/
   selector: 'app-consultationtype',
   templateUrl: './consultationtype.component.html',
   styleUrls: ['./consultationtype.component.css'],
-  providers: [DialogService]
+  providers: [DialogService, ConfirmationService]
 })
 export class ConsultationtypeComponent implements OnInit {
   searchkey: ""
-  ref : DynamicDialogRef;
-  consultationtype : Consultationtype;
-  prevConsultationTypeList : Consultationtype[];
-  consultationtypeList : Consultationtype[];
-  selectedConsultationType : Consultationtype[];
+  ref: DynamicDialogRef;
+  consultationtype: Consultationtype;
+  prevConsultationTypeList: Consultationtype[];
+  consultationtypeList: Consultationtype[];
+  selectedConsultationType: Consultationtype[];
+  responsemessage: string;
+  headermessage: string;
+  displayResponsive: boolean = false;
 
-  constructor(private consultationtypeService : ConsultationtypeService, private dialogService : DialogService, private datePipe : DatePipe) { }
+  constructor(private consultationtypeService: ConsultationtypeService, private confirmationService: ConfirmationService, private dialogService: DialogService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.fetchData();
@@ -98,24 +102,32 @@ export class ConsultationtypeComponent implements OnInit {
     })
   }
   removeConsultationTypeRecord(consultationType: Consultationtype) {
-    this.consultationtypeService.deleteConsultationType(consultationType.id).subscribe({
-      next: (result: boolean) => {
-        result;
-        this.consultationtypeList.forEach(element => {
-          if (consultationType.id == element.id) {
-            element.status = false;
-          }
-
-        });
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('complete');
-        this.prevConsultationTypeList = this.consultationtypeList.filter(x => x.status);
-      }
-    });
+    if (consultationType != undefined) {
+      this.confirmationService.confirm({
+        message: `Are you sure you want to delete the record?`,
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.consultationtypeService.deleteConsultationType(consultationType.id).subscribe({
+            next: (result: boolean) => {
+              result;
+              this.consultationtypeList.forEach(element => {
+                if (consultationType.id == element.id) {
+                  element.status = false;
+                }
+              });
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+            complete: () => {
+              console.log('complete');
+              this.prevConsultationTypeList = this.consultationtypeList.filter(x => x.status);
+            }
+          });
+        }
+      });
+    }
   }
   batchdeleteConsultationType() {
     if (this.selectedConsultationType.length > 0) {

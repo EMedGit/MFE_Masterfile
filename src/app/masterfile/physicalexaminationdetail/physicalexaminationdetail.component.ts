@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PhysicalExaminationDetail } from 'src/app/models/physicalexaminationdetail.model';
 import { PhysicalExaminationDetailService } from 'src/app/services/physicalexaminationdetail.service';
@@ -8,7 +9,7 @@ import { PopupPhysicalexaminationdetailComponent } from '../popup/popup-physical
   selector: 'app-physicalexaminationdetail',
   templateUrl: './physicalexaminationdetail.component.html',
   styleUrls: ['./physicalexaminationdetail.component.css'],
-  providers: [DialogService]
+  providers: [DialogService, ConfirmationService]
 })
 export class PhysicalexaminationdetailComponent implements OnInit {
   searchkey: ""
@@ -17,13 +18,16 @@ export class PhysicalexaminationdetailComponent implements OnInit {
   physicalExaminationDetails: PhysicalExaminationDetail[];
   selectedphysicalExaminationDetails: PhysicalExaminationDetail[];
   newphysicalExaminationDetailsList: PhysicalExaminationDetail[];
+  responsemessage: string;
+  headermessage: string;
+  displayResponsive: boolean = false;
 
-  constructor(private physicalExaminationDetailService : PhysicalExaminationDetailService, private dialogService: DialogService) { }
+  constructor(private physicalExaminationDetailService: PhysicalExaminationDetailService, private confirmationService: ConfirmationService, private dialogService: DialogService) { }
   ngOnInit(): void {
     this.getData();
   }
   getData() {
-    this.physicalExaminationDetailService.get(0,0,'','',0,100).subscribe({
+    this.physicalExaminationDetailService.get(0, 0, '', '', 0, 100).subscribe({
       next: (result: PhysicalExaminationDetail[]) => {
         this.physicalExaminationDetails = result;
         this.newphysicalExaminationDetailsList = this.physicalExaminationDetails.filter(x => x.status);
@@ -51,8 +55,7 @@ export class PhysicalexaminationdetailComponent implements OnInit {
   }
 
 
-  addPopup()
-  {
+  addPopup() {
     this.ref = this.dialogService.open(PopupPhysicalexaminationdetailComponent, {
       width: '1000px',
       height: '650px',
@@ -71,7 +74,7 @@ export class PhysicalexaminationdetailComponent implements OnInit {
     })
   }
 
-  updatePopup(physicalExaminationDetail : PhysicalExaminationDetail) {
+  updatePopup(physicalExaminationDetail: PhysicalExaminationDetail) {
     this.dialogService.open(PopupPhysicalexaminationdetailComponent, {
       width: '1000px',
       height: '650px',
@@ -97,26 +100,32 @@ export class PhysicalexaminationdetailComponent implements OnInit {
     })
   }
 
-  remove(physicalExaminationDetail : PhysicalExaminationDetail) {
-    this.physicalExaminationDetailService.delete(physicalExaminationDetail.id).subscribe({
-      next : (result : boolean) => {
-        result;
-        this.physicalExaminationDetails.forEach(element => {
-          if (physicalExaminationDetail.id == element.id)
-          {
-            element.status = false;
-          }
-        });
-      },
-      error : (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('delete complete');
-        this.newphysicalExaminationDetailsList = this.physicalExaminationDetails.filter(x => x.status);
-      }
-    });
+  remove(physicalExaminationDetail: PhysicalExaminationDetail) {
+    if (physicalExaminationDetail != undefined) {
+      this.confirmationService.confirm({
+        message: `Are you sure you want to delete the record?`,
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.physicalExaminationDetailService.delete(physicalExaminationDetail.id).subscribe({
+            next: (result: boolean) => {
+              result;
+              this.physicalExaminationDetails.forEach(element => {
+                if (physicalExaminationDetail.id == element.id) {
+                  element.status = false;
+                }
+              });
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+            complete: () => {
+              console.log('delete complete');
+              this.newphysicalExaminationDetailsList = this.physicalExaminationDetails.filter(x => x.status);
+            }
+          });
+        }
+      });
+    }
   }
-
-
 }

@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Province } from 'src/app/models/province.model';
 import { Region } from 'src/app/models/region.model';
@@ -10,18 +11,21 @@ import { PopupProvinceComponent } from '../popup/popup-province/popup-province.c
   selector: 'app-province',
   templateUrl: './province.component.html',
   styleUrls: ['./province.component.css'],
-  providers: [DialogService]
+  providers: [DialogService, ConfirmationService]
 })
 export class ProvinceComponent implements OnInit {
   searchkey: ""
   ref: DynamicDialogRef;
   province: Province;
-  prevProvinceList : Province[];
+  prevProvinceList: Province[];
   provinceList: Province[];
-  selectedProvince : Province[];
+  selectedProvince: Province[];
   regions: Region[];
+  responsemessage: string;
+  headermessage: string;
+  displayResponsive: boolean = false;
 
-  constructor(private addressService : AddressService, private dialogService : DialogService, private datePipe : DatePipe) { }
+  constructor(private addressService: AddressService, private dialogService: DialogService, private confirmationService: ConfirmationService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.fetchData();
@@ -31,7 +35,7 @@ export class ProvinceComponent implements OnInit {
       next: (result: Province[]) => {
         this.provinceList = result;
         this.prevProvinceList = this.provinceList.filter(x => x.status);
-        console.log(this.provinceList,'hey');
+        console.log(this.provinceList, 'hey');
       },
       error: (err) => {
         console.log(err);
@@ -53,7 +57,7 @@ export class ProvinceComponent implements OnInit {
     console.log(filter)
     this.prevProvinceList = filter;
   }
-  addProvincePopup(){
+  addProvincePopup() {
     this.ref = this.dialogService.open(PopupProvinceComponent, {
       width: '1200px',
       height: '530px',
@@ -67,11 +71,11 @@ export class ProvinceComponent implements OnInit {
       if (data != undefined) {
         this.provinceList.push(data);
         this.prevProvinceList = this.provinceList.filter(x => x.status);
-        console.log(this.provinceList,'xx');
+        console.log(this.provinceList, 'xx');
       }
     })
   }
-  batchdeleteProvince(){
+  batchdeleteProvince() {
     if (this.selectedProvince.length > 0) {
       this.selectedProvince.forEach(val => {
         val.modifiedBy = '';
@@ -101,7 +105,7 @@ export class ProvinceComponent implements OnInit {
       });
     }
   }
-  updateProvincePopUp(province : Province){
+  updateProvincePopUp(province: Province) {
     this.ref = this.dialogService.open(PopupProvinceComponent, {
       width: '1200px',
       height: '530px',
@@ -129,24 +133,32 @@ export class ProvinceComponent implements OnInit {
       }
     })
   }
-  removeProvinceRecord(province : Province){
-    this.addressService.deleteProvince(province.id).subscribe({
-      next: (result: boolean) => {
-        result;
-        this.provinceList.forEach(element => {
-          if (province.id == element.id) {
-            element.status = false;
-          }
-
-        });
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('complete');
-        this.prevProvinceList = this.provinceList.filter(x => x.status);
-      }
-    });
+  removeProvinceRecord(province: Province) {
+    if (province != undefined) {
+      this.confirmationService.confirm({
+        message: `Are you sure you want to delete the record?`,
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.addressService.deleteProvince(province.id).subscribe({
+            next: (result: boolean) => {
+              result;
+              this.provinceList.forEach(element => {
+                if (province.id == element.id) {
+                  element.status = false;
+                }
+              });
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+            complete: () => {
+              console.log('complete');
+              this.prevProvinceList = this.provinceList.filter(x => x.status);
+            }
+          });
+        }
+      });
+    }
   }
 }

@@ -53,10 +53,13 @@
                 </td>
             </tr>
         </ng-template>
-        <!-- <ng-template pTemplate="summary">
-            <div class="p-d-flex p-ai-center p-jc-between">
-                In total, there are {{icd10s ? icd10s.length : 0 }} ICD10.
-            </div>
-        </ng-template> -->
     </p-table>
 </div>
+<p-confirmDialog [style]="{ width: '25%' }"></p-confirmDialog>
+<p-dialog header={{headermessage}} [(visible)]="displayResponsive" [breakpoints]="{'100px': '55vw'}" [style]="{width: '400px'}"
+[draggable]="false" [resizable]="false">
+<p>{{responsemessage}}</p>
+    <ng-template pTemplate="footer">
+    <p-button (click)="displayResponsive=false" label="OK" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>

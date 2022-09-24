@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Department } from 'src/app/models/department.model';
 import { BulkUserHealthFacility } from 'src/app/models/userhealthfacility.model';
@@ -11,7 +12,7 @@ import { PopupDepartmentComponent } from '../popup/popup-department/popup-depart
   selector: 'app-department',
   templateUrl: './department.component.html',
   styleUrls: ['./department.component.css'],
-  providers: [DialogService]
+  providers: [DialogService, ConfirmationService]
 })
 export class DepartmentComponent implements OnInit {
   searchkey: "";
@@ -21,14 +22,17 @@ export class DepartmentComponent implements OnInit {
   selectedDepartments: Department[];
   newDepartmentsList: Department[];
   bulkUserHealthFacility: BulkUserHealthFacility;
+  responsemessage: string;
+  headermessage: string;
+  displayResponsive: boolean = false;
 
-  constructor(private departmentService : DepartmentService, private usersService: UsersService, private toastService: ToastService, private dialogService: DialogService) { }
+  constructor(private departmentService: DepartmentService, private usersService: UsersService, private confirmationService: ConfirmationService, private toastService: ToastService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.getData();
   }
   getData() {
-    this.departmentService.getDepartments('','',0,0,100).subscribe({
+    this.departmentService.getDepartments('', '', 0, 0, 100).subscribe({
       next: (result: Department[]) => {
         this.departments = result;
         this.newDepartmentsList = this.departments.filter(x => x.status);
@@ -43,7 +47,6 @@ export class DepartmentComponent implements OnInit {
   }
 
   filter() {
-    //this.departments.every(a => a.description?.includes(value.key));
     console.log(this.selectedDepartments)
     let filter: any[] = [];
     this.newDepartmentsList.forEach(val => {
@@ -57,8 +60,7 @@ export class DepartmentComponent implements OnInit {
     this.newDepartmentsList = filter;
   }
 
-  addDepartmentPopup()
-  {
+  addDepartmentPopup() {
     this.ref = this.dialogService.open(PopupDepartmentComponent, {
       width: '1000px',
       height: '500px',
@@ -77,7 +79,7 @@ export class DepartmentComponent implements OnInit {
     })
   }
 
-  updateDepartmentPopup(department : Department) {
+  updateDepartmentPopup(department: Department) {
     this.ref = this.dialogService.open(PopupDepartmentComponent, {
       width: '1000px',
       height: '500px',
@@ -106,37 +108,45 @@ export class DepartmentComponent implements OnInit {
     })
   }
 
-  removeDepartment(department : Department) {
-    this.departmentService.delete(department.id).subscribe({
-      next : (result : boolean) => {
-        result;
-        this.departments.forEach(element => {
-          if (department.id == element.id)
-          {
-            element.status = false;
-          }
-        });
-      },
-      error : (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        this.newDepartmentsList = this.departments.filter(x => x.status);
-        this.usersService.bulkDeleteUserHealthFacility(this.getUserHealthFacility(department)).subscribe({
-          next: (retVal) => {
-          }, error: (err) => {
-            this.toastService.showError(err.error.messages);
-          }, complete: () => {
-            this.toastService.showSuccess('Successfully Deleted.');
-          }
-        });
-      }
-    });
+  removeDepartment(department: Department) {
+    if (department != undefined) {
+      this.confirmationService.confirm({
+        message: `Are you sure you want to delete the record?`,
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.departmentService.delete(department.id).subscribe({
+            next: (result: boolean) => {
+              result;
+              this.departments.forEach(element => {
+                if (department.id == element.id) {
+                  element.status = false;
+                }
+              });
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+            complete: () => {
+              this.newDepartmentsList = this.departments.filter(x => x.status);
+              this.usersService.bulkDeleteUserHealthFacility(this.getUserHealthFacility(department)).subscribe({
+                next: (retVal) => {
+                }, error: (err) => {
+                  this.toastService.showError(err.error.messages);
+                }, complete: () => {
+                  this.toastService.showSuccess('Successfully Deleted.');
+                }
+              });
+            }
+          });
+        }
+      });
+    }
   }
-  getUserHealthFacility(department : Department): BulkUserHealthFacility {
+  getUserHealthFacility(department: Department): BulkUserHealthFacility {
     this.bulkUserHealthFacility = new BulkUserHealthFacility();
     this.bulkUserHealthFacility.departmentId = department.id;
-    this.bulkUserHealthFacility.type = 'HealthFacility';
+    this.bulkUserHealthFacility.type = 'Department';
     return this.bulkUserHealthFacility;
   }
 

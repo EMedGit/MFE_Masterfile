@@ -1,5 +1,6 @@
 import { DatePipe, XhrFactory } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Barangay } from 'src/app/models/barangay.model';
 import { AddressService } from 'src/app/services/address.service';
@@ -9,17 +10,20 @@ import { PopupBarangayComponent } from '../popup/popup-barangay/popup-barangay.c
   selector: 'app-barangay',
   templateUrl: './barangay.component.html',
   styleUrls: ['./barangay.component.css'],
-  providers : [DialogService]
+  providers: [DialogService, ConfirmationService]
 })
 export class BarangayComponent implements OnInit {
   searchkey: ""
   ref: DynamicDialogRef;
-  barangay : Barangay;
-  prevBarangayList : Barangay[];
-  barangayList : Barangay[];
-  selectedBarangay : Barangay[];
+  barangay: Barangay;
+  prevBarangayList: Barangay[];
+  barangayList: Barangay[];
+  selectedBarangay: Barangay[];
+  responsemessage: string;
+  headermessage: string;
+  displayResponsive: boolean = false;
 
-  constructor(private addressService : AddressService, private dialogService : DialogService, private datePipe : DatePipe) { }
+  constructor(private addressService: AddressService, private confirmationService: ConfirmationService, private dialogService: DialogService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.fetchData();
@@ -47,7 +51,7 @@ export class BarangayComponent implements OnInit {
     });
     this.prevBarangayList = filter;
   }
-  addBarangayPopup(){
+  addBarangayPopup() {
     this.ref = this.dialogService.open(PopupBarangayComponent, {
       width: '1200px',
       height: '630px',
@@ -57,14 +61,14 @@ export class BarangayComponent implements OnInit {
         isForSaving: true
       }
     });
-    this.ref.onClose.subscribe((data : Barangay) => {
-        if(data != undefined){
-          this.barangayList.push(data);
-          this.prevBarangayList = this.barangayList.filter(x => x.status);
-        }
+    this.ref.onClose.subscribe((data: Barangay) => {
+      if (data != undefined) {
+        this.barangayList.push(data);
+        this.prevBarangayList = this.barangayList.filter(x => x.status);
+      }
     });
   }
-  updateBarangayPopUp(barangay : Barangay){
+  updateBarangayPopUp(barangay: Barangay) {
     this.ref = this.dialogService.open(PopupBarangayComponent, {
       width: '1200px',
       height: '630px',
@@ -75,10 +79,10 @@ export class BarangayComponent implements OnInit {
         isForUpdating: true
       }
     });
-    this.ref.onClose.subscribe((data : Barangay) => {
-      if(data != undefined){
+    this.ref.onClose.subscribe((data: Barangay) => {
+      if (data != undefined) {
         this.barangayList.forEach(val => {
-          if(val.id == data.id) {
+          if (val.id == data.id) {
             val.barangayCode = data.barangayCode;
             val.barangayName = data.barangayName;
             val.provinceCode = data.provinceCode;
@@ -92,24 +96,33 @@ export class BarangayComponent implements OnInit {
       }
     });
   }
-  removeBarangayRecord(barangay : Barangay){
-    this.addressService.deleteBarangay(barangay.id).subscribe({
-      next: (result: boolean) => {
-        result;
-        this.barangayList.forEach(element => {
-          if (barangay.id == element.id) {
-            element.status = false;
-          }
-        });
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('complete');
-        this.prevBarangayList = this.barangayList.filter(x => x.status);
-      }
-    });
+  removeBarangayRecord(barangay: Barangay) {
+    if (barangay != undefined) {
+      this.confirmationService.confirm({
+        message: `Are you sure you want to delete the record?`,
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.addressService.deleteBarangay(barangay.id).subscribe({
+            next: (result: boolean) => {
+              result;
+              this.barangayList.forEach(element => {
+                if (barangay.id == element.id) {
+                  element.status = false;
+                }
+              });
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+            complete: () => {
+              console.log('complete');
+              this.prevBarangayList = this.barangayList.filter(x => x.status);
+            }
+          });
+        }
+      });
+    }
   }
   batchdeleteBarangay() {
     if (this.selectedBarangay.length > 0) {
