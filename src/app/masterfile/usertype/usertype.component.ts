@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UserType } from 'src/app/models/usertype.model';
 import { UserTypeService } from 'src/app/services/usertype.service';
@@ -8,7 +9,7 @@ import { PopupUserTypeComponent } from '../popup/popup-usertype/popup-usertype.c
   selector: 'app-usertype',
   templateUrl: './usertype.component.html',
   styleUrls: ['./usertype.component.css'],
-  providers: [DialogService]
+  providers: [DialogService, ConfirmationService]
 })
 export class UsertypeComponent implements OnInit {
   searchkey: ""
@@ -17,8 +18,11 @@ export class UsertypeComponent implements OnInit {
   userTypeList: UserType[];
   newUserTypeList: UserType[];
   selectedUserTypes: UserType[];
+  responsemessage: string;
+  headermessage: string;
+  displayResponsive: boolean = false;
 
-  constructor(private userTypeService: UserTypeService, private dialogService: DialogService) { }
+  constructor(private userTypeService: UserTypeService, private confirmationService: ConfirmationService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.getData();
@@ -27,21 +31,19 @@ export class UsertypeComponent implements OnInit {
   getData() {
     try {
       this.userTypeService
-        .getList('','',0,9999)
-        .subscribe((retval : UserType[]) => {
-          console.log(retval);          
+        .getList()
+        .subscribe((retval: UserType[]) => {
+          console.log(retval);
           this.userTypeList = retval;
           this.newUserTypeList = this.userTypeList.filter(x => x.status);
         });
     }
-    catch (error){
+    catch (error) {
       console.log(error);
     }
   }
 
   filter() {
-    //this.sections.every(a => a.description?.includes(value.key));
-
     console.log(this.selectedUserTypes)
     let filter: any[] = [];
     this.newUserTypeList.forEach(val => {
@@ -51,20 +53,17 @@ export class UsertypeComponent implements OnInit {
       }
 
     });
-    console.log(filter)
     this.newUserTypeList = filter;
   }
 
-  
-  addUserTypePopup()
-  {
-    this.dialogService.open(PopupUserTypeComponent, {
+
+  addUserTypePopup() {
+    this.ref = this.dialogService.open(PopupUserTypeComponent, {
       width: '1000px',
-      height: '600px',
+      height: '450px',
       showHeader: true,
       closable: true,
       data: {
-        section: {},
         isForSaving: true
       }
     })
@@ -76,14 +75,14 @@ export class UsertypeComponent implements OnInit {
     })
   }
 
-  updateUserTypePopup(section : UserType) {
-    this.dialogService.open(PopupUserTypeComponent, {
+  updateUserTypePopup(userType: UserType) {
+    this.ref = this.dialogService.open(PopupUserTypeComponent, {
       width: '1000px',
       height: '600px',
       showHeader: true,
       closable: true,
       data: {
-        section,
+        userType,
         isForUpdating: true
       }
     })
@@ -104,25 +103,32 @@ export class UsertypeComponent implements OnInit {
     })
   }
 
-  removeUserType(data : UserType) {
-    this.userTypeService.delete(data.id).subscribe({
-      next : (result : boolean) => {
-        result;
-        this.userTypeList.forEach(element => {
-          if (data.id == element.id)
-          {
-            element.status = false;
-          }
-        });
-      },
-      error : (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('complete');
-        this.newUserTypeList = this.userTypeList.filter(x => x.status);
-      }
-    });
+  removeUserType(data: UserType) {
+    if (data != undefined) {
+      this.confirmationService.confirm({
+        message: `Are you sure you want to delete the record?`,
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.userTypeService.delete(data.id).subscribe({
+            next: (result: boolean) => {
+              result;
+              this.userTypeList.forEach(element => {
+                if (data.id == element.id) {
+                  element.status = false;
+                }
+              });
+            },
+            error: (err: any) => {
+              console.log(err);
+            },
+            complete: () => {
+              console.log('complete');
+              this.newUserTypeList = this.userTypeList.filter(x => x.status);
+            }
+          });
+        }
+      });
+    }
   }
-
 }

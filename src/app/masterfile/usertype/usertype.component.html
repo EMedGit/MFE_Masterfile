@@ -34,6 +34,7 @@
                 </th>
                 <th pSortableColumn="code">Code<p-sortIcon field="code"></p-sortIcon></th>
                 <th pSortableColumn="description">Description <p-sortIcon field="description"></p-sortIcon></th>
+                <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
                 <th></th>
             </tr>
         </ng-template>
@@ -57,3 +58,11 @@
         </ng-template>
     </p-table>
 </div>
+<p-confirmDialog [style]="{ width: '25%' }"></p-confirmDialog>
+<p-dialog header={{headermessage}} [(visible)]="displayResponsive" [breakpoints]="{'100px': '55vw'}" [style]="{width: '400px'}"
+[draggable]="false" [resizable]="false">
+<p>{{responsemessage}}</p>
+    <ng-template pTemplate="footer">
+    <p-button (click)="displayResponsive=false" label="OK" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>

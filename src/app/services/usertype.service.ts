@@ -16,21 +16,12 @@ const httpOptions = {
     
     constructor(private http: HttpClient) { }
     
-    public getList(code: string, description: string, page: number, itemsPerPage: number) : Observable<UserType[]> 
-    {
-        let params = new HttpParams();
-        params = params.append('Code', code);
-        params = params.append('Description', description);
-        params = params.append('Page', page);
-        params = params.append('ItemsPerPage', itemsPerPage);
-        return this.http
-        .get<UserType[]>(`${environment.masterfileAPI}/userType`, {params})
-        .pipe(
-            map((result) => {
-                return result;
-            })
-        );
-    }
+    getList() : Observable<UserType[]> {
+        const params = new HttpParams()
+          .set('Page', 0)
+          .set('ItemsPerPage', 9999);
+        return this.http.get<UserType[]>(`${environment.masterfileAPI}/userType`, { params })
+      }
     GetUserTypeByCode(HF_CODE: string): Observable<UserType[]> {
         const params = new HttpParams()
             .set('Code', HF_CODE)

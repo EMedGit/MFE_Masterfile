@@ -17,20 +17,18 @@ export class PopupUserTypeComponent implements OnInit {
 
   userType: UserType;
 
-  isActiveStatus=  false;
-  isForSaving= false;
-  isForUpdating= false;
+  isActiveStatus = false;
+  isForSaving = false;
+  isForUpdating = false;
 
 
   constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private userTypeService: UserTypeService, private toastService: ToastService) { }
 
   ngOnInit(): void {
-    this.isActiveStatus = this.config.data.userType.status;
-    this.isForUpdating= this.config.data.isForUpdating;
+    this.isForUpdating = this.config.data.isForUpdating;
     this.isForSaving = this.config.data.isForSaving;
-
     this.buildFormGroup();
-    this.userTypeForm.patchValue(this.config.data.userType)    
+    this.userTypeForm.patchValue(this.config.data.userType)
   }
 
   buildFormGroup() {
@@ -42,7 +40,7 @@ export class PopupUserTypeComponent implements OnInit {
       });
 
   }
-  ClosePopUp(data: UserType){
+  ClosePopUp(data: UserType) {
     console.log(this.ref);
     this.ref.close(data);
   }
@@ -52,49 +50,46 @@ export class PopupUserTypeComponent implements OnInit {
       this.ref.close();
     }
   }
-
-  saveData(){
+  saveData() {
     if(this.isForSaving){
-      //this.userTypeService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
-      console.log(this.getData());
-    }     
+      this.userTypeService.GetUserTypeByCode(this.userTypeForm.controls['code'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.code.toUpperCase() == this.userTypeForm.controls['code'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Code already Exist!');
+        } else {
+        this.userTypeService.insert(this.getData()).subscribe(result => { this.ClosePopUp(result); });
+        }
+      });
+    }
   }
-
-  
-  updateData(){   
-
+  updateData() {
     let data = this.config.data.userType;
     data.code = this.userTypeForm.controls['code'].value;
     data.description = this.userTypeForm.controls['description'].value;
     data.modifiedBy = '';
     data.modifiedDateTime = new Date();
-    if(this.isForUpdating){
+    if (this.isForUpdating) {
       this.userTypeService.update(data.id, data).subscribe({
-      next: (result : UserType) => {
-        data = result;
-        this.ClosePopUp(result); 
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {        
-        console.log('complete');
-      }
+        next: (result: UserType) => {
+          data = result;
+          this.ClosePopUp(result);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('complete');
+        }
       });
     }
-
   }
 
-  getData() : UserType {
+  getData(): UserType {
     this.userType = new UserType();
     this.userType.code = this.userTypeForm.controls['code'].value;
     this.userType.description = this.userTypeForm.controls['description'].value;
     this.userType.createdBy = '';
     this.userType.createdDateTime = new Date();
-    
     return this.userType;
-
   }
-
-
 }
