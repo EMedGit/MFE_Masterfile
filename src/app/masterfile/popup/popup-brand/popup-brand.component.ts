@@ -61,7 +61,15 @@ export class PopupBrandComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Code already Exist!');
         } else {
-        this.brandService.postBrand(this.getValue()).subscribe(result => { this.ClosePopUp(result); });
+        this.brandService.postBrand(this.getValue()).subscribe({
+          next: result => {
+            this.ClosePopUp(result);
+          }, error: (err) => {
+            this.toastService.showError(err.error.messages);
+          }, complete: () => {
+            this.toastService.showSuccess('Successfully Saved.');
+          }
+        });
         }
       });
     }
@@ -82,10 +90,10 @@ export class PopupBrandComponent implements OnInit {
           this.ClosePopUp(result);
         },
         error : (err) => {
-          console.log(err);
+          this.toastService.showError(err.error.messages);
         },
         complete : () => {
-          console.log('complete');
+          this.toastService.showSuccess('Successfully Updated.');
         }
       });
     }

@@ -58,8 +58,14 @@ export class PopupPhicmembercategoryComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Code already Exist!');
         } else {
-        this.phicmembercategoryService.postPhicmembercategory(this.getValue()).subscribe(result => {
-          this.ClosePopUp(result);
+        this.phicmembercategoryService.postPhicmembercategory(this.getValue()).subscribe({
+          next: result => {
+            this.ClosePopUp(result);
+          }, error: (err) => {
+            this.toastService.showError(err.error.messages);
+          }, complete: () => {
+            this.toastService.showSuccess('Successfully Saved.');
+          }
         });
       }
     });
@@ -80,10 +86,10 @@ export class PopupPhicmembercategoryComponent implements OnInit {
           this.ClosePopUp(result);
         },
         error : (err) => {
-          console.log(err);
+          this.toastService.showError(err.error.messages);
         },
         complete : () => {
-          console.log('complete');
+          this.toastService.showSuccess('Successfully Updated.');
         }
       });
     }

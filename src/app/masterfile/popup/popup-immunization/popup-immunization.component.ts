@@ -107,10 +107,10 @@ export class PopupImmunizationComponent implements OnInit {
           this.ClosePopUp(result);
         },
         error: (err) => {
-          console.log(err);
+          this.toastService.showError(err.error.messages);
         },
         complete: () => {
-          console.log('update complete');
+          this.toastService.showSuccess('Successfully Updated.');
         }
       });
     }

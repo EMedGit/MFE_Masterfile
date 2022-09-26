@@ -77,8 +77,14 @@ export class PopupReferralcategorydetailComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Referral Category Description already Exist!');
         } else {
-          this.referralcategorydetailService.postReferralcategorydetail(this.getValue()).subscribe(result => {
-            this.ClosePopUp(result);
+          this.referralcategorydetailService.postReferralcategorydetail(this.getValue()).subscribe({
+            next: result => {
+              this.ClosePopUp(result);
+            }, error: (err) => {
+              this.toastService.showError(err.error.messages);
+            }, complete: () => {
+              this.toastService.showSuccess('Successfully Saved.');
+            }
           });
         }
       });
@@ -106,10 +112,10 @@ export class PopupReferralcategorydetailComponent implements OnInit {
           this.ClosePopUp(result);
         },
         error: (err) => {
-          console.log(err);
+          this.toastService.showError(err.error.messages);
         },
         complete: () => {
-          console.log('complete');
+          this.toastService.showSuccess('Successfully Updated.');
         }
       });
     }

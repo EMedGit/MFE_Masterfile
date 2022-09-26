@@ -72,7 +72,15 @@ export class PopupDepartmentComponent implements OnInit {
         } else {
           this.hfService.getHealthFacilityById(this.departmentForm.controls['healthFacilityId'].value).subscribe(retVal => {
             this.healthfacility = retVal;
-            this.departmentService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
+            this.departmentService.insert(this.getData()).subscribe({
+              next: result => {
+                this.ClosePopUp(result);
+              }, error: (err) => {
+                this.toastService.showError(err.error.messages);
+              }, complete: () => {
+                this.toastService.showSuccess('Successfully Saved.');
+              }
+            });
           });
         }
       });

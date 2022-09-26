@@ -7,6 +7,7 @@ import { Address } from 'src/app/models/address.model';
 import { Province } from 'src/app/models/province.model';
 import { Region } from 'src/app/models/region.model';
 import { AddressService } from 'src/app/services/address.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-province',
@@ -32,7 +33,7 @@ export class PopupProvinceComponent implements OnInit {
   address = new BehaviorSubject<Address>(new Address());
   outputAddress: EventEmitter<Address> = new EventEmitter<Address>();
   outputAddressForm: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
-  constructor(private ref : DynamicDialogRef, private config : DynamicDialogConfig, private addressService : AddressService, private datePipe : DatePipe) { }
+  constructor(private ref : DynamicDialogRef, private config : DynamicDialogConfig, private addressService : AddressService, private datePipe : DatePipe, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isForUpdating = this.config.data.isForUpdating;
@@ -68,8 +69,14 @@ export class PopupProvinceComponent implements OnInit {
   }
   saveData(){
     if(this.isForSaving){
-      this.addressService.postProvince(this.getValue()).subscribe(result => {
-        this.ClosePopUp(result);
+      this.addressService.postProvince(this.getValue()).subscribe({
+        next: result => {
+          this.ClosePopUp(result);
+        }, error: (err) => {
+          this.toastService.showError(err.error.messages);
+        }, complete: () => {
+          this.toastService.showSuccess('Successfully Saved.');
+        }
       });
     }
   }
@@ -116,10 +123,10 @@ export class PopupProvinceComponent implements OnInit {
           this.ClosePopUp(result);
         },
         error : (err) => {
-          console.log(err);
+          this.toastService.showError(err.error.messages);
         },
         complete : () => {
-          console.log('complete');
+          this.toastService.showSuccess('Successfully Updated.');
         }
       });
     }

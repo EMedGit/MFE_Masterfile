@@ -9,6 +9,7 @@ import { Municipality } from 'src/app/models/municipality.model';
 import { Province } from 'src/app/models/province.model';
 import { Region } from 'src/app/models/region.model';
 import { AddressService } from 'src/app/services/address.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-barangay',
@@ -17,23 +18,23 @@ import { AddressService } from 'src/app/services/address.service';
 })
 export class PopupBarangayComponent implements OnInit {
 
-  barangayForm : FormGroup;
-  formBuilder : FormBuilder;
-  barangay : Barangay;
-  arrBarangay : Barangay[]=[];
-  barangayList : Barangay[];
+  barangayForm: FormGroup;
+  formBuilder: FormBuilder;
+  barangay: Barangay;
+  arrBarangay: Barangay[] = [];
+  barangayList: Barangay[];
   region: Region[] = [];
   province: Province[] = [];
   municipality: Municipality[] = [];
-  id : number = 0;
+  id: number = 0;
 
-  isActiveStatus=  false;
-  isForSaving= false;
-  isForUpdating= false;
+  isActiveStatus = false;
+  isForSaving = false;
+  isForUpdating = false;
   address = new BehaviorSubject<Address>(new Address());
   outputAddress: EventEmitter<Address> = new EventEmitter<Address>();
   outputAddressForm: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
-  constructor(private ref : DynamicDialogRef, private config : DynamicDialogConfig, private addressService : AddressService, private datePipe : DatePipe) { }
+  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private addressService: AddressService, private datePipe: DatePipe, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isForUpdating = this.config.data.isForUpdating;
@@ -57,10 +58,10 @@ export class PopupBarangayComponent implements OnInit {
         zipcode: ['', Validators.required]
       });
   }
-  loadData() : void {
+  loadData(): void {
     let data = this.config.data.barangay;
-    this.addressService.GetRegionById(0).subscribe(retval => { 
-    return this.region = retval;
+    this.addressService.GetRegionById(0).subscribe(retval => {
+      return this.region = retval;
     });
     this.addressService.GetProvinceByCode('').subscribe(retVal => {
       this.province = retVal;
@@ -72,7 +73,7 @@ export class PopupBarangayComponent implements OnInit {
       this.outputAddress.emit(value)
     });
   }
-  ClosePopUp(data : Barangay){
+  ClosePopUp(data: Barangay) {
     this.ref.close(data);
   }
   ngOnDestroy() {
@@ -80,14 +81,20 @@ export class PopupBarangayComponent implements OnInit {
       this.ref.close();
     }
   }
-  saveData(){
-    if(this.isForSaving){
-      this.addressService.postBarangay(this.getValue()).subscribe(result => {
-        this.ClosePopUp(result);
+  saveData() {
+    if (this.isForSaving) {
+      this.addressService.postBarangay(this.getValue()).subscribe({
+        next: result => {
+          this.ClosePopUp(result);
+        }, error: (err) => {
+          this.toastService.showError(err.error.messages);
+        }, complete: () => {
+          this.toastService.showSuccess('Successfully Saved.');
+        }
       });
+    }
   }
-  }
-  updateData(){
+  updateData() {
     let data = this.config.data.barangay;
     let obj = new Barangay();
     obj.barangayCode = this.barangayForm.controls['barangayCode'].value;
@@ -98,18 +105,18 @@ export class PopupBarangayComponent implements OnInit {
     obj.modifiedDateTime = this.datePipe.transform(
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
     ) as string;
-    if(this.isForUpdating){
+    if (this.isForUpdating) {
       console.log('try', obj);
       this.addressService.putBarangay(data.id, obj).subscribe({
-        next : (result : Barangay) => {
+        next: (result: Barangay) => {
           obj = result;
           this.ClosePopUp(result);
         },
-        error : (err) => {
-          console.log(err);
+        error: (err) => {
+          this.toastService.showError(err.error.messages);
         },
-        complete : () => {
-          console.log('complete');
+        complete: () => {
+          this.toastService.showSuccess('Successfully Updated.');
         }
       });
     }
@@ -124,7 +131,7 @@ export class PopupBarangayComponent implements OnInit {
     this.barangay.createdBy = 'admin';
     return this.barangay;
   }
-  onValueChanges() : void {
+  onValueChanges(): void {
     this.barangayForm.valueChanges.subscribe(value => {
       value.provinceName = this.province.find(t => t.provinceCode == value.provinceCode)?.provinceName ?? null;
       value.municipalityName = this.municipality.find(t => t.municipalityCode == value.municipalityCode)?.municipalityName ?? null;
@@ -150,5 +157,5 @@ export class PopupBarangayComponent implements OnInit {
         this.municipality = retVal;
       })
     });
-  } 
+  }
 }

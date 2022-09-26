@@ -13,18 +13,18 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class PopupPharmacyComponent implements OnInit {
 
-  pharmacyForm : FormGroup;
-  formBuilder : FormBuilder;
-  pharmacy : Pharmacy;
-  arrPharmacy : Pharmacy[] = [];
-  pharmacyList : Pharmacy[];
-  id : number = 0;
+  pharmacyForm: FormGroup;
+  formBuilder: FormBuilder;
+  pharmacy: Pharmacy;
+  arrPharmacy: Pharmacy[] = [];
+  pharmacyList: Pharmacy[];
+  id: number = 0;
 
-  isActiveStatus=  false;
-  isForSaving= false;
-  isForUpdating= false;
+  isActiveStatus = false;
+  isForSaving = false;
+  isForUpdating = false;
 
-  constructor(private ref : DynamicDialogRef, private config : DynamicDialogConfig, private pharmacyService : PharmacyService, private datePipe : DatePipe, private toastService: ToastService) { }
+  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private pharmacyService: PharmacyService, private datePipe: DatePipe, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isForUpdating = this.config.data.isForUpdating;
@@ -37,11 +37,11 @@ export class PopupPharmacyComponent implements OnInit {
     this.formBuilder = new FormBuilder();
     this.pharmacyForm = this.formBuilder.group(
       {
-        code : [''],
-        description : ['']
+        code: [''],
+        description: ['']
       });
   }
-  ClosePopUp(data : Pharmacy){
+  ClosePopUp(data: Pharmacy) {
     this.ref.close(data);
   }
   ngOnDestroy() {
@@ -49,21 +49,27 @@ export class PopupPharmacyComponent implements OnInit {
       this.ref.close();
     }
   }
-  saveData(){
-    if(this.isForSaving){
+  saveData() {
+    if (this.isForSaving) {
       this.pharmacyService.GetPharmacyByCode(this.pharmacyForm.controls['code'].value).subscribe(retVal => {
         let obj = retVal.find(x => x.code.toUpperCase() == this.pharmacyForm.controls['code'].value.toUpperCase())
         if (obj != undefined) {
           this.toastService.showError('Code already Exist!');
         } else {
-        this.pharmacyService.postPharmacyService(this.getValue()).subscribe(result=>{
-          this.ClosePopUp(result);  
-        });      
-      }
-    });
+          this.pharmacyService.postPharmacyService(this.getValue()).subscribe({
+            next: result => {
+              this.ClosePopUp(result);
+            }, error: (err) => {
+              this.toastService.showError(err.error.messages);
+            }, complete: () => {
+              this.toastService.showSuccess('Successfully Saved.');
+            }
+          });
+        }
+      });
     }
   }
-  updateData(){    
+  updateData() {
     let data = this.config.data.pharmacy;
     let obj = new Pharmacy();
     obj.code = this.pharmacyForm.controls['code'].value;
@@ -71,18 +77,18 @@ export class PopupPharmacyComponent implements OnInit {
     obj.modifiedDateTime = this.datePipe.transform(
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
     ) as string;
-    if(this.isForUpdating){
+    if (this.isForUpdating) {
       this.pharmacyService.putPharmacyService(data.id, obj).subscribe({
-      next: (result : Pharmacy) => {
+        next: (result: Pharmacy) => {
           obj = result;
-          this.ClosePopUp(result); 
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {        
-        console.log('complete');
-      }
+          this.ClosePopUp(result);
+        },
+        error: (err) => {
+          this.toastService.showError(err.error.messages);
+        },
+        complete: () => {
+          this.toastService.showSuccess('Successfully Updated.');
+        }
       });
     }
   }

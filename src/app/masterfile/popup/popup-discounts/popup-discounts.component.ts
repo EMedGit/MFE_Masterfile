@@ -15,24 +15,24 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class PopupDiscountsComponent implements OnInit {
 
-  patienttype : PatientType;
-  discountsForm : FormGroup;
-  formBuilder : FormBuilder;
-  discounts : Discounts;
-  arrDiscounts : Discounts[] = [];
-  discountsList : Discounts[];
-  id : number = 0;
-  patienttypeList : PatientType[];
+  patienttype: PatientType;
+  discountsForm: FormGroup;
+  formBuilder: FormBuilder;
+  discounts: Discounts;
+  arrDiscounts: Discounts[] = [];
+  discountsList: Discounts[];
+  id: number = 0;
+  patienttypeList: PatientType[];
 
-  isActiveStatus=  false;
-  isForSaving= false;
-  isForUpdating= false;
-  
-  constructor(private ref : DynamicDialogRef, 
-    private config : DynamicDialogConfig, 
-    private discountsService : DiscountsService, 
-    private patientTypeService : PatienttypeService,
-    private datePipe : DatePipe,
+  isActiveStatus = false;
+  isForSaving = false;
+  isForUpdating = false;
+
+  constructor(private ref: DynamicDialogRef,
+    private config: DynamicDialogConfig,
+    private discountsService: DiscountsService,
+    private patientTypeService: PatienttypeService,
+    private datePipe: DatePipe,
     private toastService: ToastService) { }
 
   ngOnInit(): void {
@@ -41,29 +41,29 @@ export class PopupDiscountsComponent implements OnInit {
 
     this.buildFormGroup();
     this.discountsForm.patchValue(this.config.data.discounts);
-    console.log(this.config.data.discounts,'hellox')
+    console.log(this.config.data.discounts, 'hellox')
     this.loadData();
   }
 
-  selectedItem(event : any){
+  selectedItem(event: any) {
     this.patienttype = event.value;
   }
   buildFormGroup(): void {
     this.formBuilder = new FormBuilder();
     this.discountsForm = this.formBuilder.group(
       {
-        patientTypeDescription : [''],
-        discountSchemaPharmacy : 0,
-        discountSchemaLaboratory : 0,
-        discountSchemaRadiology : 0
+        patientTypeDescription: [''],
+        discountSchemaPharmacy: 0,
+        discountSchemaLaboratory: 0,
+        discountSchemaRadiology: 0
       });
   }
-  loadData() : void {
+  loadData(): void {
     this.patientTypeService.getPatientType().subscribe(retval => {
       this.patienttypeList = retval;
     });
   }
-  ClosePopUp(data:Discounts){
+  ClosePopUp(data: Discounts) {
     this.ref.close(data);
   }
 
@@ -72,17 +72,30 @@ export class PopupDiscountsComponent implements OnInit {
       this.ref.close();
     }
   }
-  saveData(){
-    if(this.isForSaving){
-      this.discountsService.postDiscounts(this.getValue()).subscribe(result=>{
-        this.ClosePopUp(result);  
-      });      
+  saveData() {
+    if (this.isForSaving) {
+      this.discountsService.getDiscountsDescription(this.discountsForm.controls['patientTypeDescription'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.patientTypeDescription?.toUpperCase() == this.discountsForm.controls['patientTypeDescription'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Description already Exist!');
+        } else {
+          this.discountsService.postDiscounts(this.getValue()).subscribe({
+            next: result => {
+              this.ClosePopUp(result);
+            }, error: (err) => {
+              this.toastService.showError(err.error.messages);
+            }, complete: () => {
+              this.toastService.showSuccess('Successfully Saved.');
+            }
+          });
+        }
+      });
     }
   }
-  updateData(){
+  updateData() {
     let data = this.config.data.discounts;
     let obj = new Discounts();
-    if(this.patienttype == undefined){
+    if (this.patienttype == undefined) {
       obj.patientTypeId = data.id;
     } else {
       obj.patientTypeId = this.patienttype.id;
@@ -94,31 +107,30 @@ export class PopupDiscountsComponent implements OnInit {
     obj.modifiedDateTime = this.datePipe.transform(
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
     ) as string;
-    if(this.isForUpdating){
-      console.log(obj,'hello')
+    if (this.isForUpdating) {
+      console.log(obj, 'hello')
       this.discountsService.putDiscounts(data.id, obj).subscribe({
-      next: (result : Discounts) => {
+        next: (result: Discounts) => {
           obj = result;
-          this.ClosePopUp(result); 
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {        
-        console.log('complete');
-      }
+          this.ClosePopUp(result);
+        },
+        error: (err) => {
+          this.toastService.showError(err.error.messages);
+        },
+        complete: () => {
+          this.toastService.showSuccess('Successfully Updated.');
+        }
       });
     }
   }
 
   getValue(): Discounts {
-    this.discounts = new Discounts();  
-    if(this.patienttype == undefined)
-    {
+    this.discounts = new Discounts();
+    if (this.patienttype == undefined) {
       let x = this.patienttypeList.find(x => x.id);
       this.discounts.patientTypeId = x?.id;
       this.discounts.patientTypeDescription = x?.description;
-    } else {     
+    } else {
       this.discounts.patientTypeId = this.patienttype.id;
       this.discounts.patientTypeDescription = this.patienttype.description;
     }

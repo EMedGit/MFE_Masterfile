@@ -13,20 +13,20 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class PopupDiagnosticcenterComponent implements OnInit {
 
-  diagnosticCenterForm : FormGroup;
-  formBuilder : FormBuilder;
-  diagnosticCenter : DiagnosticCenter;
-  arrDiagnosticCenter : DiagnosticCenter[] = [];
-  diagnosticCenterList : DiagnosticCenter[];
-  id : number = 0;
+  diagnosticCenterForm: FormGroup;
+  formBuilder: FormBuilder;
+  diagnosticCenter: DiagnosticCenter;
+  arrDiagnosticCenter: DiagnosticCenter[] = [];
+  diagnosticCenterList: DiagnosticCenter[];
+  id: number = 0;
 
-  isActiveStatus=  false;
-  isForSaving= false;
-  isForUpdating= false;
-  constructor(private ref : DynamicDialogRef,
-    private config : DynamicDialogConfig,
-    private diagnosticcenterService : DiagnosticcenterService,
-    private datePipe : DatePipe,
+  isActiveStatus = false;
+  isForSaving = false;
+  isForUpdating = false;
+  constructor(private ref: DynamicDialogRef,
+    private config: DynamicDialogConfig,
+    private diagnosticcenterService: DiagnosticcenterService,
+    private datePipe: DatePipe,
     private toastService: ToastService) { }
 
   ngOnInit(): void {
@@ -40,11 +40,11 @@ export class PopupDiagnosticcenterComponent implements OnInit {
     this.formBuilder = new FormBuilder();
     this.diagnosticCenterForm = this.formBuilder.group(
       {
-        code : [''],
-        description : ['']
+        code: [''],
+        description: ['']
       });
   }
-  ClosePopUp(data : DiagnosticCenter){
+  ClosePopUp(data: DiagnosticCenter) {
     this.ref.close(data);
   }
   ngOnDestroy() {
@@ -52,21 +52,27 @@ export class PopupDiagnosticcenterComponent implements OnInit {
       this.ref.close();
     }
   }
-  saveData(){
-    if(this.isForSaving){
+  saveData() {
+    if (this.isForSaving) {
       this.diagnosticcenterService.GetDiagnosticCenterByCode(this.diagnosticCenterForm.controls['code'].value).subscribe(retVal => {
         let obj = retVal.find(x => x.code.toUpperCase() == this.diagnosticCenterForm.controls['code'].value.toUpperCase())
         if (obj != undefined) {
           this.toastService.showError('Code already Exist!');
         } else {
-        this.diagnosticcenterService.postDiagnosticCenter(this.getValue()).subscribe(result=>{
-          this.ClosePopUp(result);  
-        });      
-      }
-    });
+          this.diagnosticcenterService.postDiagnosticCenter(this.getValue()).subscribe({
+            next: result => {
+              this.ClosePopUp(result);
+            }, error: (err) => {
+              this.toastService.showError(err.error.messages);
+            }, complete: () => {
+              this.toastService.showSuccess('Successfully Saved.');
+            }
+          });
+        }
+      });
     }
   }
-  updateData(){    
+  updateData() {
     let data = this.config.data.diagnosticcenter;
     let obj = new DiagnosticCenter();
     obj.code = this.diagnosticCenterForm.controls['code'].value;
@@ -74,18 +80,18 @@ export class PopupDiagnosticcenterComponent implements OnInit {
     obj.modifiedDateTime = this.datePipe.transform(
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
     ) as string;
-    if(this.isForUpdating){
+    if (this.isForUpdating) {
       this.diagnosticcenterService.putDiagnosticCenter(data.id, obj).subscribe({
-      next: (result : DiagnosticCenter) => {
+        next: (result: DiagnosticCenter) => {
           obj = result;
-          this.ClosePopUp(result); 
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {        
-        console.log('complete');
-      }
+          this.ClosePopUp(result);
+        },
+        error: (err) => {
+          this.toastService.showError(err.error.messages);
+        },
+        complete: () => {
+          this.toastService.showSuccess('Successfully Updated.');
+        }
       });
     }
   }

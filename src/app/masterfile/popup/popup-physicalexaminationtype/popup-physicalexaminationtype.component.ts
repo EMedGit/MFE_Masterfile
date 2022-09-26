@@ -57,7 +57,15 @@ export class PopupPhysicalexaminationtypeComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Type already Exist!');
         } else {
-          this.petService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
+          this.petService.insert(this.getData()).subscribe({
+            next: result => {
+              this.ClosePopUp(result);
+            }, error: (err) => {
+              this.toastService.showError(err.error.messages);
+            }, complete: () => {
+              this.toastService.showSuccess('Successfully Saved.');
+            }
+          });
         }
       });
     }
@@ -75,10 +83,10 @@ export class PopupPhysicalexaminationtypeComponent implements OnInit {
           this.ClosePopUp(result);
         },
         error: (err) => {
-          console.log(err);
+          this.toastService.showError(err.error.messages);
         },
         complete: () => {
-          console.log('complete');
+          this.toastService.showSuccess('Successfully Updated.');
         }
       });
     }

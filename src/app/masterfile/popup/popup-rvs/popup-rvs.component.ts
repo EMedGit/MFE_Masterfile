@@ -86,7 +86,15 @@ export class PopupRvsComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Code already Exist!');
         } else {
-          this.rvsService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
+          this.rvsService.insert(this.getData()).subscribe({
+            next: result => {
+              this.ClosePopUp(result);
+            }, error: (err) => {
+              this.toastService.showError(err.error.messages);
+            }, complete: () => {
+              this.toastService.showSuccess('Successfully Saved.');
+            }
+          });
         }
       });
     }
@@ -117,10 +125,10 @@ export class PopupRvsComponent implements OnInit {
           this.ClosePopUp(result);
         },
         error: (err) => {
-          console.log(err);
+          this.toastService.showError(err.error.messages);
         },
         complete: () => {
-          console.log('complete');
+          this.toastService.showSuccess('Successfully Updated.');
         }
       });
     }

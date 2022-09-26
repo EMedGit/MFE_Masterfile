@@ -67,7 +67,15 @@ export class PopupIcdComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Code already Exist!');
         } else {
-          this.icd10Service.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
+          this.icd10Service.insert(this.getData()).subscribe({
+            next: result => {
+              this.ClosePopUp(result);
+            }, error: (err) => {
+              this.toastService.showError(err.error.messages);
+            }, complete: () => {
+              this.toastService.showSuccess('Successfully Saved.');
+            }
+          });
         }
       });
     }
@@ -95,10 +103,10 @@ export class PopupIcdComponent implements OnInit {
           this.ClosePopUp(result);
         },
         error: (err) => {
-          console.log(err);
+          this.toastService.showError(err.error.messages);
         },
         complete: () => {
-          console.log('complete');
+          this.toastService.showSuccess('Successfully Updated.');
         }
       });
     }

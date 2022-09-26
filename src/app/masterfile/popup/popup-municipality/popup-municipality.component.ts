@@ -7,6 +7,7 @@ import { Address } from 'src/app/models/address.model';
 import { Municipality } from 'src/app/models/municipality.model';
 import { Province } from 'src/app/models/province.model';
 import { AddressService } from 'src/app/services/address.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-popup-municipality',
@@ -29,7 +30,7 @@ export class PopupMunicipalityComponent implements OnInit {
   address = new BehaviorSubject<Address>(new Address());
   outputAddress: EventEmitter<Address> = new EventEmitter<Address>();
   outputAddressForm: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
-  constructor(private ref : DynamicDialogRef, private config : DynamicDialogConfig, private addressService : AddressService, private datePipe : DatePipe) { }
+  constructor(private ref : DynamicDialogRef, private config : DynamicDialogConfig, private addressService : AddressService, private datePipe : DatePipe, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.isForUpdating = this.config.data.isForUpdating;
@@ -62,8 +63,14 @@ export class PopupMunicipalityComponent implements OnInit {
   }
   saveData(){
     if(this.isForSaving){
-      this.addressService.postMunicipality(this.getValue()).subscribe(result => {
-        this.ClosePopUp(result);
+      this.addressService.postMunicipality(this.getValue()).subscribe({
+        next: result => {
+          this.ClosePopUp(result);
+        }, error: (err) => {
+          this.toastService.showError(err.error.messages);
+        }, complete: () => {
+          this.toastService.showSuccess('Successfully Saved.');
+        }
       });
     }
   }
@@ -84,10 +91,10 @@ export class PopupMunicipalityComponent implements OnInit {
           this.ClosePopUp(result);
         },
         error : (err) => {
-          console.log(err);
+          this.toastService.showError(err.error.messages);
         },
         complete : () => {
-          console.log('complete');
+          this.toastService.showSuccess('Successfully Updated.');
         }
       });
     }

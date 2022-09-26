@@ -51,13 +51,21 @@ export class PopupUserTypeComponent implements OnInit {
     }
   }
   saveData() {
-    if(this.isForSaving){
+    if (this.isForSaving) {
       this.userTypeService.GetUserTypeByCode(this.userTypeForm.controls['code'].value).subscribe(retVal => {
         let obj = retVal.find(x => x.code.toUpperCase() == this.userTypeForm.controls['code'].value.toUpperCase())
         if (obj != undefined) {
           this.toastService.showError('Code already Exist!');
         } else {
-        this.userTypeService.insert(this.getData()).subscribe(result => { this.ClosePopUp(result); });
+          this.userTypeService.insert(this.getData()).subscribe({
+            next: result => {
+              this.ClosePopUp(result);
+            }, error: (err) => {
+              this.toastService.showError(err.error.messages);
+            }, complete: () => {
+              this.toastService.showSuccess('Successfully Saved.');
+            }
+          });
         }
       });
     }
@@ -75,10 +83,10 @@ export class PopupUserTypeComponent implements OnInit {
           this.ClosePopUp(result);
         },
         error: (err) => {
-          console.log(err);
+          this.toastService.showError(err.error.messages);
         },
         complete: () => {
-          console.log('complete');
+          this.toastService.showSuccess('Successfully Updated.');
         }
       });
     }

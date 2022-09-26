@@ -64,7 +64,15 @@ export class PopupZscoreComponent implements OnInit {
 
   saveData() {
     if (this.isForSaving) {
-      this.zScoreService.insert(this.getData()).subscribe((retval) => { this.ClosePopUp(retval); });
+      this.zScoreService.insert(this.getData()).subscribe({
+        next: result => {
+          this.ClosePopUp(result);
+        }, error: (err) => {
+          this.toastService.showError(err.error.messages);
+        }, complete: () => {
+          this.toastService.showSuccess('Successfully Saved.');
+        }
+      });
     }
   }
 
@@ -98,10 +106,10 @@ export class PopupZscoreComponent implements OnInit {
           this.ClosePopUp(result);
         },
         error: (err) => {
-          console.log(err);
+          this.toastService.showError(err.error.messages);
         },
         complete: () => {
-          console.log('update complete');
+          this.toastService.showSuccess('Successfully Updated.');
         }
       });
     }

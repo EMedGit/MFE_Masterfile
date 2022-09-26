@@ -112,9 +112,15 @@ export class PopupMedicineComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Code already Exist!');
         } else {
-          this.medicineService.insert(this.getData()).subscribe((retval) => {
-            this.getNewData();
-            this.ClosePopUp(retval);
+          this.medicineService.insert(this.getData()).subscribe({
+            next: result => {
+              this.getNewData();
+              this.ClosePopUp(result);
+            }, error: (err) => {
+              this.toastService.showError(err.error.messages);
+            }, complete: () => {
+              this.toastService.showSuccess('Successfully Saved.');
+            }
           });
         }
       });
@@ -183,10 +189,10 @@ export class PopupMedicineComponent implements OnInit {
           this.ClosePopUp(result);
         },
         error: (err) => {
-          console.log(err);
+          this.toastService.showError(err.error.messages);
         },
         complete: () => {
-          console.log('update complete');
+          this.toastService.showSuccess('Successfully Updated.');
         }
       });
     }

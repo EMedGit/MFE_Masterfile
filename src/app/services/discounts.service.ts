@@ -20,6 +20,13 @@ export class DiscountsService {
       .set('ItemsPerPage', 9999);
     return this.http.get<Discounts[]>(`${environment.masterfileAPI}/discounts`, { params });
   }
+  getDiscountsDescription(Descrip : string): Observable<Discounts[]> {
+    const params = new HttpParams()
+      .set('PatientTypeDescription', Descrip)
+      .set('Page', 0)
+      .set('ItemsPerPage', 99);
+    return this.http.get<Discounts[]>(`${environment.masterfileAPI}/discounts`, { params })
+  }
   postDiscounts(data : Discounts) : Observable<Discounts>{
     return this.http.post<Discounts>(`${environment.masterfileAPI}/discounts/`, data, httpOptions);
   }
