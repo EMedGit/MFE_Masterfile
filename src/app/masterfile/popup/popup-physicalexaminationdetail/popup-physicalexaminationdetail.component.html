@@ -4,7 +4,7 @@
             <div class="col-12">
                 <h1>PHYSICAL EXAMINATION DETAIL</h1>
             </div>
-            
+
         </div>
         <div class="row">
             <div class="col">
@@ -12,23 +12,26 @@
             </div>
             <div class="col">
             </div>
-        </div>  
+        </div>
         <div class="grid mb-1">
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
-                    <input type="text" id="code" formControlName="code" pInputText style="font-weight: bold;" >
+                    <input type="text" id="code" formControlName="code" pInputText style="font-weight: bold;">
                     <label for="code">Code</label>
                 </span>
             </div>
             <div class="col-4 p-fluid" style="align-self: center;" *ngIf="isForUpdating">
-                <i class="pi pi-check-circle" style="font-size: 2rem" pTooltip="Active Record" *ngIf="isActiveStatus"></i>
-                <i class="pi pi-times-circle" style="font-size: 2rem" pTooltip="Inactive Record"  *ngIf="!isActiveStatus"></i>
+                <i class="pi pi-check-circle" style="font-size: 2rem" pTooltip="Active Record"
+                    *ngIf="isActiveStatus"></i>
+                <i class="pi pi-times-circle" style="font-size: 2rem" pTooltip="Inactive Record"
+                    *ngIf="!isActiveStatus"></i>
             </div>
         </div>
         <div class="grid mb-1">
             <div class="col-12 p-fluid">
                 <span class="p-float-label">
-                    <input type="text" id="description" formControlName="description" pInputText style="font-weight: bold;">
+                    <input type="text" id="description" formControlName="description" pInputText
+                        style="font-weight: bold;">
                     <label for="description">Description</label>
                 </span>
             </div>
@@ -36,34 +39,41 @@
         <div class="grid mb-1">
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
-                    <p-dropdown id="physicalExaminationTypeId" formControlName="physicalExaminationTypeId" 
-                    [options]="petList" optionLabel="type" [(ngModel)]="selectedpet" (onChange)="changePEType()" placeholder=" "></p-dropdown>
-                    <label for="physicalExaminationTypeId">Physical Examination Type</label>
+                    <p-dropdown inputId="rcbPhysicalExaminationType" [options]="physicalexaminationtype"
+                        formControlName="physicalExaminationTypeId" [showClear]="true" [autoDisplayFirst]="false"
+                        styleClass="dropdown-custom" optionLabel="type" optionValue="id">
+                    </p-dropdown>
+                    <label>Physical Examination Type</label>
                 </span>
             </div>
-            
+
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
-                    <p-dropdown id="physicalExaminationDetailTypeId" formControlName="physicalExaminationDetailTypeId" 
-                    [options]="pedtList" optionLabel="description" [(ngModel)]="selectedpedt" placeholder=" "></p-dropdown>
-                    <label for="physicalExaminationDetailTypeId">Physical Examination Detail Type</label>
+                    <p-dropdown inputId="rcbPhysicalExaminationDetailType" [options]="physicalexaminationdetailtype"
+                        formControlName="physicalExaminationDetailTypeId" [showClear]="true" [autoDisplayFirst]="false"
+                        styleClass="dropdown-custom" optionLabel="description" optionValue="id">
+                    </p-dropdown>
+                    <label>Physical Examination Detail Type</label>
                 </span>
             </div>
         </div>
-        
-                
+
+
         <div class="grid mb-1 mr-1">
             <div class="col-12 relative">
                 <div class="absolute top-0 right-0">
                     <div class="flex justify-content-end flex-wrap card-container">
                         <div class="flex align-items-center justify-content-center mr-2">
-                            <button pButton pRipple type="button" label="CANCEL" class="p-button-secondary" (click)="ngOnDestroy()"></button>
+                            <button pButton pRipple type="button" label="CANCEL" class="p-button-secondary"
+                                (click)="ngOnDestroy()"></button>
                         </div>
                         <div class="flex align-items-center justify-content-center mr-2">
-                            <button pButton pRipple type="button" icon="pi pi-pencil" *ngIf="isForUpdating" label="UPDATE" class="p-button-info" (click)="updateData()"></button>
+                            <button pButton pRipple type="button" icon="pi pi-pencil" *ngIf="isForUpdating"
+                                label="UPDATE" class="p-button-info" (click)="updateData()"></button>
                         </div>
                         <div class="flex align-items-center justify-content-center mr-2">
-                            <button pButton pRipple type="button" icon="pi pi-pencil" *ngIf="isForSaving" label="SAVE" class="p-button-success" (click)="saveData()"></button>
+                            <button pButton pRipple type="button" icon="pi pi-pencil" *ngIf="isForSaving" label="SAVE"
+                                class="p-button-success" (click)="saveData()"></button>
                         </div>
                     </div>
                 </div>

@@ -15,22 +15,12 @@ export class PhysicalExaminationTypeService {
     PhysicalExaminationType : PhysicalExaminationType[]
     constructor(private http: HttpClient) { }
     
-    public get(Type: string, page: number, itemsPerPage: number) 
-    : Observable<PhysicalExaminationType[]> 
-    {
-        let params = new HttpParams();
-        params = params.append('Type', Type);
-        params = params.append('Page', page);
-        params = params.append('ItemsPerPage', itemsPerPage);
-
-        return this.http
-        .get<PhysicalExaminationType[]>(`${environment.masterfileAPI}/physicalExaminationType`, {params})
-        .pipe(
-            map((result) => {
-            return result;
-            })
-        );
-    }
+    get(): Observable<PhysicalExaminationType[]> {
+        const params = new HttpParams()
+          .set('Page', 0)
+          .set('ItemsPerPage', 9999);
+        return this.http.get<PhysicalExaminationType[]>(`${environment.masterfileAPI}/physicalExaminationType`, { params })
+      }
     GetPhysicalExaminationTypeByCode(HF_CODE: string): Observable<PhysicalExaminationType[]> {
         const params = new HttpParams()
             .set('Type', HF_CODE)

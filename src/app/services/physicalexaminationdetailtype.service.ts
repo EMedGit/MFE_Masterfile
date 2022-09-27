@@ -7,31 +7,26 @@ import { PhysicalExaminationDetailType } from "../models/physicalexaminationdeta
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
-  
+
 @Injectable({
     providedIn: 'root'
 })
 export class PhysicalExaminationDetailTypeService {
-    PhysicalExaminationDetailType : PhysicalExaminationDetailType[]
+    PhysicalExaminationDetailType: PhysicalExaminationDetailType[]
     constructor(private http: HttpClient) { }
-    
-    public get(physicalExaminationTypeId: number, code: string, description: string, page: number, itemsPerPage: number) 
-    : Observable<PhysicalExaminationDetailType[]> 
-    {
-        let params = new HttpParams();
-        params = params.append('PhysicalExaminationTypeId', physicalExaminationTypeId);
-        params = params.append('Code', code);
-        params = params.append('Description', description);
-        params = params.append('Page', page);
-        params = params.append('ItemsPerPage', itemsPerPage);
 
-        return this.http
-        .get<PhysicalExaminationDetailType[]>(`${environment.masterfileAPI}/physicalExaminationDetailType`, {params})
-        .pipe(
-            map((result) => {
-            return result;
-            })
-        );
+    get(): Observable<PhysicalExaminationDetailType[]> {
+        const params = new HttpParams()
+            .set('Page', 0)
+            .set('ItemsPerPage', 9999);
+        return this.http.get<PhysicalExaminationDetailType[]>(`${environment.masterfileAPI}/physicalExaminationDetailType`, { params })
+    }
+    getPhysicalExaminationDetailTypeById(id: number): Observable<PhysicalExaminationDetailType[]> {
+        const params = new HttpParams()
+            .set('PhysicalExaminationTypeId', id)
+            .set('Page', 0)
+            .set('ItemsPerPage', 9999);
+        return this.http.get<PhysicalExaminationDetailType[]>(`${environment.masterfileAPI}/physicalExaminationDetailType`, { params })
     }
     GetPhysicalExaminationDetailTypeByCode(HF_CODE: string): Observable<PhysicalExaminationDetailType[]> {
         const params = new HttpParams()
@@ -39,11 +34,11 @@ export class PhysicalExaminationDetailTypeService {
             .set('Page', 0)
             .set('ItemsPerPage', 999);
         return this.http.get<PhysicalExaminationDetailType[]>(`${environment.masterfileAPI}/physicalExaminationDetailType`, { params });
-      }
-    insert(data: PhysicalExaminationDetailType) : Observable<PhysicalExaminationDetailType>  {
+    }
+    insert(data: PhysicalExaminationDetailType): Observable<PhysicalExaminationDetailType> {
         const url = `${environment.masterfileAPI}/physicalExaminationDetailType`;
         return this.http.post<PhysicalExaminationDetailType>(url, data, httpOptions);
-    } 
+    }
     update(id: number, data: PhysicalExaminationDetailType): Observable<any> {
         console.log(data);
         console.log(JSON.stringify(data));

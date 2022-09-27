@@ -47,7 +47,7 @@ export class PopupPhysicalexaminationdetailtypeComponent implements OnInit {
         description: ['']
       });
 
-    this.petService.get('', 0, 100).subscribe({
+    this.petService.get().subscribe({
       next: (result: PhysicalExaminationType[]) => {
         this.petList = result;
         this.petList = this.petList.filter(x => x.status);

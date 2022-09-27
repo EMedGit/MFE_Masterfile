@@ -25,7 +25,7 @@ export class PhysicalexaminationdetailtypeComponent implements OnInit {
   }
 
   getData() {
-    this.physicalExaminationDetailTypeService.get(0,'','',0,100).subscribe({
+    this.physicalExaminationDetailTypeService.get().subscribe({
       next: (result: PhysicalExaminationDetailType[]) => {
         this.physicalExaminationDetailTypes = result;
         this.newphysicalExaminationDetailTypesList = this.physicalExaminationDetailTypes.filter(x => x.status);

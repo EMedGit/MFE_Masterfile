@@ -29,7 +29,7 @@ export class PhysicalexaminationtypeComponent implements OnInit {
   }
 
   getData() {
-    this.physicalExaminationTypeService.get('', 0, 100).subscribe({
+    this.physicalExaminationTypeService.get().subscribe({
       next: (result: PhysicalExaminationType[]) => {
         this.physicalExaminationTypes = result;
         this.newphysicalExaminationTypesList = this.physicalExaminationTypes.filter(x => x.status);

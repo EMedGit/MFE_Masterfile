@@ -25,23 +25,49 @@ export class PopupPhysicalexaminationdetailComponent implements OnInit {
   isForSaving = false;
   isForUpdating = false;
 
-  pedtList: PhysicalExaminationDetailType[];
-  petList: PhysicalExaminationType[];
-
-  selectedpedt: PhysicalExaminationDetailType;
-  selectedpet: PhysicalExaminationType;
+  physicalexaminationdetailtype: PhysicalExaminationDetailType[];
+  physicalexaminationtype: PhysicalExaminationType[];
 
   constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig,
     private pedService: PhysicalExaminationDetailService, private pedtService: PhysicalExaminationDetailTypeService,
     private petService: PhysicalExaminationTypeService,
     private toastService: ToastService) { }
   ngOnInit(): void {
-    this.isActiveStatus = this.config.data.physicalExaminationDetail.status;
+    // this.isActiveStatus = this.config.data.physicalExaminationDetail.status;
     this.isForUpdating = this.config.data.isForUpdating;
     this.isForSaving = this.config.data.isForSaving;
-
     this.buildFormGroup();
     this.physicalExaminationDetailForm.patchValue(this.config.data.physicalExaminationDetail)
+    this.loadData();
+    this.onValueChanges();
+   
+  }
+  loadData(): void {
+    this.pedtService.get().subscribe(retVal => { this.physicalexaminationdetailtype = retVal; });
+    this.petService.get().subscribe(retVal => { this.physicalexaminationtype = retVal; });
+  }
+  onValueChanges(): void {
+    this.physicalExaminationDetailForm.valueChanges.subscribe(value => {
+      console.log(value,'test')
+      value.physicalExaminationDetailTypeId = this.physicalexaminationdetailtype.find(t => t.physicalExaminationTypeId == value.physicalExaminationTypeId)?.id ?? null;
+      this.setValueChanges();
+    });
+  }
+  setValueChanges(): void {
+    this.physicalExaminationDetailForm.get('physicalExaminationTypeId')?.valueChanges.subscribe(physicalExaminationTypeId => {
+      if(physicalExaminationTypeId == null) {
+        this.physicalExaminationDetailForm.patchValue({
+          physicalExaminationTypeId: null,
+          physicalExaminationDetailTypeId: null
+        });
+        this.physicalexaminationtype = [];
+        this.physicalexaminationdetailtype = [];
+        return;
+      }
+      this.pedtService.getPhysicalExaminationDetailTypeById(physicalExaminationTypeId).subscribe(retVal => {
+        this.physicalexaminationdetailtype = retVal;
+      });
+    });
   }
 
   buildFormGroup(): void {
@@ -50,24 +76,9 @@ export class PopupPhysicalexaminationdetailComponent implements OnInit {
       {
         code: [''],
         description: [''],
-        physicalExaminationTypeId: [''],
-        physicalExaminationDetailTypeId: ['']
-
+        physicalExaminationTypeId: null,
+        physicalExaminationDetailTypeId: null
       });
-
-    this.petService.get('', 0, 100).subscribe({
-      next: (result: PhysicalExaminationType[]) => {
-        this.petList = result;
-        this.petList = this.petList.filter(x => x.status);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('getdata complete');
-      }
-    });
-
   }
 
   ClosePopUp(data: PhysicalExaminationDetail) {
@@ -106,8 +117,8 @@ export class PopupPhysicalexaminationdetailComponent implements OnInit {
     let data = this.config.data.physicalExaminationDetail;
     data.code = this.physicalExaminationDetailForm.controls['code'].value;
     data.description = this.physicalExaminationDetailForm.controls['description'].value;
-    data.physicalExaminationTypeId = this.selectedpet.id;
-    data.physicalExaminationDetailTypeId = this.selectedpedt.id;
+    data.physicalExaminationTypeId = this.physicalExaminationDetailForm.controls['physicalExaminationTypeId'].value;
+    data.physicalExaminationDetailTypeId = this.physicalExaminationDetailForm.controls['physicalExaminationDetailTypeId'].value;
     data.modifiedBy = '';
     data.modifiedDateTime = new Date();
     if (this.isForUpdating) {
@@ -131,29 +142,11 @@ export class PopupPhysicalexaminationdetailComponent implements OnInit {
     this.physicalExaminationDetail = new PhysicalExaminationDetail();
     this.physicalExaminationDetail.code = this.physicalExaminationDetailForm.controls['code'].value;
     this.physicalExaminationDetail.description = this.physicalExaminationDetailForm.controls['description'].value;
-    this.physicalExaminationDetail.physicalExaminationTypeId = this.selectedpet.id;
-    this.physicalExaminationDetail.physicalExaminationDetailTypeId = this.selectedpedt.id;
-
+    this.physicalExaminationDetail.physicalExaminationTypeId = this.physicalExaminationDetailForm.controls['physicalExaminationTypeId'].value;
+    this.physicalExaminationDetail.physicalExaminationDetailTypeId = this.physicalExaminationDetailForm.controls['physicalExaminationDetailTypeId'].value;
     this.physicalExaminationDetail.createdBy = '';
     this.physicalExaminationDetail.createdDateTime = new Date();
     return this.physicalExaminationDetail;
 
   }
-
-  changePEType() {
-    this.pedtService.get(this.selectedpet.id, '', '', 0, 100).subscribe({
-      next: (result: PhysicalExaminationDetailType[]) => {
-        this.pedtList = result;
-        this.pedtList = this.pedtList.filter(x => x.status);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('changePEType complete');
-      }
-    });
-
-  }
-
 }
