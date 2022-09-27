@@ -80,7 +80,6 @@ export class MenuComponent implements OnInit {
   selectedMastefiles(event: any): void {
     let toRoute = 'masterfile/menu' + event.routerLink;
     this.router.navigate([toRoute]);
-    console.log(toRoute,'yeah')
   }
 
 }

@@ -22,22 +22,30 @@ export class ICD10Service {
             .then(data => { return data; });
     }
 
-    public get(code: string, description: string, page: number, itemsPerPage: number)
-        : Observable<ICD10[]> {
-        let params = new HttpParams();
-        params = params.append('Code', code);
-        params = params.append('Description', description);
-        params = params.append('Page', page);
-        params = params.append('ItemsPerPage', itemsPerPage);
+    // public get(code: string, description: string, page: number, itemsPerPage: number)
+    //     : Observable<ICD10[]> {
+    //     let params = new HttpParams();
+    //     params = params.append('Code', code);
+    //     params = params.append('Description', description);
+    //     params = params.append('Page', page);
+    //     params = params.append('ItemsPerPage', itemsPerPage);
 
-        return this.http
-            .get<ICD10[]>(`${environment.masterfileAPI}/icd10`, { params })
-            .pipe(
-                map((result) => {
-                    return result;
-                })
-            );
+    //     return this.http
+    //         .get<ICD10[]>(`${environment.masterfileAPI}/icd10`, { params })
+    //         .pipe(
+    //             map((result) => {
+    //                 return result;
+    //             })
+    //         );
+    // }
+
+    public get(): Observable<ICD10[]> {
+        const params = new HttpParams()
+            .set('Page', 0)
+            .set('ItemsPerPage', 9999);
+        return this.http.get<ICD10[]>(`${environment.masterfileAPI}/icd10`, { params })
     }
+
     GetICDByCode(HF_CODE: string): Observable<ICD10[]> {
         const params = new HttpParams()
             .set('Code', HF_CODE)

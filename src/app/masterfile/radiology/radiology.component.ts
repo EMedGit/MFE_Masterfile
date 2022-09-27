@@ -97,6 +97,7 @@ export class RadiologyComponent implements OnInit {
             val.specializationCode = data.specializationCode;
             val.ancillaryDepartmentId = data.ancillaryDepartmentId;
             val.ancillarySectionId = data.ancillarySectionId;
+            val.activeInactiveStatus = data.activeInactiveStatus;
             val.status = data.status;
             val.modifiedBy = data.modifiedBy;
             val.modifiedDateTime = data.modifiedDateTime;

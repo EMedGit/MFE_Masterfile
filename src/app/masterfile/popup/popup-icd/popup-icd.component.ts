@@ -23,8 +23,6 @@ export class PopupIcdComponent implements OnInit {
   constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private icd10Service: ICD10Service, private toastService: ToastService) { }
 
   ngOnInit(): void {
-
-    this.isActiveStatus = this.config.data.icd.status;
     this.isForUpdating = this.config.data.isForUpdating;
     this.isForSaving = this.config.data.isForSaving;
 

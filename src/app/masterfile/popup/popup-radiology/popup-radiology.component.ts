@@ -87,7 +87,8 @@ export class PopupRadiologyComponent implements OnInit {
         priceReferenceIndex: [''],
         diagnosisRemarks: [''],
         ancillaryDepartmentId: [''],
-        ancillarySectionId: ['']
+        ancillarySectionId: [''],
+        activeInactiveStatus: ['']
       });
   }
   ClosePopUp(data: Radiology) {
@@ -132,6 +133,7 @@ export class PopupRadiologyComponent implements OnInit {
     obj.specializationCode = this.specializationCode ?? "";
     obj.ancillaryDepartmentId = this.radiologyForm.controls['ancillaryDepartmentId'].value;
     obj.ancillarySectionId = this.radiologyForm.controls['ancillarySectionId'].value;
+    obj.activeInactiveStatus = this.radiologyForm.controls['activeInactiveStatus'].value;
     obj.modifiedBy = 'Fox';
     obj.modifiedDateTime = this.datePipe.transform(
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
@@ -165,6 +167,7 @@ export class PopupRadiologyComponent implements OnInit {
     this.radiology.specializationCode = this.specializationCode ?? "";
     this.radiology.ancillaryDepartmentId = this.radiologyForm.controls['ancillaryDepartmentId'].value;
     this.radiology.ancillarySectionId = this.radiologyForm.controls['ancillarySectionId'].value;
+    this.radiology.activeInactiveStatus = this.radiologyForm.controls['activeInactiveStatus'].value;
     return this.radiology;
   }
 }

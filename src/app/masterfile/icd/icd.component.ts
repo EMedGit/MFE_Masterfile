@@ -31,7 +31,7 @@ export class IcdComponent implements OnInit {
   }
 
   getData() {
-    this.icd10Service.get('', '', 0, 100).subscribe({
+    this.icd10Service.get().subscribe({
       next: (result: ICD10[]) => {
         this.icd10List = result;
         this.newICD10List = this.icd10List.filter(x => x.status);
@@ -50,8 +50,16 @@ export class IcdComponent implements OnInit {
     }
   }
 
-  filter(value: any) {
-    this.newICD10List.every(a => a.description?.includes(value.key));
+  filter() {
+    let filter: any[] = [];
+    console.log(this.icd10List,'hello')
+    this.icd10List.forEach(val => {
+      if (val.description.toUpperCase().includes(this.searchkey.toUpperCase()) && val.status) {
+        filter.push(val);
+      }
+    });
+    this.newICD10List = filter;
+    console.log(this.newICD10List,'hello')
   }
 
   addICDPopup() {

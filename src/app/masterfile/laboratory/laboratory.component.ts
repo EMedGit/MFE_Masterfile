@@ -96,6 +96,7 @@ export class LaboratoryComponent implements OnInit {
             val.specializationCode = data.specializationCode;
             val.ancillaryDepartmentId = data.ancillaryDepartmentId;
             val.ancillarySpecializationId = data.ancillarySpecializationId;
+            val.activeInactiveStatus = data.activeInactiveStatus;
             val.status = data.status;
             val.createdBy = data.createdBy;
             val.createdDateTime = data.createdDateTime;
