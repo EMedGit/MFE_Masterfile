@@ -5,6 +5,7 @@ import { RvsComponent } from './rvs/rvs.component';
 import { IcdComponent } from './icd/icd.component';
 import { AddressComponent } from './address/address.component';
 import { ButtonModule } from 'primeng/button';
+import { PanelModule } from 'primeng/panel';
 import { PopupAddressComponent } from './popup/popup-address/popup-address.component';
 import { PopupIcdComponent } from './popup/popup-icd/popup-icd.component';
 import { PopupRvsComponent } from './popup/popup-rvs/popup-rvs.component';
@@ -211,6 +212,7 @@ import { PopupRegionComponent } from './popup/popup-region/popup-region.componen
     InputMaskModule,
     ConfirmDialogModule,
     TriStateCheckboxModule,
+    PanelModule,
   ],
   providers:[ToastService,MessageService]
 })

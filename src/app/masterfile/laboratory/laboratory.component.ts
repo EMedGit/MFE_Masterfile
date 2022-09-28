@@ -55,9 +55,9 @@ export class LaboratoryComponent implements OnInit {
   addLaboratoryPopup() {
     this.ref = this.dialogService.open(PopupLaboratoryComponent, {
       width: '1200px',
-      height: '830px',
+      height: '400px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         isForSaving: true
       }
@@ -72,9 +72,9 @@ export class LaboratoryComponent implements OnInit {
   updateLaboratoryPopUp(laboratory: Laboratory) {
     this.ref = this.dialogService.open(PopupLaboratoryComponent, {
       width: '1200px',
-      height: '830px',
+      height: '400px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         laboratory,
         isForUpdating: true

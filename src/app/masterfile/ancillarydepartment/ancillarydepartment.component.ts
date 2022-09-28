@@ -54,10 +54,10 @@ export class AncillarydepartmentComponent implements OnInit {
   }
   addAncillaryDepartmentPopup() {
     this.ref = this.dialogService.open(PopupAncillarydepartmentComponent, {
-      width: '1200px',
-      height: '430px',
+      width: '1000px',
+      height: '400px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         isForSaving: true
       }
@@ -71,10 +71,10 @@ export class AncillarydepartmentComponent implements OnInit {
   }
   updateAncillaryDepartmentPopUp(ancillarydepartment: AncillaryDepartment) {
     this.ref = this.dialogService.open(PopupAncillarydepartmentComponent, {
-      width: '1200px',
-      height: '430px',
+      width: '1000px',
+      height: '400px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         ancillarydepartment,
         isForUpdating: true

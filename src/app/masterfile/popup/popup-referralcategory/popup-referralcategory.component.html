@@ -1,29 +1,14 @@
 
 <form [formGroup]="referralcategoryForm">
-    <div class="card p-fluid">
-        <div class="grid mb-0 mt-1">
-            <div class="col-6">
-                <h1>REFERRAL CATEGORY</h1>
-            </div>            
-        </div>
-        <div class="row">
-            <div class="col">
-                <hr>
-            </div>
-            <div class="col">
-            </div>
-        </div>  
+    <p-panel header="REFERRAL CATEGORY">       
         <div class="grid mb-1">
-            
-        </div>        
-        <div class="grid mb-1">
-            <div class="col-3 p-fluid">
+            <div class="col-4 p-fluid">
                 <span class="p-float-label">
                     <input type="text" id="code" formControlName="code" pInputText style="font-weight: bold;" >
                     <label for="code">Code</label>
                 </span>
             </div>  
-            <div class="col-3 p-fluid">
+            <div class="col-8 p-fluid">
                 <span class="p-float-label">
                     <input type="text" id="description" formControlName="description" pInputText style="font-weight: bold;">
                     <label for="description">Description</label>
@@ -48,5 +33,5 @@
                 </div>
             </div>
         </div>
-    </div>  
+    </p-panel>  
 </form>

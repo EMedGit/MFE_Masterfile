@@ -65,9 +65,9 @@ export class IcdComponent implements OnInit {
   addICDPopup() {
     this.ref = this.dialogService.open(PopupIcdComponent, {
       width: '1000px',
-      height: '550px',
+      height: '500px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         icd10: {},
         isForSaving: true
@@ -84,9 +84,9 @@ export class IcdComponent implements OnInit {
   updateICDPopUp(icd: ICD10) {
     this.ref = this.dialogService.open(PopupIcdComponent, {
       width: '1000px',
-      height: '550px',
+      height: '500px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         icd,
         isForUpdating: true

@@ -86,8 +86,8 @@ export class PopupRadiologyComponent implements OnInit {
         lowestPrice: [''],
         priceReferenceIndex: [''],
         diagnosisRemarks: [''],
-        ancillaryDepartmentId: [''],
-        ancillarySectionId: [''],
+        ancillaryDepartmentId: null,
+        ancillarySectionId: null,
         activeInactiveStatus: ['']
       });
   }

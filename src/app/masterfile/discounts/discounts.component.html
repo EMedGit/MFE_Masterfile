@@ -1,16 +1,15 @@
-<div class="card">
-    <div class="grid mt-2 mb-2">
+<p-panel>
+    <div class="grid">
         <div class="col-12" style="text-align:center">
             <h1> DISCOUNTS </h1>
         </div>
     </div>
-</div>
-<div class="card mt-1">
-
     <p-toolbar styleClass="p-mb-4">
         <ng-template pTemplate="left" class="flex">
-            <button pButton pRipple label="NEW" icon="pi pi-plus-circle" class="p-button-success mr-2" (click)="addDiscountsPopup()"></button>
-            <button pButton pRipple label="REMOVE" icon="pi pi-trash" class="p-button-danger" (click)="batchdeleteDiscounts()" [disabled]="!selectedDiscounts || !selectedDiscounts.length" ></button>
+            <button pButton pRipple label="NEW" icon="pi pi-plus-circle" class="p-button-success mr-2"
+                (click)="addDiscountsPopup()"></button>
+            <button pButton pRipple label="REMOVE" icon="pi pi-trash" class="p-button-danger"
+                (click)="batchdeleteDiscounts()" [disabled]="!selectedDiscounts || !selectedDiscounts.length"></button>
         </ng-template>
 
         <ng-template pTemplate="right">
@@ -22,21 +21,30 @@
             </div>
         </ng-template>
     </p-toolbar>
-    
-    <p-table #dt [value]="prevDiscountsList" [rows]="5" [paginator]="true" [globalFilterFields]="['description']" 
+
+    <p-table #dt [value]="prevDiscountsList" [rows]="5" [paginator]="true" [globalFilterFields]="['description']"
         [(selection)]="selectedDiscounts"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
-        
+
         <ng-template pTemplate="header">
             <tr>
                 <th style="width: 1rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
-                <th pSortableColumn="patientTypeDescription">Patient Type Description<p-sortIcon field="patientTypeDescription"></p-sortIcon></th>
-                <th pSortableColumn="discountschemaPharmacy">Discounts Schema Pharmacy <p-sortIcon field="discountschemaPharmacy"></p-sortIcon></th>
-                <th pSortableColumn="discountschemaLaboratory">Discounts Schema Laboratory <p-sortIcon field="discountschemaLaboratory"></p-sortIcon></th>
-                <th pSortableColumn="discountschemaRadiology">Discounts Schema Radiology <p-sortIcon field="discountschemaRadiology"></p-sortIcon></th>
-                <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
+                <th pSortableColumn="patientTypeDescription">Patient Type Description<p-sortIcon
+                        field="patientTypeDescription"></p-sortIcon>
+                </th>
+                <th pSortableColumn="discountschemaPharmacy">Discounts Schema Pharmacy <p-sortIcon
+                        field="discountschemaPharmacy"></p-sortIcon>
+                </th>
+                <th pSortableColumn="discountschemaLaboratory">Discounts Schema Laboratory <p-sortIcon
+                        field="discountschemaLaboratory"></p-sortIcon>
+                </th>
+                <th pSortableColumn="discountschemaRadiology">Discounts Schema Radiology <p-sortIcon
+                        field="discountschemaRadiology"></p-sortIcon>
+                </th>
+                <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon>
+                </th>
                 <th></th>
             </tr>
         </ng-template>
@@ -50,21 +58,24 @@
                 <td>{{discounts.discountSchemaLaboratory | number : '1.0-3'}}</td>
                 <td>{{discounts.discountSchemaRadiology | number : '1.0-3'}}</td>
                 <td>
-                    <i class="pi" style="font-size: 2rem"  [ngClass]="{'true-icon pi-check-circle': discounts.status, 'false-icon pi-times-circle': !discounts.status}"></i>
+                    <i class="pi" style="font-size: 2rem"
+                        [ngClass]="{'true-icon pi-check-circle': discounts.status, 'false-icon pi-times-circle': !discounts.status}"></i>
                 </td>
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" (click)="updateDiscountsPopUp(discounts)"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="removeDiscountsRecord(discounts)"></button>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2"
+                        (click)="updateDiscountsPopUp(discounts)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                        (click)="removeDiscountsRecord(discounts)"></button>
                 </td>
             </tr>
         </ng-template>
     </p-table>
-</div>
+</p-panel>
 <p-confirmDialog [style]="{ width: '25%' }"></p-confirmDialog>
-<p-dialog header={{headermessage}} [(visible)]="displayResponsive" [breakpoints]="{'100px': '55vw'}" [style]="{width: '400px'}"
-[draggable]="false" [resizable]="false">
-<p>{{responsemessage}}</p>
+<p-dialog header={{headermessage}} [(visible)]="displayResponsive" [breakpoints]="{'100px': '55vw'}"
+    [style]="{width: '400px'}" [draggable]="false" [resizable]="false">
+    <p>{{responsemessage}}</p>
     <ng-template pTemplate="footer">
-    <p-button (click)="displayResponsive=false" label="OK" styleClass="p-button-text"></p-button>
+        <p-button (click)="displayResponsive=false" label="OK" styleClass="p-button-text"></p-button>
     </ng-template>
 </p-dialog>

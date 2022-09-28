@@ -57,10 +57,10 @@ export class MedicinecategoryComponent implements OnInit {
   }
   addMedicineCategoryPopup() {
     this.ref = this.dialogService.open(PopupMedicinecategoryComponent, {
-      width: '1200px',
-      height: '430px',
+      width: '1000px',
+      height: '400px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         isForSaving: true
       }
@@ -74,10 +74,10 @@ export class MedicinecategoryComponent implements OnInit {
   }
   updateMedicineCategoryPopUp(medicineCategory: Medicinecategory) {
     this.ref = this.dialogService.open(PopupMedicinecategoryComponent, {
-      width: '1200px',
-      height: '430px',
+      width: '1000px',
+      height: '400px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         medicineCategory,
         isForUpdating: true

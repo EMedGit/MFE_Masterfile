@@ -60,9 +60,9 @@ export class UsertypeComponent implements OnInit {
   addUserTypePopup() {
     this.ref = this.dialogService.open(PopupUserTypeComponent, {
       width: '1000px',
-      height: '450px',
+      height: '350px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         isForSaving: true
       }
@@ -77,10 +77,10 @@ export class UsertypeComponent implements OnInit {
 
   updateUserTypePopup(userType: UserType) {
     this.ref = this.dialogService.open(PopupUserTypeComponent, {
-      width: '1000px',
-      height: '600px',
+      width: '1200px',
+      height: '350px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         userType,
         isForUpdating: true

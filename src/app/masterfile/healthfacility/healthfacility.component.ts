@@ -64,9 +64,9 @@ export class HealthfacilityComponent implements OnInit {
   addHealthFacilityPopup() {
     this.ref = this.dialogService.open(PopupHealthfacilityComponent, {
       width: '1000px',
-      height: '500px',
+      height: '400px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         // healthFacility: {},
         isForSaving: true
@@ -83,8 +83,9 @@ export class HealthfacilityComponent implements OnInit {
   updateHealthFacilityPopup(healthFacility: HealthFacility) {
     this.ref = this.dialogService.open(PopupHealthfacilityComponent, {
       width: '1000px',
-      height: '500px',
+      height: '400px',
       showHeader: true,
+      closable: false,
       data: {
         healthFacility,
         isForUpdating: true

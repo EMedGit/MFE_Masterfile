@@ -56,10 +56,10 @@ export class MunicipalityComponent implements OnInit {
   }
   addMunicipalityPopup() {
     this.ref = this.dialogService.open(PopupMunicipalityComponent, {
-      width: '1200px',
-      height: '530px',
+      width: '1000px',
+      height: '350px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         isForSaving: true
       }
@@ -103,10 +103,10 @@ export class MunicipalityComponent implements OnInit {
   }
   updateMunicipalityPopUp(municipality: Municipality) {
     this.ref = this.dialogService.open(PopupMunicipalityComponent, {
-      width: '1200px',
-      height: '530px',
+      width: '1000px',
+      height: '350px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         municipality,
         isForUpdating: true

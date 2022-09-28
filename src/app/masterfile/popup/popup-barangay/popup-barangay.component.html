@@ -1,18 +1,6 @@
 
 <form [formGroup]="barangayForm">
-    <div class="card p-fluid">
-        <div class="grid mb-0 mt-1">
-            <div class="col-6">
-                <h1>BARANGAY DETAIL</h1>
-            </div>            
-        </div>
-        <div class="row">
-            <div class="col">
-                <hr>
-            </div>
-            <div class="col">
-            </div>
-        </div>  
+    <p-panel header="BARANGAY DETAIL">
         <div class="grid mb-1">
             <div class="col-3 p-fluid">
                 <span class="p-float-label">
@@ -36,7 +24,7 @@
         <div class="grid mb-1">
             <div class="col-12 lg:col-4  p-fluid" *ngIf="isForSaving">
                 <span class="p-float-label">
-                    <p-dropdown [options]="province" optionLabel="provinceName" [showClear]="true"
+                    <p-dropdown [options]="province" optionLabel="provinceName" [showClear]="true" appendTo="body"
                         styleClass="dropdown-custom" [autoDisplayFirst]="false" [filter]="true" filterBy="provinceName"
                         [showClear]="true" formControlName="provinceCode" optionValue="provinceCode"
                         [ngClass]="{ 'ng-invalid ng-dirty': (this.barangayForm.controls['provinceCode'].errors)}">
@@ -46,7 +34,7 @@
             </div>
             <div class="col-12 lg:col-4  p-fluid" *ngIf="isForSaving">
                 <span class="p-float-label">
-                    <p-dropdown [options]="municipality" optionLabel="municipalityName" styleClass="dropdown-custom"
+                    <p-dropdown [options]="municipality" optionLabel="municipalityName" appendTo="body" styleClass="dropdown-custom"
                         [autoDisplayFirst]="false" [showClear]="true" [filter]="true" filterBy="municipalityName"
                         formControlName="municipalityCode" optionValue="municipalityCode"
                         [ngClass]="{ 'ng-invalid ng-dirty': (this.barangayForm.controls['municipalityCode'].errors)}">
@@ -56,7 +44,7 @@
             </div>
             <div class="col-12 lg:col-6  p-fluid" *ngIf="isForUpdating">
                 <span class="p-float-label">
-                    <p-dropdown [options]="province" optionLabel="provinceName" [showClear]="true"
+                    <p-dropdown [options]="province" optionLabel="provinceName" [showClear]="true" appendTo="body"
                         styleClass="dropdown-custom" [autoDisplayFirst]="false" [filter]="true" filterBy="provinceName"
                         [showClear]="true" formControlName="provinceCode" optionValue="provinceCode"
                         [ngClass]="{ 'ng-invalid ng-dirty': (this.barangayForm.controls['provinceCode'].errors)}">
@@ -66,7 +54,7 @@
             </div>
             <div class="col-12 lg:col-6  p-fluid" *ngIf="isForUpdating">
                 <span class="p-float-label">
-                    <p-dropdown [options]="municipality" optionLabel="municipalityName" styleClass="dropdown-custom"
+                    <p-dropdown [options]="municipality" optionLabel="municipalityName" styleClass="dropdown-custom" appendTo="body"
                         [autoDisplayFirst]="false" [showClear]="true" [filter]="true" filterBy="municipalityName"
                         formControlName="municipalityCode" optionValue="municipalityCode"
                         [ngClass]="{ 'ng-invalid ng-dirty': (this.barangayForm.controls['municipalityCode'].errors)}">
@@ -102,5 +90,5 @@
                 </div>
             </div>
         </div>
-    </div>  
+    </p-panel> 
 </form>

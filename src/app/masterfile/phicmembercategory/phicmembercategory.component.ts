@@ -52,10 +52,10 @@ export class PhicmembercategoryComponent implements OnInit {
   }
   addPHICMemberCategoryPopup() {
     this.ref = this.dialogService.open(PopupPhicmembercategoryComponent, {
-      width: '1200px',
-      height: '430px',
+      width: '1000px',
+      height: '400px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         isForSaving: true
       }
@@ -69,10 +69,10 @@ export class PhicmembercategoryComponent implements OnInit {
   }
   updatePHICMemberCategoryPopUp(phicmembercategory: Phicmembercategory) {
     this.ref = this.dialogService.open(PopupPhicmembercategoryComponent, {
-      width: '1200px',
-      height: '430px',
+      width: '1000px',
+      height: '400px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         phicmembercategory,
         isForUpdating: true

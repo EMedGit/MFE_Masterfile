@@ -91,8 +91,8 @@ export class PopupLaboratoryComponent implements OnInit {
         lowestPrice: [''],
         priceReferenceIndex: [''],
         diagnosisRemarks: [''],
-        ancillaryDepartmentId: [''],
-        ancillarySpecializationId: [''],
+        ancillaryDepartmentId: null,
+        ancillarySpecializationId: null,
         activeInactiveStatus: ['']
       });
   }

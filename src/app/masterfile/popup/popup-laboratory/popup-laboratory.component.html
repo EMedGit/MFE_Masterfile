@@ -1,17 +1,5 @@
 <form [formGroup]="laboratoryForm">
-    <div class="card p-fluid">
-        <div class="grid mb-0 mt-1">
-            <div class="col-6">
-                <h1>LABORATORY</h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <hr>
-            </div>
-            <div class="col">
-            </div>
-        </div>
+    <p-panel header="LABORATORY DETAIL">    
         <div class="grid mb-1">
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
@@ -67,7 +55,7 @@
             </div>
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
-                    <p-dropdown inputId="rcbAncillaryDepartment" [options]="ancillarydepartment"
+                    <p-dropdown inputId="rcbAncillaryDepartment" [options]="ancillarydepartment" appendTo="body"
                         formControlName="ancillaryDepartmentId" [showClear]="true" [autoDisplayFirst]="false"
                         styleClass="dropdown-custom" optionLabel="description" optionValue="id">
                     </p-dropdown>
@@ -76,7 +64,7 @@
             </div>
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
-                    <p-dropdown inputId="rcbAncillarySection" [options]="ancillarysection"
+                    <p-dropdown inputId="rcbAncillarySection" [options]="ancillarysection" appendTo="body"
                         formControlName="ancillarySpecializationId" [showClear]="true" [autoDisplayFirst]="false"
                         styleClass="dropdown-custom" optionLabel="description" optionValue="id">
                     </p-dropdown>
@@ -110,5 +98,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </p-panel>
 </form>

@@ -1,15 +1,15 @@
-<div class="card">
-    <div class="grid mt-2 mb-2">
+<p-panel>
+    <div class="grid">
         <div class="col-12" style="text-align:center">
             <h1> BARANGAY </h1>
         </div>
     </div>
-</div>
-<div class="card mt-1">
     <p-toolbar styleClass="p-mb-4">
         <ng-template pTemplate="left" class="flex">
-            <button pButton pRipple label="NEW" icon="pi pi-plus-circle" class="p-button-success mr-2" (click)="addBarangayPopup()"></button>
-            <button pButton pRipple label="REMOVE" icon="pi pi-trash" class="p-button-danger" (click)="batchdeleteBarangay()" [disabled]="!selectedBarangay || !selectedBarangay.length" ></button>
+            <button pButton pRipple label="NEW" icon="pi pi-plus-circle" class="p-button-success mr-2"
+                (click)="addBarangayPopup()"></button>
+            <button pButton pRipple label="REMOVE" icon="pi pi-trash" class="p-button-danger"
+                (click)="batchdeleteBarangay()" [disabled]="!selectedBarangay || !selectedBarangay.length"></button>
         </ng-template>
 
         <ng-template pTemplate="right">
@@ -21,19 +21,22 @@
             </div>
         </ng-template>
     </p-toolbar>
-    
-    <p-table #dt [value]="prevBarangayList" [rows]="5" [paginator]="true" [globalFilterFields]="['barangayCode','barangayName']" 
-        [(selection)]="selectedBarangay"
+
+    <p-table #dt [value]="prevBarangayList" [rows]="5" [paginator]="true"
+        [globalFilterFields]="['barangayCode','barangayName']" [(selection)]="selectedBarangay"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
-        
+
         <ng-template pTemplate="header">
             <tr>
                 <th style="width: 1rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
-                <th pSortableColumn="barangayCode">Barangay Code<p-sortIcon field="barangayCode"></p-sortIcon></th>
-                <th pSortableColumn="barangayName">Barangay Name <p-sortIcon field="barangayName"></p-sortIcon></th>
-                <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
+                <th pSortableColumn="barangayCode">Barangay Code<p-sortIcon field="barangayCode"></p-sortIcon>
+                </th>
+                <th pSortableColumn="barangayName">Barangay Name <p-sortIcon field="barangayName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon>
+                </th>
                 <th></th>
             </tr>
         </ng-template>
@@ -45,22 +48,24 @@
                 <td>{{barangay.barangayCode}}</td>
                 <td>{{barangay.barangayName}}</td>
                 <td>
-                    <i class="pi" style="font-size: 2rem"  [ngClass]="{'true-icon pi-check-circle': barangay.status, 'false-icon pi-times-circle': !barangay.status}"></i>
+                    <i class="pi" style="font-size: 2rem"
+                        [ngClass]="{'true-icon pi-check-circle': barangay.status, 'false-icon pi-times-circle': !barangay.status}"></i>
                 </td>
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" (click)="updateBarangayPopUp(barangay)"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="removeBarangayRecord(barangay)"></button>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2"
+                        (click)="updateBarangayPopUp(barangay)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                        (click)="removeBarangayRecord(barangay)"></button>
                 </td>
             </tr>
         </ng-template>
-
     </p-table>
-</div>
+</p-panel>
 <p-confirmDialog [style]="{ width: '25%' }"></p-confirmDialog>
-<p-dialog header={{headermessage}} [(visible)]="displayResponsive" [breakpoints]="{'100px': '55vw'}" [style]="{width: '400px'}"
-[draggable]="false" [resizable]="false">
-<p>{{responsemessage}}</p>
+<p-dialog header={{headermessage}} [(visible)]="displayResponsive" [breakpoints]="{'100px': '55vw'}"
+    [style]="{width: '400px'}" [draggable]="false" [resizable]="false">
+    <p>{{responsemessage}}</p>
     <ng-template pTemplate="footer">
-    <p-button (click)="displayResponsive=false" label="OK" styleClass="p-button-text"></p-button>
+        <p-button (click)="displayResponsive=false" label="OK" styleClass="p-button-text"></p-button>
     </ng-template>
 </p-dialog>

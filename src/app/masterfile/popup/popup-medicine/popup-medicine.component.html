@@ -1,18 +1,5 @@
 <form [formGroup]="medicineForm">
-    <div class="card p-fluid">
-        <div class="grid mb-0 mt-1">
-            <div class="col-6">
-                <h1>MEDICINE DETAIL</h1>
-            </div>            
-        </div>
-        <div class="row">
-            <div class="col">
-                <hr>
-            </div>
-            <div class="col">
-            </div>
-        </div>    
-        
+    <p-panel header="MEDICINE DETAIL">    
         <div class="grid mb-1">
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
@@ -54,19 +41,13 @@
         <div class="grid mb-1">
             <div class="col-3 p-fluid">
                 <span class="p-float-label">
-                    <!-- <p-inputNumber inputid="cost" formControlName="cost" pInputText 
-                    mode="currency" currency="PHP" locale="en-US" > </p-inputNumber>
-                    <label for="cost" style="align-self: center;"> Cost</label> -->
                     <p-inputNumber inputId="cost" formControlName="cost" mode="currency" currency="PHP" locale="en-US">
                     </p-inputNumber>
                     <label for="cost">Cost</label>
                 </span>
             </div>  
             <div class="col-3 p-fluid" >
-                <span class="p-float-label">
-                    <!-- <p-inputNumber inputid="price" formControlName="price" pInputText 
-                    mode="currency" currency="PHP" locale="en-US"> </p-inputNumber>
-                    <label for="price" style="align-self: center;"> Price</label> -->
+                <span class="p-float-label">              
                     <p-inputNumber inputId="price" formControlName="price" mode="currency" currency="PHP" locale="en-US">
                     </p-inputNumber>
                     <label for="price">Price</label>
@@ -74,8 +55,8 @@
             </div>  
             <div class="col-3 p-fluid">
                 <span class="p-float-label">
-                    <p-dropdown id="categoryId" formControlName="categoryId" 
-                    [options]="mcList" optionLabel="description" placeholder="" optionValue="id"></p-dropdown>
+                    <p-dropdown id="categoryId" formControlName="categoryId" [options]="mcList" appendTo="body"
+                     optionLabel="description" placeholder="" optionValue="id"></p-dropdown>
                     <label for="categoryId">Category</label>
                 </span>
             </div>
@@ -104,5 +85,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </p-panel>
 </form>

@@ -58,9 +58,9 @@ export class PhysicalexaminationdetailComponent implements OnInit {
   addPopup() {
     this.ref = this.dialogService.open(PopupPhysicalexaminationdetailComponent, {
       width: '1000px',
-      height: '650px',
+      height: '400px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         physicalExaminationDetail: {},
         isForSaving: true
@@ -77,8 +77,9 @@ export class PhysicalexaminationdetailComponent implements OnInit {
   updatePopup(physicalExaminationDetail: PhysicalExaminationDetail) {
     this.dialogService.open(PopupPhysicalexaminationdetailComponent, {
       width: '1000px',
-      height: '650px',
+      height: '400px',
       showHeader: true,
+      closable: false,
       data: {
         physicalExaminationDetail,
         isForUpdating: true

@@ -17,7 +17,7 @@ export class MedicinecategoryService {
   getMedicineCategory(): Observable<Medicinecategory[]> {
     const params = new HttpParams()      
       .set('Page', 0)
-      .set('ItemsPerPage', 9999999);
+      .set('ItemsPerPage', 9999);
     return this.http.get<Medicinecategory[]>(`${environment.masterfileAPI}/medicineCategory`, { params })
   }
   GetMedicineCategoryByCode(HF_CODE: string): Observable<Medicinecategory[]> {

@@ -54,10 +54,10 @@ export class BrandComponent implements OnInit {
   }
   addBrandPopup() {
     this.ref = this.dialogService.open(PopupBrandComponent, {
-      width: '1200px',
-      height: '430px',
+      width: '1000px',
+      height: '400px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         isForSaving: true
       }
@@ -69,13 +69,12 @@ export class BrandComponent implements OnInit {
       }
     });
   }
-
   updateBrandPopUp(brand: Brand) {
     this.ref = this.dialogService.open(PopupBrandComponent, {
-      width: '1200px',
-      height: '430px',
+      width: '1000px',
+      height: '400px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         brand,
         isForUpdating: true

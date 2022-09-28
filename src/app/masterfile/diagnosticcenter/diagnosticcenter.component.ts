@@ -55,10 +55,10 @@ export class DiagnosticcenterComponent implements OnInit {
   }
   addDiagnosticCenterPopup() {
     this.ref = this.dialogService.open(PopupDiagnosticcenterComponent, {
-      width: '1200px',
-      height: '430px',
+      width: '1000px',
+      height: '300px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         isForSaving: true
       }
@@ -72,10 +72,10 @@ export class DiagnosticcenterComponent implements OnInit {
   }
   updateDiagnosticCenterPopUp(diagnosticcenter: DiagnosticCenter) {
     this.ref = this.dialogService.open(PopupDiagnosticcenterComponent, {
-      width: '1200px',
-      height: '430px',
+      width: '1000px',
+      height: '300px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         diagnosticcenter,
         isForUpdating: true

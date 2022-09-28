@@ -57,10 +57,10 @@ export class ChiefcomplaintComponent implements OnInit {
   }
   addChiefComplaintPopup() {
     this.ref = this.dialogService.open(PopupChiefcomplaintComponent, {
-      width: '1200px',
-      height: '430px',
+      width: '1000px',
+      height: '300px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         isForSaving: true
       }
@@ -74,10 +74,10 @@ export class ChiefcomplaintComponent implements OnInit {
   }
   updateChiefComplaintPopUp(chiefcomplaint: ChiefComplaint) {
     this.ref = this.dialogService.open(PopupChiefcomplaintComponent, {
-      width: '1200px',
-      height: '430px',
+      width: '1000px',
+      height: '300px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         chiefcomplaint,
         isForUpdating: true

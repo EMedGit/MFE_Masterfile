@@ -1,18 +1,6 @@
 
 <form [formGroup]="discountsForm">
-    <div class="card p-fluid">
-        <div class="grid mb-0 mt-1">
-            <div class="col-6">
-                <h1>DISCOUNTS DETAIL</h1>
-            </div>            
-        </div>
-        <div class="row">
-            <div class="col">
-                <hr>
-            </div>
-            <div class="col">
-            </div>
-        </div>         
+    <p-panel header="DISCOUNTS DETAIL">              
         <div class="grid mb-1">
             <div class="col-5 p-fluid">
                 <span class="p-float-label">
@@ -33,8 +21,6 @@
         <div class="grid mb-1">
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
-                    <!-- <p-inputNumber inputId="discountschemaPharmacy"  formControlName="discountschemaPharmacy" suffix="%">
-                    </p-inputNumber> -->
                     <input
                     type="text"
                     id="discountschemaPharmacy"
@@ -47,8 +33,6 @@
             </div>
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
-                    <!-- <p-inputNumber inputId="discountschemaLaboratory" formControlName="discountSchemaLaboratory" suffix="%">
-                    </p-inputNumber> -->
                     <input
                     type="text"
                     id="discountschemaLaboratory"
@@ -61,8 +45,6 @@
             </div>
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
-                    <!-- <p-inputNumber inputId="discountschemaRadiology" formControlName="discountschemaRadiology" suffix="%">
-                    </p-inputNumber> -->
                     <input
                     type="text"
                     id="discountschemaRadiology"
@@ -92,5 +74,5 @@
                 </div>
             </div>
         </div>
-    </div>  
+    </p-panel>  
 </form>

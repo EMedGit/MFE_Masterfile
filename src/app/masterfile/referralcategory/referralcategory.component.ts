@@ -55,10 +55,10 @@ export class ReferralcategoryComponent implements OnInit {
   }
   addReferralCategoryPopup() {
     this.ref = this.dialogService.open(PopupReferralcategoryComponent, {
-      width: '1200px',
-      height: '430px',
+      width: '1000px',
+      height: '300px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         isForSaving: true
       }
@@ -72,10 +72,10 @@ export class ReferralcategoryComponent implements OnInit {
   }
   updateReferralCategoryPopUp(referralcategory: ReferralCategory) {
     this.ref = this.dialogService.open(PopupReferralcategoryComponent, {
-      width: '1200px',
-      height: '430px',
+      width: '1000px',
+      height: '300px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         referralcategory,
         isForUpdating: true

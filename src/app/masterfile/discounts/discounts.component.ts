@@ -55,9 +55,9 @@ export class DiscountsComponent implements OnInit {
   addDiscountsPopup() {
     this.ref = this.dialogService.open(PopupDiscountsComponent, {
       width: '1000px',
-      height: '450px',
+      height: '400px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         isForSaving: true
       }
@@ -72,9 +72,9 @@ export class DiscountsComponent implements OnInit {
   updateDiscountsPopUp(discounts: Discounts) {
     this.ref = this.dialogService.open(PopupDiscountsComponent, {
       width: '1000px',
-      height: '450px',
+      height: '400px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         discounts,
         isForUpdating: true

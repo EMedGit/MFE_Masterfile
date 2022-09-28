@@ -56,9 +56,9 @@ export class RadiologyComponent implements OnInit {
   addRadiologyPopup() {
     this.ref = this.dialogService.open(PopupRadiologyComponent, {
       width: '1200px',
-      height: '830px',
+      height: '400px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         isForSaving: true
       }
@@ -73,9 +73,9 @@ export class RadiologyComponent implements OnInit {
   updateRadiologyPopUp(radiology: Radiology) {
     this.ref = this.dialogService.open(PopupRadiologyComponent, {
       width: '1200px',
-      height: '830px',
+      height: '400px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         radiology,
         isForUpdating: true

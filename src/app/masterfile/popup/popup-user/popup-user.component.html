@@ -1,16 +1,5 @@
 <form [formGroup]="usersForm" (ngSubmit)="saveData()">
-  <div class="card p-fluid">
-    <div class="grid mb-0 mt-1">
-      <div class="col-12">
-        <h1>USER DETAIL</h1>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <hr />
-      </div>
-      <div class="col"></div>
-    </div>
+  <p-panel header="USER DETAIL">    
     <div class="col-12">
       <h3>Personal Information</h3>
     </div>
@@ -308,5 +297,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </p-panel>
 </form>

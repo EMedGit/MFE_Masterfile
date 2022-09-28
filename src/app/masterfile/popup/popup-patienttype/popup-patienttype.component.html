@@ -1,23 +1,11 @@
 
 <form [formGroup]="patienttypeForm">
-    <div class="card p-fluid">
-        <div class="grid mb-0 mt-1">
-            <div class="col-6">
-                <h1>PATIENT TYPE DETAIL</h1>
-            </div>            
-        </div>
-        <div class="row">
-            <div class="col">
-                <hr>
-            </div>
-            <div class="col">
-            </div>
-        </div>  
+    <p-panel header="PATIENT TYPE DETAIL">    
         <div class="grid mb-1">
             <div class="col-5 p-fluid">
                 <span class="p-float-label">
                     <p-dropdown inputId="healthFacilityId" optionLabel="name" [options]="healthFacilityList" [itemSize]="3" [virtualScroll]="true"
-	                [showClear]="true" (onChange)="selectedItem($event)"></p-dropdown> 
+	                appendTo="body"[showClear]="true" (onChange)="selectedItem($event)"></p-dropdown> 
                     <label for="healthFacilityId">Health Facility</label>
                 </span>
             </div>
@@ -48,5 +36,5 @@
                 </div>
             </div>
         </div>
-    </div>  
+    </p-panel>  
 </form>

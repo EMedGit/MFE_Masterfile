@@ -1,11 +1,9 @@
-<div class="card">
-    <div class="grid mt-2 mb-2">
+<p-panel>
+    <div class="grid">
         <div class="col-12" style="text-align:center">
             <h1> USERS </h1>
         </div>
     </div>
-</div>
-<div class="card mt-1">
     <p-toolbar styleClass="p-mb-4">
         <ng-template pTemplate="left" class="flex">
             <button pButton pRipple label="NEW" icon="pi pi-plus-circle" class="p-button-success mr-2" (click)="addUsersPopup()"></button>
@@ -43,6 +41,5 @@
             </tr>
         </ng-template>
     </p-table>
-   
-</div>
+</p-panel>
 <p-confirmDialog [style]="{ width: '50%' }"></p-confirmDialog>

@@ -53,10 +53,10 @@ export class BarangayComponent implements OnInit {
   }
   addBarangayPopup() {
     this.ref = this.dialogService.open(PopupBarangayComponent, {
-      width: '1200px',
-      height: '630px',
+      width: '1000px',
+      height: '400px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         isForSaving: true
       }
@@ -70,10 +70,10 @@ export class BarangayComponent implements OnInit {
   }
   updateBarangayPopUp(barangay: Barangay) {
     this.ref = this.dialogService.open(PopupBarangayComponent, {
-      width: '1200px',
-      height: '630px',
+      width: '1000px',
+      height: '400px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         barangay,
         isForUpdating: true

@@ -59,10 +59,10 @@ export class ProvinceComponent implements OnInit {
   }
   addProvincePopup() {
     this.ref = this.dialogService.open(PopupProvinceComponent, {
-      width: '1200px',
-      height: '530px',
+      width: '1000px',
+      height: '300px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         isForSaving: true
       }
@@ -107,10 +107,10 @@ export class ProvinceComponent implements OnInit {
   }
   updateProvincePopUp(province: Province) {
     this.ref = this.dialogService.open(PopupProvinceComponent, {
-      width: '1200px',
-      height: '530px',
+      width: '1000px',
+      height: '300px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         province,
         isForUpdating: true

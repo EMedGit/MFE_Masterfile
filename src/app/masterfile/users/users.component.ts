@@ -77,9 +77,9 @@ export class UsersComponent implements OnInit {
   addUsersPopup() {
     this.ref = this.dialogService.open(PopupUserComponent, {
       width: '1200px',
-      height: '750px',
+      height: '600px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         isForSaving: true,
       },
@@ -96,9 +96,9 @@ export class UsersComponent implements OnInit {
   updateUsersPopUp(users: Users) {
     this.ref = this.dialogService.open(PopupUserComponent, {
       width: '1200px',
-      height: '750px',
+      height: '600px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         users,
         isForUpdating: true,
@@ -143,9 +143,9 @@ export class UsersComponent implements OnInit {
   addUsersPermissions(users: Users) {
     this.ref = this.dialogService.open(PopupUserpermissionsComponent, {
       width: '1200px',
-      height: '750px',
+      height: '770px',
       showHeader: true,
-      closable: true,
+      closable: false,
       data: {
         users,
         isForSaving: true,
@@ -163,7 +163,7 @@ export class UsersComponent implements OnInit {
   addUsersHealthFacility(users: Users) {
     this.ref = this.dialogService.open(PopupUserhealthfacilityComponent, {
       width: '1200px',
-      height: '750px',
+      height: '620px',
       showHeader: true,
       closable: true,
       data: {

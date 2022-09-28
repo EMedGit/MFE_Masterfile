@@ -55,6 +55,7 @@ export class PopupMedicineComponent implements OnInit {
   loadData(): void {
     this.brandService.getBrandList().subscribe(retVal => { this.brandList = retVal });
     this.medicineService.getMedicineBrandList().subscribe(retVal => { this.medicineBrandList= retVal })
+    this.mcService.getMedicineCategory().subscribe(retVal => { this.mcList = retVal });
   }
   onValueChanges(): void {
     this.medicineForm.valueChanges.subscribe(value => {
@@ -81,18 +82,18 @@ export class PopupMedicineComponent implements OnInit {
         BrandData: null
       });
 
-    this.mcService.getMedicineCategory().subscribe({
-      next: (result: Medicinecategory[]) => {
-        this.mcList = result;
-        this.mcList = this.mcList.filter(x => x.status);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log(this.mcList);
-      }
-    });
+    // this.mcService.getMedicineCategory().subscribe({
+    //   next: (result: Medicinecategory[]) => {
+    //     this.mcList = result;
+    //     this.mcList = this.mcList.filter(x => x.status);
+    //   },
+    //   error: (err) => {
+    //     console.log(err);
+    //   },
+    //   complete: () => {
+    //     console.log(this.mcList);
+    //   }
+    // });
   }
 
   ClosePopUp(data: Medicine) {
