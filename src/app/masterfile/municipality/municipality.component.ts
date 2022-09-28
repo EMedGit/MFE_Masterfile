@@ -57,7 +57,7 @@ export class MunicipalityComponent implements OnInit {
   addMunicipalityPopup() {
     this.ref = this.dialogService.open(PopupMunicipalityComponent, {
       width: '1000px',
-      height: '350px',
+      height: '270px',
       showHeader: true,
       closable: false,
       data: {
@@ -104,7 +104,7 @@ export class MunicipalityComponent implements OnInit {
   updateMunicipalityPopUp(municipality: Municipality) {
     this.ref = this.dialogService.open(PopupMunicipalityComponent, {
       width: '1000px',
-      height: '350px',
+      height: '270px',
       showHeader: true,
       closable: false,
       data: {

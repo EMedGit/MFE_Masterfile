@@ -55,7 +55,7 @@ export class PatienttypeComponent implements OnInit {
   addPatientTypePopup() {
     this.ref = this.dialogService.open(PopupPatienttypeComponent, {
       width: '1000px',
-      height: '350px',
+      height: '325px',
       showHeader: true,
       closable: false,
       data: {
@@ -72,7 +72,7 @@ export class PatienttypeComponent implements OnInit {
   updatePatientTypePopUp(patienttype: PatientType) {
     this.ref = this.dialogService.open(PopupPatienttypeComponent, {
       width: '1000px',
-      height: '350px',
+      height: '325px',
       showHeader: true,
       closable: false,
       data: {

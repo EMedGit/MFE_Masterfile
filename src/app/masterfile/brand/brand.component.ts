@@ -55,7 +55,7 @@ export class BrandComponent implements OnInit {
   addBrandPopup() {
     this.ref = this.dialogService.open(PopupBrandComponent, {
       width: '1000px',
-      height: '400px',
+      height: '325px',
       showHeader: true,
       closable: false,
       data: {
@@ -72,7 +72,7 @@ export class BrandComponent implements OnInit {
   updateBrandPopUp(brand: Brand) {
     this.ref = this.dialogService.open(PopupBrandComponent, {
       width: '1000px',
-      height: '400px',
+      height: '325px',
       showHeader: true,
       closable: false,
       data: {

@@ -59,7 +59,7 @@ export class ConsultationtypeComponent implements OnInit {
   addConsultationTypePopup() {
     this.ref = this.dialogService.open(PopupConsultationtypeComponent, {
       width: '1000px',
-      height: '400px',
+      height: '325px',
       showHeader: true,
       closable: false,
       data: {
@@ -76,7 +76,7 @@ export class ConsultationtypeComponent implements OnInit {
   updateConsultationTypePopUp(consultationType: Consultationtype) {
     this.ref = this.dialogService.open(PopupConsultationtypeComponent, {
       width: '1000px',
-      height: '400px',
+      height: '325px',
       showHeader: true,
       closable: false,
       data: {

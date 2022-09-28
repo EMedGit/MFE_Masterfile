@@ -57,7 +57,7 @@ export class ReferralcategorydetailComponent implements OnInit {
   addReferralCategoryDetailPopup() {
     this.ref = this.dialogService.open(PopupReferralcategorydetailComponent, {
       width: '1000px',
-      height: '400px',
+      height: '380px',
       showHeader: true,
       closable: false,
       data: {
@@ -74,7 +74,7 @@ export class ReferralcategorydetailComponent implements OnInit {
   updateReferralCategoryDetailPopUp(referralcategorydetail: ReferralCategoryDetail) {
     this.ref = this.dialogService.open(PopupReferralcategorydetailComponent, {
       width: '1000px',
-      height: '400px',
+      height: '380px',
       showHeader: true,
       closable: false,
       data: {

@@ -56,7 +56,7 @@ export class SectionComponent implements OnInit {
   addSectionPopup() {
     this.ref = this.dialogService.open(PopupSectionComponent, {
       width: '1000px',
-      height: '350px',
+      height: '325px',
       showHeader: true,
       closable: false,
       data: {
@@ -75,7 +75,7 @@ export class SectionComponent implements OnInit {
   updateSectionPopup(section: Section) {
     this.ref = this.dialogService.open(PopupSectionComponent, {
       width: '1000px',
-      height: '350px',
+      height: '325px',
       showHeader: true,
       closable: false,
       data: {

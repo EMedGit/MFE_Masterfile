@@ -56,7 +56,7 @@ export class ImmunizationtypeComponent implements OnInit {
   addPopup() {
     this.ref = this.dialogService.open(PopupImmunizationtypeComponent, {
       width: '1000px',
-      height: '400px',
+      height: '325px',
       showHeader: true,
       closable: false,
       data: {
@@ -76,7 +76,7 @@ export class ImmunizationtypeComponent implements OnInit {
   updatePopUp(immunizationType: ImmunizationType) {
     this.dialogService.open(PopupImmunizationtypeComponent, {
       width: '1000px',
-      height: '400px',
+      height: '325px',
       showHeader: true,
       closable: false,
       data: {

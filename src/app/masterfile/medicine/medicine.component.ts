@@ -56,7 +56,7 @@ export class MedicineComponent implements OnInit {
   addPopup() {
     this.ref = this.dialogService.open(PopupMedicineComponent, {
       width: '1000px',
-      height: '450px',
+      height: '440px',
       showHeader: true,
       closable: false,
       data: {
@@ -75,7 +75,7 @@ export class MedicineComponent implements OnInit {
   updatePopUp(medicine: Medicine) {
     this.ref = this.dialogService.open(PopupMedicineComponent, {
       width: '1000px',
-      height: '450px',
+      height: '440px',
       showHeader: true,
       closable: false,
       data: {

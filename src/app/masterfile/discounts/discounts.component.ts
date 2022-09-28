@@ -55,7 +55,7 @@ export class DiscountsComponent implements OnInit {
   addDiscountsPopup() {
     this.ref = this.dialogService.open(PopupDiscountsComponent, {
       width: '1000px',
-      height: '400px',
+      height: '380px',
       showHeader: true,
       closable: false,
       data: {
@@ -72,7 +72,7 @@ export class DiscountsComponent implements OnInit {
   updateDiscountsPopUp(discounts: Discounts) {
     this.ref = this.dialogService.open(PopupDiscountsComponent, {
       width: '1000px',
-      height: '400px',
+      height: '380px',
       showHeader: true,
       closable: false,
       data: {

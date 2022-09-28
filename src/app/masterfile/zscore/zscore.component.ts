@@ -58,7 +58,7 @@ export class ZscoreComponent implements OnInit {
   addPopup() {
     this.ref = this.dialogService.open(PopupZscoreComponent, {
       width: '1000px',
-      height: '400px',
+      height: '380px',
       showHeader: true,
       closable: false,
       data: {
@@ -77,7 +77,7 @@ export class ZscoreComponent implements OnInit {
   updatePopUp(zScore: ZScore) {
     this.ref = this.dialogService.open(PopupZscoreComponent, {
       width: '1000px',
-      height: '400px',
+      height: '380px',
       showHeader: true,
       closable: false,
       data: {

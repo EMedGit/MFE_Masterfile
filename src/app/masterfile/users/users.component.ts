@@ -77,7 +77,7 @@ export class UsersComponent implements OnInit {
   addUsersPopup() {
     this.ref = this.dialogService.open(PopupUserComponent, {
       width: '1200px',
-      height: '600px',
+      height: '575px',
       showHeader: true,
       closable: false,
       data: {
@@ -96,7 +96,7 @@ export class UsersComponent implements OnInit {
   updateUsersPopUp(users: Users) {
     this.ref = this.dialogService.open(PopupUserComponent, {
       width: '1200px',
-      height: '600px',
+      height: '575px',
       showHeader: true,
       closable: false,
       data: {

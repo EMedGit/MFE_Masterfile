@@ -53,7 +53,7 @@ export class PhicmembercategoryComponent implements OnInit {
   addPHICMemberCategoryPopup() {
     this.ref = this.dialogService.open(PopupPhicmembercategoryComponent, {
       width: '1000px',
-      height: '400px',
+      height: '325px',
       showHeader: true,
       closable: false,
       data: {
@@ -70,7 +70,7 @@ export class PhicmembercategoryComponent implements OnInit {
   updatePHICMemberCategoryPopUp(phicmembercategory: Phicmembercategory) {
     this.ref = this.dialogService.open(PopupPhicmembercategoryComponent, {
       width: '1000px',
-      height: '400px',
+      height: '325px',
       showHeader: true,
       closable: false,
       data: {

@@ -63,7 +63,7 @@ export class DepartmentComponent implements OnInit {
   addDepartmentPopup() {
     this.ref = this.dialogService.open(PopupDepartmentComponent, {
       width: '1000px',
-      height: '400px',
+      height: '325px',
       showHeader: true,
       closable: false,
       data: {
@@ -82,7 +82,7 @@ export class DepartmentComponent implements OnInit {
   updateDepartmentPopup(department: Department) {
     this.ref = this.dialogService.open(PopupDepartmentComponent, {
       width: '1000px',
-      height: '400px',
+      height: '325px',
       showHeader: true,
       closable: false,
       data: {

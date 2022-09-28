@@ -63,7 +63,7 @@ export class CivilstatusComponent implements OnInit {
   addCivilStatusPopup() {
     this.ref = this.dialogService.open(PopupCivilstatusComponent, {
       width: '1000px',
-      height: '400px',
+      height: '325px',
       showHeader: true,
       closable: false,
       data: {
@@ -80,7 +80,7 @@ export class CivilstatusComponent implements OnInit {
   updateCivilStatusPopUp(civilStatus: CivilStatus) {
     this.ref = this.dialogService.open(PopupCivilstatusComponent, {
       width: '1000px',
-      height: '400px',
+      height: '325px',
       showHeader: true,
       closable: false,
       data: {

@@ -54,7 +54,7 @@ export class RvsComponent implements OnInit {
   addRVSPopup() {
     this.ref = this.dialogService.open(PopupRvsComponent, {
       width: '1000px',
-      height: '600px',
+      height: '585px',
       showHeader: true,
       closable: false,
       data: {
@@ -73,7 +73,7 @@ export class RvsComponent implements OnInit {
   updateRVSPopUp(rvs: RVS) {
     this.ref = this.dialogService.open(PopupRvsComponent, {
       width: '1000px',
-      height: '600px',
+      height: '585px',
       showHeader: true,
       closable: false,
       data: {

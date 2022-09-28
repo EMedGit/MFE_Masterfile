@@ -30,7 +30,6 @@ export class ChiefcomplaintComponent implements OnInit {
     this.fetchData();
   }
   fetchData() {
-    console.log('hello');
     this.chiefcomplaintService.getChiefcomplaint().subscribe({
       next: (result: ChiefComplaint[]) => {
         this.chiefcomplaintList = result;
@@ -58,7 +57,7 @@ export class ChiefcomplaintComponent implements OnInit {
   addChiefComplaintPopup() {
     this.ref = this.dialogService.open(PopupChiefcomplaintComponent, {
       width: '1000px',
-      height: '300px',
+      height: '275px',
       showHeader: true,
       closable: false,
       data: {
@@ -75,7 +74,7 @@ export class ChiefcomplaintComponent implements OnInit {
   updateChiefComplaintPopUp(chiefcomplaint: ChiefComplaint) {
     this.ref = this.dialogService.open(PopupChiefcomplaintComponent, {
       width: '1000px',
-      height: '300px',
+      height: '275px',
       showHeader: true,
       closable: false,
       data: {

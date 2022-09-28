@@ -10,7 +10,7 @@
 
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
-                    <p-dropdown inputId="rcbHealthFacility" [options]="healthFacilityList"
+                    <p-dropdown inputId="rcbHealthFacility" [options]="healthFacilityList" appendTo="body"
                         formControlName="healthFacilityId" [showClear]="true" [autoDisplayFirst]="false"
                         styleClass="dropdown-custom" optionLabel="name" optionValue="id"
                         [ngClass]="{ 'ng-invalid ng-dirty': (this.departmentForm.controls['healthFacilityId'].errors)}">
