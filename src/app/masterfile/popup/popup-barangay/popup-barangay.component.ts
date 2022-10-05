@@ -83,13 +83,20 @@ export class PopupBarangayComponent implements OnInit {
   }
   saveData() {
     if (this.isForSaving) {
-      this.addressService.postBarangay(this.getValue()).subscribe({
-        next: result => {
-          this.ClosePopUp(result);
-        }, error: (err) => {
-          this.toastService.showError(err.error.messages);
-        }, complete: () => {
-          this.toastService.showSuccess('Successfully Saved.');
+      this.addressService.GetBarangayAddressByCode(this.barangayForm.controls['barangayCode'].value).subscribe(retVal => {
+        let obj = retVal.find(x => x.barangayCode.toUpperCase() == this.barangayForm.controls['barangayCode'].value.toUpperCase())
+        if (obj != undefined) {
+          this.toastService.showError('Barangay Code already Exist!');
+        } else {
+          this.addressService.postBarangay(this.getValue()).subscribe({
+            next: result => {
+              this.ClosePopUp(result);
+            }, error: (err) => {
+              this.toastService.showError(err.error.messages);
+            }, complete: () => {
+              this.toastService.showSuccess('Successfully Saved.');
+            }
+          });
         }
       });
     }
@@ -106,7 +113,6 @@ export class PopupBarangayComponent implements OnInit {
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
     ) as string;
     if (this.isForUpdating) {
-      console.log('try', obj);
       this.addressService.putBarangay(data.id, obj).subscribe({
         next: (result: Barangay) => {
           obj = result;

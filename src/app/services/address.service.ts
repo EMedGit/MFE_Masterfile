@@ -22,6 +22,13 @@ export class AddressService {
       .set('ItemsPerPage', 99999);
     return this.http.get<Barangay[]>(`${environment.addressInformationAPI}/barangay`, { params })
   }
+  GetBarangayAddressByCode(HF_CODE: string): Observable<Barangay[]> {
+    const params = new HttpParams()
+      .set('BarangayCode', HF_CODE)
+      .set('Page', 0)
+      .set('ItemsPerPage', 999);
+    return this.http.get<Barangay[]>(`${environment.addressInformationAPI}/barangay`, { params });
+  }
   postBarangay(data : Barangay) : Observable<Barangay>{
     return this.http.post<Barangay>(`${environment.addressInformationAPI}/barangay/`, data, httpOptions);
   }

@@ -51,7 +51,6 @@ export class PopupPatienttypeComponent implements OnInit {
       {
         description: ['']
       });
-    console.log(this.patienttypeForm, 'aerox');
   }
 
   loadData(): void {
@@ -65,7 +64,6 @@ export class PopupPatienttypeComponent implements OnInit {
   }
   selectedItem(event: any) {
     this.healthfacility = event.value;
-    console.log('hello', this.healthfacility);
   }
   ngOnDestroy() {
     if (this.ref) {
