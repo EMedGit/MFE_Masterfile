@@ -43,7 +43,10 @@
     <ng-template pTemplate="header">
       <tr>
         <th pSortableColumn="type">
-          Claims<p-sortIcon field="type"></p-sortIcon>
+          Type<p-sortIcon field="type"></p-sortIcon>
+        </th>
+        <th pSortableColumn="type">
+          Permission<p-sortIcon field="type"></p-sortIcon>
         </th>
         <th style="width: 20rem">
           <p-checkbox
@@ -58,6 +61,7 @@
     </ng-template>
     <ng-template pTemplate="body" let-userpermission>
       <tr>
+        <td>Permission</td>
         <td>{{ userpermission.type }}</td>
         <td>
           <p-checkbox

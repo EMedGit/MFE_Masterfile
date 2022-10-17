@@ -54,7 +54,7 @@ export class PopupUserpermissionsComponent implements OnInit {
     this.prevuserpermissions = filter;
   }
   saveData() {
-    this.usersService.addupdateuserclaims(this.getValue()).subscribe({
+    this.usersService.addupdateuserclaims(this.getValue(this.userpermissions)).subscribe({
       next: (retVal) => {},
       error: (err) => {
         console.log(err);
@@ -85,15 +85,21 @@ export class PopupUserpermissionsComponent implements OnInit {
     //   },
     // });
   }
-  getValue(): UserClaim {
-    this.userpermissions.forEach((value) => {
-      value.value = value.checkboxvalue ? '1' : '0';
+  getValue(userpermissions:Claim[]): UserClaim {
+    // this.userpermissions.forEach((value) => {
+    //   value.value = value.checkboxvalue ? '1' : '0';
+    // });
+    let obj = Object.assign([],userpermissions) as Claim[];
+    obj.forEach((value:Claim) => {
+      if(value.checkboxvalue){
+      value.value = value.type;
+      value.type = 'Permission';
+      }
     });
     this.userclaims = {
       userId: this.config.data.users.id,
-      claims: this.userpermissions.filter((x) => x.value),
+      claims: obj.filter(x=>x.type==='Permission'),
     };
-    console.log(this.userclaims);
     return this.userclaims;
   }
   loaddata() {
@@ -103,6 +109,7 @@ export class PopupUserpermissionsComponent implements OnInit {
       .getUserClaims(this.config.data.users.id)
       .subscribe({
         next: (retVal) => {
+          console.log(retVal,'lol')
           this.listpermissions = retVal;
         },
         error: (err) => {
@@ -113,7 +120,7 @@ export class PopupUserpermissionsComponent implements OnInit {
             let claim = new Claim();
             let stringvalue = val.value as unknown;
             claim.type = val.type;
-            claim.checkboxvalue = stringvalue == '1' ? true : false;
+            claim.checkboxvalue = stringvalue !== '0' ? true : false;
             this.userpermissions.push(claim);
           });
           this.prevuserpermissions = this.userpermissions;
@@ -122,13 +129,39 @@ export class PopupUserpermissionsComponent implements OnInit {
   }
   selectRow() {
     if (this.checkstate) {
-      this.userpermissions.forEach((value) => {
-        value.checkboxvalue = true;
-      });
+      if(this.prevuserpermissions.length!==this.userpermissions.length)
+      {
+        this.userpermissions.forEach((value) => {
+          this.prevuserpermissions.forEach(prevvalue=>{
+            if(prevvalue.type==value.type)
+            {
+              value.checkboxvalue = true;
+            }
+          })
+        });
+      }
+      else{
+        this.userpermissions.forEach((value) => {
+          value.checkboxvalue = true;
+        });
+      }
     } else {
+      if(this.prevuserpermissions.length!==this.userpermissions.length)
+      {
+      this.userpermissions.forEach((value) => {
+        this.prevuserpermissions.forEach(prevvalue=>{
+          if(prevvalue.type==value.type&&prevvalue.checkboxvalue)
+          {
+            value.checkboxvalue = false;
+          }
+        })
+      });
+    }
+    else{
       this.userpermissions.forEach((value) => {
         value.checkboxvalue = false;
       });
+    }
     }
   }
 }
