@@ -184,7 +184,7 @@ export class PopupUserhealthfacilityComponent implements OnInit {
        })
     }});
   }
-  getValue(): UserHealthFacility[] {
+  getValue(): UserHealthFacility[] {   
     return this.userhealthfacility;
   }
   loaddata() {
@@ -290,6 +290,7 @@ export class PopupUserhealthfacilityComponent implements OnInit {
       });
   }
   selectHealthFacility(event: any) {
+
     this.departmentService
       .getDepartments(
         '',
@@ -406,8 +407,10 @@ export class PopupUserhealthfacilityComponent implements OnInit {
     this.userhealthfacilityobj.id = 0;
     this.userhealthfacilityobj.userId = this.config.data.users.id;
     this.userhealthfacilityobj.userFullName =
-      this.config.data.users.userFullName;
+      this.config.data.users.fullName;
     this.userhealthfacilityobj.healthFacilityId = this.healthfacility?.value.id;
+    this.userhealthfacilityobj.code = this.healthfacility?.value.code;
+    this.userhealthfacilityobj.facilityAddress = this.healthfacility?.value.facilityAddress;
     this.userhealthfacilityobj.departmentId = this.department?.value.id;
     this.userhealthfacilityobj.departmentName =
       this.department?.value.description;
@@ -416,8 +419,6 @@ export class PopupUserhealthfacilityComponent implements OnInit {
     this.userhealthfacilityobj.status = true;
     this.userhealthfacilityobj.healthFacilityName =
       this.healthfacility?.value.name;
-    this.userhealthfacilityobj.code = '';
-    this.userhealthfacilityobj.facilityAddress = '';
     this.userhealthfacility.push(this.userhealthfacilityobj);
     this.prevuserhealthfacility = this.userhealthfacility.filter(
       (x) => x.status
