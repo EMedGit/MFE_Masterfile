@@ -1,63 +1,77 @@
-<p-panel>
-    <div class="grid">
-        <div class="col-12" style="text-align:center">
-            <h1>ANCILLARY DEPARTMENT</h1>
-        </div>
-    </div>
-    <p-toolbar styleClass="p-mb-4">
-        <ng-template pTemplate="left" class="flex">
-            <button pButton pRipple label="NEW" icon="pi pi-plus-circle" class="p-button-success mr-2" (click)="addAncillaryDepartmentPopup()"></button>
-            <button pButton pRipple label="REMOVE" icon="pi pi-trash" class="p-button-danger" (click)="batchdeleteAncillaryDepartment()" [disabled]="!selectedAncillaryDepartment || !selectedAncillaryDepartment.length" ></button>
-        </ng-template>
-
-        <ng-template pTemplate="right">
-            <div class="p-d-flex p-ai-center p-jc-between">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" placeholder="Search..." (input)="filter()" [(ngModel)]="searchkey" />
-                </span>
+<div class="shadow-2">
+    <p-panel>
+        <div class="grid">
+            <div class="col-12" style="text-align:center">
+                <h1>ANCILLARY DEPARTMENT</h1>
             </div>
-        </ng-template>
-    </p-toolbar>
-    
-    <p-table #dt [value]="prevAncillaryDepartmentList" [rows]="5" [paginator]="true" [globalFilterFields]="['code','description']" 
-        [(selection)]="selectedAncillaryDepartment"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
-        
-        <ng-template pTemplate="header">
-            <tr>
-                <th style="width: 1rem">
-                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                </th>
-                <th pSortableColumn="code">Code<p-sortIcon field="code"></p-sortIcon></th>
-                <th pSortableColumn="description">Description <p-sortIcon field="description"></p-sortIcon></th>
-                <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
-                <th></th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-ancillarydepartment>
-            <tr>
-                <td>
-                    <p-tableCheckbox [value]="ancillarydepartment"></p-tableCheckbox>
-                </td>
-                <td>{{ancillarydepartment.code}}</td>
-                <td>{{ancillarydepartment.description}}</td>
-                <td>
-                    <i class="pi" style="font-size: 2rem"  [ngClass]="{'true-icon pi-check-circle': ancillarydepartment.status, 'false-icon pi-times-circle': !ancillarydepartment.status}"></i>
-                </td>
-                <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" (click)="updateAncillaryDepartmentPopUp(ancillarydepartment)"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="removeAncillaryDepartmentRecord(ancillarydepartment)"></button>
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
-</p-panel>
+        </div>
+        <div class="shadow-2">
+        <p-toolbar styleClass="p-mb-4">
+            <ng-template pTemplate="left" class="flex">
+                <button pButton pRipple label="NEW" icon="pi pi-plus-circle" class="p-button-success mr-2"
+                    (click)="addAncillaryDepartmentPopup()"></button>
+                <button pButton pRipple label="REMOVE" icon="pi pi-trash" class="p-button-danger"
+                    (click)="batchdeleteAncillaryDepartment()"
+                    [disabled]="!selectedAncillaryDepartment || !selectedAncillaryDepartment.length"></button>
+            </ng-template>
+
+            <ng-template pTemplate="right">
+                <div class="p-d-flex p-ai-center p-jc-between">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" placeholder="Search..." (input)="filter()"
+                            [(ngModel)]="searchkey" />
+                    </span>
+                </div>
+            </ng-template>
+        </p-toolbar>
+
+        <p-table #dt [value]="prevAncillaryDepartmentList" [rows]="5" [paginator]="true"
+            [globalFilterFields]="['code','description']" [(selection)]="selectedAncillaryDepartment"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 1rem">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th pSortableColumn="code">Code<p-sortIcon field="code"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="description">Description <p-sortIcon field="description"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon>
+                    </th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-ancillarydepartment>
+                <tr>
+                    <td>
+                        <p-tableCheckbox [value]="ancillarydepartment"></p-tableCheckbox>
+                    </td>
+                    <td>{{ancillarydepartment.code}}</td>
+                    <td>{{ancillarydepartment.description}}</td>
+                    <td>
+                        <i class="pi" style="font-size: 2rem"
+                            [ngClass]="{'true-icon pi-check-circle': ancillarydepartment.status, 'false-icon pi-times-circle': !ancillarydepartment.status}"></i>
+                    </td>
+                    <td>
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2"
+                            (click)="updateAncillaryDepartmentPopUp(ancillarydepartment)"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                            (click)="removeAncillaryDepartmentRecord(ancillarydepartment)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    </p-panel>
+</div>
 <p-confirmDialog [style]="{ width: '25%' }"></p-confirmDialog>
-<p-dialog header={{headermessage}} [(visible)]="displayResponsive" [breakpoints]="{'100px': '55vw'}" [style]="{width: '400px'}"
-[draggable]="false" [resizable]="false">
-<p>{{responsemessage}}</p>
+<p-dialog header={{headermessage}} [(visible)]="displayResponsive" [breakpoints]="{'100px': '55vw'}"
+    [style]="{width: '400px'}" [draggable]="false" [resizable]="false">
+    <p>{{responsemessage}}</p>
     <ng-template pTemplate="footer">
-    <p-button (click)="displayResponsive=false" label="OK" styleClass="p-button-text"></p-button>
+        <p-button (click)="displayResponsive=false" label="OK" styleClass="p-button-text"></p-button>
     </ng-template>
 </p-dialog>
