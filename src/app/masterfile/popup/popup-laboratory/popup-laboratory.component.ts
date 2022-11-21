@@ -138,6 +138,7 @@ export class PopupLaboratoryComponent implements OnInit {
     obj.ancillaryDepartmentId = this.laboratoryForm.controls['ancillaryDepartmentId'].value;
     obj.ancillarySpecializationId = this.laboratoryForm.controls['ancillarySpecializationId'].value;
     obj.activeInactiveStatus = this.laboratoryForm.controls['activeInactiveStatus'].value;
+    obj.classificationId = 1
     obj.modifiedBy = 'Fox';
     obj.modifiedDateTime = this.datePipe.transform(
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
@@ -173,6 +174,7 @@ export class PopupLaboratoryComponent implements OnInit {
     this.laboratory.ancillaryDepartmentId = this.laboratoryForm.controls['ancillaryDepartmentId'].value;
     this.laboratory.ancillarySpecializationId = this.laboratoryForm.controls['ancillarySpecializationId'].value;
     this.laboratory.activeInactiveStatus = this.laboratoryForm.controls['activeInactiveStatus'].value;
+    this.laboratory.classificationId = 1;
     return this.laboratory;
   }
 }

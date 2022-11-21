@@ -134,6 +134,7 @@ export class PopupRadiologyComponent implements OnInit {
     obj.ancillaryDepartmentId = this.radiologyForm.controls['ancillaryDepartmentId'].value;
     obj.ancillarySectionId = this.radiologyForm.controls['ancillarySectionId'].value;
     obj.activeInactiveStatus = this.radiologyForm.controls['activeInactiveStatus'].value;
+    obj.classificationId = 2;
     obj.modifiedBy = 'Fox';
     obj.modifiedDateTime = this.datePipe.transform(
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
@@ -168,6 +169,7 @@ export class PopupRadiologyComponent implements OnInit {
     this.radiology.ancillaryDepartmentId = this.radiologyForm.controls['ancillaryDepartmentId'].value;
     this.radiology.ancillarySectionId = this.radiologyForm.controls['ancillarySectionId'].value;
     this.radiology.activeInactiveStatus = this.radiologyForm.controls['activeInactiveStatus'].value;
+    this.radiology.classificationId = 2;
     return this.radiology;
   }
 }
