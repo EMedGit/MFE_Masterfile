@@ -100,8 +100,8 @@ export class PopupConsultationtypeComponent implements OnInit {
       obj.healthFacilityId = this.healthfacility.id;
       obj.healthFacilityCode = this.healthfacility.code;
     }
-    obj.code = this.consultationtypeForm.controls['code'].value;
-    obj.description = this.consultationtypeForm.controls['description'].value;
+    obj.code = this.consultationtypeForm.controls['code'].value.toUpperCase();
+    obj.description = this.consultationtypeForm.controls['description'].value.toUpperCase();
     obj.modifiedDateTime = this.datePipe.transform(
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
     ) as string;
@@ -133,8 +133,8 @@ export class PopupConsultationtypeComponent implements OnInit {
       this.consultationType.healthFacilityId = this.healthfacility.id;
       this.consultationType.healthFacilityCode = this.healthfacility.code;
     }
-    this.consultationType.code = this.consultationtypeForm.controls['code'].value;
-    this.consultationType.description = this.consultationtypeForm.controls['description'].value;
+    this.consultationType.code = this.consultationtypeForm.controls['code'].value.toUpperCase();
+    this.consultationType.description = this.consultationtypeForm.controls['description'].value.toUpperCase();
     return this.consultationType;
   }
 }

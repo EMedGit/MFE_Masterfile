@@ -18,3 +18,6 @@
 .pi-times-circle {
     color: rgb(224, 42, 17);
 }
+th, td, .p-dropdown, input{
+    text-transform: uppercase;
+}
