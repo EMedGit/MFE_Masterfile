@@ -55,7 +55,7 @@ export class UsersService {
   getUserClaims(username: string): Observable<Claim[]> {
     let params = new HttpParams();
     params = params.append('username', username);
-    // params = params.append('group', 'EHR');
+    params = params.append('group', 'EHR,SDN');
     return this.http
       .get<Claim[]>(`${environment.authAPI}/identity/getUserClaims`, { params })
       .pipe(
