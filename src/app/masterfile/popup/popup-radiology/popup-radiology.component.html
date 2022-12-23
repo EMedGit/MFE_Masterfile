@@ -56,7 +56,7 @@
             </div>
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
-                    <p-dropdown inputId="rcbAncillaryDepartment" [options]="ancillarydepartment"
+                    <p-dropdown inputId="rcbAncillaryDepartment" [options]="ancillarydepartment" appendTo="body"
                         formControlName="ancillaryDepartmentId" [showClear]="true" [autoDisplayFirst]="false"
                         styleClass="dropdown-custom" optionLabel="description" optionValue="id">
                     </p-dropdown>
@@ -65,7 +65,7 @@
             </div>
             <div class="col-4 p-fluid">
                 <span class="p-float-label">
-                    <p-dropdown inputId="rcbAncillarySection" [options]="ancillarysection"
+                    <p-dropdown inputId="rcbAncillarySection" [options]="ancillarysection" appendTo="body"
                         formControlName="ancillarySectionId" [showClear]="true" [autoDisplayFirst]="false"
                         styleClass="dropdown-custom" optionLabel="description" optionValue="id">
                     </p-dropdown>

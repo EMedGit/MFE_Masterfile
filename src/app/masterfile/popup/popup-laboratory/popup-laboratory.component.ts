@@ -93,7 +93,7 @@ export class PopupLaboratoryComponent implements OnInit {
         diagnosisRemarks: [''],
         ancillaryDepartmentId: null,
         ancillarySpecializationId: null,
-        activeInactiveStatus: ['']
+        activeInactiveStatus: 0
       });
   }
   ClosePopUp(data: Laboratory) {

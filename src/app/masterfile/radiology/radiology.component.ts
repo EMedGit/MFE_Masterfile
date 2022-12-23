@@ -43,10 +43,8 @@ export class RadiologyComponent implements OnInit {
     })
   }
   filter() {
-    console.log(this.selectedRadiology)
     let filter: any[] = [];
     this.radiologyList.forEach(val => {
-      console.log(val)
       if (val.description.toUpperCase().includes(this.searchkey.toUpperCase()) && val.status) {
         filter.push(val);
       }

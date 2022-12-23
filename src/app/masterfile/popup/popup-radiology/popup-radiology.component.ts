@@ -88,7 +88,7 @@ export class PopupRadiologyComponent implements OnInit {
         diagnosisRemarks: [''],
         ancillaryDepartmentId: null,
         ancillarySectionId: null,
-        activeInactiveStatus: ['']
+        activeInactiveStatus: 0
       });
   }
   ClosePopUp(data: Radiology) {
