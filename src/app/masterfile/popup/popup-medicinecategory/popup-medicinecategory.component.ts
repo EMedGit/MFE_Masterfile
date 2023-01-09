@@ -23,6 +23,7 @@ export class PopupMedicinecategoryComponent implements OnInit {
   isActiveStatus = false;
   isForSaving = false;
   isForUpdating = false;
+  disableButton = false;
 
   constructor(private ref: DynamicDialogRef,
     private config: DynamicDialogConfig,
@@ -60,6 +61,7 @@ export class PopupMedicinecategoryComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Code already Exist!');
         } else {
+          this.disableButton = true;
           this.medicinecategoryService.postMedicineCategory(this.getValue()).subscribe({
             next: result => {
               this.ClosePopUp(result);

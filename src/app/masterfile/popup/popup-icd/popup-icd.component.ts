@@ -19,6 +19,7 @@ export class PopupIcdComponent implements OnInit {
   isActiveStatus = false;
   isForSaving = false;
   isForUpdating = false;
+  disableButton = false;
 
   constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private icd10Service: ICD10Service, private toastService: ToastService) { }
 
@@ -65,6 +66,7 @@ export class PopupIcdComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Code already Exist!');
         } else {
+          this.disableButton = true;
           this.icd10Service.insert(this.getData()).subscribe({
             next: result => {
               this.ClosePopUp(result);

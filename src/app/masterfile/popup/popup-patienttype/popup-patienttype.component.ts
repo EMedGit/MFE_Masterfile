@@ -28,6 +28,7 @@ export class PopupPatienttypeComponent implements OnInit {
   isActiveStatus = false;
   isForSaving = false;
   isForUpdating = false;
+  disableButton = false;
 
   constructor(private ref: DynamicDialogRef,
     private config: DynamicDialogConfig,
@@ -77,6 +78,7 @@ export class PopupPatienttypeComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Description already Exist!');
         } else {
+          this.disableButton = true;
           this.patienttypeService.postPatientType(this.getValue()).subscribe({
             next: result => {
               this.ClosePopUp(result);

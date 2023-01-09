@@ -20,6 +20,7 @@ export class PopupPhysicalexaminationtypeComponent implements OnInit {
   isActiveStatus = false;
   isForSaving = false;
   isForUpdating = false;
+  disableButton = false;
 
   constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private petService: PhysicalExaminationTypeService, private toastService: ToastService) { }
 
@@ -57,6 +58,7 @@ export class PopupPhysicalexaminationtypeComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Type already Exist!');
         } else {
+          this.disableButton = true;
           this.petService.insert(this.getData()).subscribe({
             next: result => {
               this.ClosePopUp(result);

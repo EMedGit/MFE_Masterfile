@@ -31,6 +31,7 @@ export class PopupBarangayComponent implements OnInit {
   isActiveStatus = false;
   isForSaving = false;
   isForUpdating = false;
+  disableButton = false;
   address = new BehaviorSubject<Address>(new Address());
   outputAddress: EventEmitter<Address> = new EventEmitter<Address>();
   outputAddressForm: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
@@ -88,6 +89,7 @@ export class PopupBarangayComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Barangay Code already Exist!');
         } else {
+          this.disableButton = true;
           this.addressService.postBarangay(this.getValue()).subscribe({
             next: result => {
               this.ClosePopUp(result);

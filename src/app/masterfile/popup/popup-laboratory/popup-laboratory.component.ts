@@ -31,6 +31,7 @@ export class PopupLaboratoryComponent implements OnInit {
   isActiveStatus = false;
   isForSaving = false;
   isForUpdating = false;
+  disableButton = false;
   constructor(private ref: DynamicDialogRef,
     private config: DynamicDialogConfig,
     private ancillarydepartmentService: AncillarydepartmentService,
@@ -112,6 +113,7 @@ export class PopupLaboratoryComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Code already Exist!');
         } else {
+          this.disableButton = true;
           this.laboratoryService.postLaboratory(this.getValue()).subscribe({
             next: result => {
               this.ClosePopUp(result);

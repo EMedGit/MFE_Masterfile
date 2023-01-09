@@ -20,6 +20,7 @@ export class PopupZscoreComponent implements OnInit {
   isActiveStatus =  false;
   isForSaving = false;
   isForUpdating = false;
+  disableButton = false;
 
   genderList = [
     {code: 'M', description: 'MALE'},
@@ -64,6 +65,7 @@ export class PopupZscoreComponent implements OnInit {
 
   saveData() {
     if (this.isForSaving) {
+      this.disableButton = true;
       this.zScoreService.insert(this.getData()).subscribe({
         next: result => {
           this.ClosePopUp(result);

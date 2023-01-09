@@ -23,6 +23,7 @@ export class PopupPhicmembercategoryComponent implements OnInit {
   isActiveStatus=  false;
   isForSaving= false;
   isForUpdating= false;
+  disableButton = false;
 
   constructor(private ref : DynamicDialogRef, private config : DynamicDialogConfig, private phicmembercategoryService : PhicmembercategoryService, private datePipe : DatePipe, private toastService: ToastService) { }
 
@@ -58,6 +59,7 @@ export class PopupPhicmembercategoryComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Code already Exist!');
         } else {
+        this.disableButton = true;
         this.phicmembercategoryService.postPhicmembercategory(this.getValue()).subscribe({
           next: result => {
             this.ClosePopUp(result);

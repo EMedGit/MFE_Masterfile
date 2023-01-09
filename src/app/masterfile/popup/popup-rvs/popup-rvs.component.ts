@@ -20,6 +20,7 @@ export class PopupRvsComponent implements OnInit {
   isActiveStatus = false;
   isForSaving = false;
   isForUpdating = false;
+  disableButton = false;
 
   specialProcedures: SpecialProcedure[];
 
@@ -86,6 +87,7 @@ export class PopupRvsComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Code already Exist!');
         } else {
+          this.disableButton = true;
           this.rvsService.insert(this.getData()).subscribe({
             next: result => {
               this.ClosePopUp(result);

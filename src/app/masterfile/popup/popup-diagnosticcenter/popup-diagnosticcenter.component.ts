@@ -23,6 +23,7 @@ export class PopupDiagnosticcenterComponent implements OnInit {
   isActiveStatus = false;
   isForSaving = false;
   isForUpdating = false;
+  disableButton = false;
   constructor(private ref: DynamicDialogRef,
     private config: DynamicDialogConfig,
     private diagnosticcenterService: DiagnosticcenterService,
@@ -59,6 +60,7 @@ export class PopupDiagnosticcenterComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Code already Exist!');
         } else {
+          this.disableButton = true;
           this.diagnosticcenterService.postDiagnosticCenter(this.getValue()).subscribe({
             next: result => {
               this.ClosePopUp(result);

@@ -27,6 +27,7 @@ export class PopupMunicipalityComponent implements OnInit {
   isActiveStatus=  false;
   isForSaving= false;
   isForUpdating= false;
+  disableButton = false;
   address = new BehaviorSubject<Address>(new Address());
   outputAddress: EventEmitter<Address> = new EventEmitter<Address>();
   outputAddressForm: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
@@ -63,6 +64,7 @@ export class PopupMunicipalityComponent implements OnInit {
   }
   saveData(){
     if(this.isForSaving){
+      this.disableButton = true;
       this.addressService.postMunicipality(this.getValue()).subscribe({
         next: result => {
           this.ClosePopUp(result);
@@ -84,7 +86,6 @@ export class PopupMunicipalityComponent implements OnInit {
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
     ) as string;
     if(this.isForUpdating){
-      console.log('try', obj);
       this.addressService.putMunicipality(data.id, obj).subscribe({
         next : (result : Municipality) => {
           obj = result;

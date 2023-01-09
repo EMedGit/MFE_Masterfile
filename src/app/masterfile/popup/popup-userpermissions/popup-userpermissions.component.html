@@ -109,6 +109,7 @@
               *ngIf="isForSaving"
               label="SAVE"
               (click)="saveData()"
+              [disabled]="disableButton"
               class="p-button-success"
             ></button>
           </div>

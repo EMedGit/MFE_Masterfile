@@ -30,6 +30,7 @@ export class PopupProvinceComponent implements OnInit {
   isActiveStatus=  false;
   isForSaving= false;
   isForUpdating= false;
+  disableButton = false;
   address = new BehaviorSubject<Address>(new Address());
   outputAddress: EventEmitter<Address> = new EventEmitter<Address>();
   outputAddressForm: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
@@ -69,6 +70,7 @@ export class PopupProvinceComponent implements OnInit {
   }
   saveData(){
     if(this.isForSaving){
+      this.disableButton = true;
       this.addressService.postProvince(this.getValue()).subscribe({
         next: result => {
           this.ClosePopUp(result);

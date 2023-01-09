@@ -27,6 +27,7 @@ export class PopupConsultationtypeComponent implements OnInit {
   isActiveStatus=  false;
   isForSaving= false;
   isForUpdating= false;
+  disableButton = false;
 
   constructor(private ref : DynamicDialogRef, 
     private config : DynamicDialogConfig, 
@@ -75,6 +76,7 @@ export class PopupConsultationtypeComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Code already Exist!');
         } else {
+        this.disableButton = true;
         this.consultationtypeService.postConsultationType(this.getValue()).subscribe({
           next: result => {
             this.ClosePopUp(result);

@@ -28,6 +28,7 @@ export class PopupSectionComponent implements OnInit {
   isActiveStatus = false;
   isForSaving = false;
   isForUpdating = false;
+  disableButton = false;
 
   constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private sectionService: SectionService, private usersService: UsersService,
     private departmentService: DepartmentService, private hfService: HealthFacilityService, private toastService: ToastService) { }
@@ -72,6 +73,7 @@ export class PopupSectionComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Code already Exist!');
         } else {
+          this.disableButton = true;
           this.sectionService.insert(this.getData()).subscribe({
             next: result => {
               this.ClosePopUp(result);

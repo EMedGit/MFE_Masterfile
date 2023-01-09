@@ -23,6 +23,7 @@ export class PopupChiefcomplaintComponent implements OnInit {
   isActiveStatus = false;
   isForSaving = false;
   isForUpdating = false;
+  disableButton = false;
 
   constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private chiefcomplaintService: ChiefcomplaintService, private datePipe: DatePipe, private toastService: ToastService) { }
 
@@ -57,6 +58,7 @@ export class PopupChiefcomplaintComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Code already Exist!');
         } else {
+          this.disableButton = true;
           this.chiefcomplaintService.postChiefcomplaint(this.getValue()).subscribe({
             next: result => {
               this.ClosePopUp(result);

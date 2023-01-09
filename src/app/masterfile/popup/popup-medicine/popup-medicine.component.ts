@@ -34,6 +34,7 @@ export class PopupMedicineComponent implements OnInit {
   isActiveStatus = false;
   isForSaving = false;
   isForUpdating = false;
+  disableButton = false;
 
   mcList: Medicinecategory[];
   selectedMC: Medicinecategory;
@@ -113,6 +114,7 @@ export class PopupMedicineComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Code already Exist!');
         } else {
+          this.disableButton = true;
           this.medicineService.insert(this.getData()).subscribe({
             next: result => {
               this.getNewData();

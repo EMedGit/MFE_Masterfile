@@ -23,6 +23,7 @@ export class PopupHealthfacilityComponent implements OnInit {
   isActiveStatus = false;
   isForSaving = false;
   isForUpdating = false;
+  disableButton = false;
 
   constructor(private ref: DynamicDialogRef,
     private config: DynamicDialogConfig,
@@ -58,10 +59,12 @@ export class PopupHealthfacilityComponent implements OnInit {
     if (this.isForSaving) {
       this.healthFacilityService.GetHealthFacilityByHealthFacilityCode(this.healthFacilityForm.controls['code'].value).subscribe(retVal => {
         if (retVal)
+        this.disableButton = true;
           this.healthFacilityService.insert(this.getData()).subscribe({
             next: result => {
               this.ClosePopUp(result);
             }, error: (err) => {
+              this.disableButton = false;
               this.toastService.showError(err.error.messages);
             }, complete: () => {
               this.toastService.showSuccess('Successfully Saved.');

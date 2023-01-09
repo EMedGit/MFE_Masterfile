@@ -24,6 +24,7 @@ export class PopupPhysicalexaminationdetailComponent implements OnInit {
   isActiveStatus = false;
   isForSaving = false;
   isForUpdating = false;
+  disableButton = false;
 
   physicalexaminationdetailtype: PhysicalExaminationDetailType[];
   physicalexaminationtype: PhysicalExaminationType[];
@@ -99,6 +100,7 @@ export class PopupPhysicalexaminationdetailComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Code already Exist!');
         } else {
+          this.disableButton = true;
           this.pedService.insert(this.getData()).subscribe({
             next: result => {
               this.ClosePopUp(result);

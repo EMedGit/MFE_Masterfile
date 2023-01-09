@@ -27,6 +27,7 @@ export class PopupReferralcategorydetailComponent implements OnInit {
   isActiveStatus = false;
   isForSaving = false;
   isForUpdating = false;
+  disableButton = false;
 
   constructor(private ref: DynamicDialogRef,
     private config: DynamicDialogConfig,
@@ -77,6 +78,7 @@ export class PopupReferralcategorydetailComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Referral Category Description already Exist!');
         } else {
+          this.disableButton = true;
           this.referralcategorydetailService.postReferralcategorydetail(this.getValue()).subscribe({
             next: result => {
               this.ClosePopUp(result);

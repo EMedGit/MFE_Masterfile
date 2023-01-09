@@ -24,6 +24,7 @@ export class PopupDepartmentComponent implements OnInit {
   isActiveStatus = false;
   isForSaving = false;
   isForUpdating = false;
+  disableButton = false;
 
   healthFacilityId: number;
   healthfacility: HealthFacility;
@@ -70,6 +71,7 @@ export class PopupDepartmentComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Code already Exist!');
         } else {
+          this.disableButton = true;
           this.hfService.getHealthFacilityById(this.departmentForm.controls['healthFacilityId'].value).subscribe(retVal => {
             this.healthfacility = retVal;
             this.departmentService.insert(this.getData()).subscribe({

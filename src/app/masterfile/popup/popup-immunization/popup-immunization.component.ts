@@ -22,6 +22,7 @@ export class PopupImmunizationComponent implements OnInit {
   isActiveStatus = false;
   isForSaving = false;
   isForUpdating = false;
+  disableButton = false;
 
   immunizationList: ImmunizationType[];
 
@@ -68,6 +69,7 @@ export class PopupImmunizationComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Code already Exist!');
         } else {
+          this.disableButton = true;
           this.immunizationService.insert(this.getImmunizationData()).subscribe({
             next: retval => {
               this.ClosePopUp(retval);

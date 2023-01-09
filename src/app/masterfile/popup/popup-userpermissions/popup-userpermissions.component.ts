@@ -23,6 +23,7 @@ export class PopupUserpermissionsComponent implements OnInit {
   checkstate: boolean = false;
   isForSaving = false;
   isForUpdating = false;
+  disableButton = false;
   searchkey: '';
   constructor(
     private ref: DynamicDialogRef,
@@ -54,10 +55,10 @@ export class PopupUserpermissionsComponent implements OnInit {
     this.prevuserpermissions = filter;
   }
   saveData() {
+    this.disableButton = true;
     this.usersService.addupdateuserclaims(this.getValue(this.userpermissions)).subscribe({
       next: (retVal) => {},
       error: (err) => {
-        console.log(err);
         this.toastService.showError(err.error.messages);
       },
       complete: () => {

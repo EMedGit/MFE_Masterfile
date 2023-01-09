@@ -27,6 +27,7 @@ export class PopupDiscountsComponent implements OnInit {
   isActiveStatus = false;
   isForSaving = false;
   isForUpdating = false;
+  disableButton = false;
 
   constructor(private ref: DynamicDialogRef,
     private config: DynamicDialogConfig,
@@ -79,6 +80,7 @@ export class PopupDiscountsComponent implements OnInit {
         if (obj != undefined) {
           this.toastService.showError('Description already Exist!');
         } else {
+          this.disableButton = true;
           this.discountsService.postDiscounts(this.getValue()).subscribe({
             next: result => {
               this.ClosePopUp(result);

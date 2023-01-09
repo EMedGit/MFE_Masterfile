@@ -59,7 +59,7 @@
                         </div>
                         <div class="flex align-items-center justify-content-center mr-2">
                             <button pButton pRipple type="button" icon="pi pi-pencil" *ngIf="isForSaving" label="SAVE"
-                                class="p-button-success" (click)="saveData()"></button>
+                                class="p-button-success" (click)="saveData()" [disabled]="disableButton"></button>
                         </div>
                     </div>
                 </div>
