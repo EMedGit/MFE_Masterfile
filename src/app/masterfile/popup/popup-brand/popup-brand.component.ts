@@ -63,6 +63,7 @@ export class PopupBrandComponent implements OnInit {
           this.toastService.showError('Code already Exist!');
         } else {
         this.disableButton = true;
+        console.log(this.disableButton,'eyyy')
         this.brandService.postBrand(this.getValue()).subscribe({
           next: result => {
             this.ClosePopUp(result);
