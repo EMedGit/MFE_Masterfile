@@ -108,7 +108,6 @@ export class PopupConsultationtypeComponent implements OnInit {
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
     ) as string;
     if(this.isForUpdating){
-      console.log('try', obj);
       this.consultationtypeService.putConsultationType(data.id, obj).subscribe({
         next : (result : Consultationtype) => {
           obj = result;
