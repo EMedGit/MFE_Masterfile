@@ -102,8 +102,8 @@ export class PopupConsultationtypeComponent implements OnInit {
       obj.healthFacilityId = this.healthfacility.id;
       obj.healthFacilityCode = this.healthfacility.code;
     }
-    obj.code = this.consultationtypeForm.controls['code'].value.toUpperCase();
-    obj.description = this.consultationtypeForm.controls['description'].value.toUpperCase();
+    obj.code = (!this.consultationtypeForm.controls['code'].value ? this.toastService.showError('Code is Required') : this.consultationtypeForm.controls['code'].value.toUpperCase());
+    obj.description = !this.consultationtypeForm.controls['description'].value ? this.toastService.showError('Description is Required') : this.consultationtypeForm.controls['description'].value.toUpperCase();
     obj.modifiedDateTime = this.datePipe.transform(
       new Date(), 'yyyy-MM-ddTHH:mm:ss'
     ) as string;
@@ -114,7 +114,7 @@ export class PopupConsultationtypeComponent implements OnInit {
           this.ClosePopUp(result);
         },
         error : (err) => {
-          this.toastService.showError(err.error.messages);
+          // this.toastService.showError(err.error.messages);
         },
         complete : () => {
           this.toastService.showSuccess('Successfully Updated.');
