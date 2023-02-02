@@ -110,7 +110,6 @@ export class PopupUserpermissionsComponent implements OnInit {
       .getUserClaims(this.config.data.users.id)
       .subscribe({
         next: (retVal) => {
-          console.log(retVal,'lol')
           this.listpermissions = retVal;
         },
         error: (err) => {
