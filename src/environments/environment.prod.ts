@@ -15,10 +15,32 @@ export const environment = {
   // mediaAPI: 'http://13.75.89.190:11195/api/v1',
   // appId:'EHR-MABINI'
 
-   //LAUNION
-  masterfileAPI: 'https://launion-masterfile-live-api.azurewebsites.net/api/v1',
-  authAPI: 'https://launion-identity-live-api.azurewebsites.net/api/v1',
-  addressInformationAPI: 'https://psgcaddress-live-api.azurewebsites.net/api/v1',
-  mediaAPI: 'http://13.75.89.190:11195/api/v1',
-  appId:'EHR-LAUNION'
+  //LAUNION
+  // masterfileAPI: 'https://launion-masterfile-live-api.azurewebsites.net/api/v1',
+  // authAPI: 'https://launion-identity-live-api.azurewebsites.net/api/v1',
+  // addressInformationAPI: 'https://psgcaddress-live-api.azurewebsites.net/api/v1',
+  // mediaAPI: 'http://13.75.89.190:11195/api/v1',
+  // appId:'EHR-LAUNION'
+
+  //BATAANSAMAL
+  //  masterfileAPI: 'https://bataansamal-masterfile-live-api.azurewebsites.net/api/v1',
+  //  authAPI: 'https://bataansamal-identity-live-api.azurewebsites.net/api/v1',
+  //  addressInformationAPI: 'https://psgcaddress-live-api.azurewebsites.net/api/v1',
+  //  mediaAPI: 'http://13.75.89.190:11195/api/v1',
+  //  appId:'EHR-BATAANSAMAL'
+
+  //DEMO
+  // masterfileAPI: 'https://demo-masterfile-live-api.azurewebsites.net/api/v1',
+  // authAPI: 'https://demo-identity-live-api.azurewebsites.net/api/v1',
+  // addressInformationAPI:
+  //   'https://psgcaddress-live-api.azurewebsites.net/api/v1',
+  // mediaAPI: 'http://13.75.89.190:11195/api/v1',
+  // appId: 'EHR-DEMO',
+
+  //CALOOCAN
+   masterfileAPI: 'https://caloocan-masterfile-live-api.azurewebsites.net/api/v1',
+   authAPI: 'https://caloocan-identity-live-api.azurewebsites.net/api/v1',
+   addressInformationAPI: 'https://psgcaddress-live-api.azurewebsites.net/api/v1',
+   mediaAPI: 'http://13.75.89.190:11195/api/v1',
+   appId:'EHR-CALOOCAN'
 };
