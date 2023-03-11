@@ -45,9 +45,16 @@ export const environment = {
   //  appId:'EHR-CALOOCAN'
 
      //ILOCOS NORTE
-     masterfileAPI: 'https://ilocosnorte-masterfile-live-api.azurewebsites.net/api/v1',
-     authAPI: 'https://ilocosnorte-identity-live-api.azurewebsites.net/api/v1',
+    //  masterfileAPI: 'https://ilocosnorte-masterfile-live-api.azurewebsites.net/api/v1',
+    //  authAPI: 'https://ilocosnorte-identity-live-api.azurewebsites.net/api/v1',
+    //  addressInformationAPI: 'https://psgcaddress-live-api.azurewebsites.net/api/v1',
+    //  mediaAPI: 'http://13.75.89.190:11195/api/v1',
+    //  appId:'EHR-ILOCOSNORTE'
+
+    //BENGUET
+     masterfileAPI: 'https://benguet-masterfile-live-api.azurewebsites.net/api/v1',
+     authAPI: 'https://benguet-identity-live-api.azurewebsites.net/api/v1',
      addressInformationAPI: 'https://psgcaddress-live-api.azurewebsites.net/api/v1',
      mediaAPI: 'http://13.75.89.190:11195/api/v1',
-     appId:'EHR-ILOCOSNORTE'
+     appId:'EHR-BENGUET'
 };
