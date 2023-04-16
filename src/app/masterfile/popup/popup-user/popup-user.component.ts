@@ -181,12 +181,23 @@ export class PopupUserComponent implements OnInit {
           },
           complete: () => {
             this.toastService.showSuccess('User updated successfully!');
-            console.log(this.users)
             this.ref.close(this.users);
           },
         });
       }
     }
+  }
+  resetPassword() {
+    this.usersService.resetDefaultPassword(this.users.id).subscribe({
+      next: () => {},
+      error: (err) => {
+        this.toastService.showError(err.error.messages);
+      },
+      complete: () => {
+        this.toastService.showSuccess('Password reset to default successfully!');
+        this.ref.close(this.users);
+      }
+    });
   }
   getValue(): Users {
     this.users = Object.assign(this.users, this.usersForm.value);

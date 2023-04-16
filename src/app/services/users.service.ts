@@ -52,6 +52,9 @@ export class UsersService {
       httpOptions
     );
   }
+  resetDefaultPassword(userid: string): Observable<any> {
+    return this.http.put(`${environment.authAPI}/identity/resetDefaultPassword/${userid}`, httpOptions);
+  }
   getUserClaims(username: string): Observable<Claim[]> {
     let params = new HttpParams();
     params = params.append('username', username);
