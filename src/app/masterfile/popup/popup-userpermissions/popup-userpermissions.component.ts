@@ -18,12 +18,15 @@ export class PopupUserpermissionsComponent implements OnInit {
   selectedUserpermissions: Claim[];
   prevuserpermissions: Claim[];
   userpermissions: Claim[] = [];
+  selecteduserperms: Claim[] = [];
   listpermissions: Claim[] = [];
+  usersList: Users[] = [];
   userclaims: UserClaim = new UserClaim();
   checkstate: boolean = false;
   isForSaving = false;
   isForUpdating = false;
   disableButton = false;
+  isCopyUserChecked = false;
   searchkey: '';
   constructor(
     private ref: DynamicDialogRef,
@@ -34,7 +37,15 @@ export class PopupUserpermissionsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.buildFormGroup();
     this.loaddata();
+  }
+  buildFormGroup(): void {
+    this.formBuilder = new FormBuilder();
+    this.usersForm = this.formBuilder.group(
+      {
+        userId: [{value: null, disabled: true}]
+      });
   }
   ClosePopUp(data: Users) {
     this.ref.close(data);
@@ -125,7 +136,7 @@ export class PopupUserpermissionsComponent implements OnInit {
           });
           this.prevuserpermissions = this.userpermissions;
         }
-      });
+      });   
   }
   selectRow() {
     if (this.checkstate) {
@@ -163,5 +174,74 @@ export class PopupUserpermissionsComponent implements OnInit {
       });
     }
     }
+  }
+  CopyUser(event: any) : void {
+    if (event.checked) {
+      this.isCopyUserChecked = true;
+      this.usersForm.controls['userId'].enable();
+      this.usersService.getUsersList().subscribe({
+        next: retVal => {
+          this.usersList = retVal;
+        }, error: err => {
+          this.toastService.showError(err.error.messages);
+        }, complete: () => {
+          this.setValueChanges();
+        }
+      });    
+    } else {
+      this.isCopyUserChecked = false;
+      this.usersForm.controls['userId'].disable();
+      this.usersForm.reset();  
+    }
+  }
+  setValueChanges(): void {
+    this.usersForm.get('userId')?.valueChanges.subscribe(userId => {
+      if (this.isCopyUserChecked) {
+        this.usersService.getUserClaims(userId).subscribe({
+          next: (retVal) => {
+            this.listpermissions = retVal;
+          },
+          error: (err) => {},
+          complete: () => {
+            this.prevuserpermissions = [];
+            this.userpermissions = [];
+            this.listpermissions.forEach((val) => {
+              let claim = new Claim();
+              let stringvalue = val.value as unknown;
+              claim.type = val.type;
+              claim.checkboxvalue = stringvalue !== '0' ? true : false;
+              this.userpermissions.push(claim);
+            });
+            this.prevuserpermissions = this.userpermissions;
+          }
+        });
+      } else {
+        this.userdefaultpermission();  
+      }
+    }); 
+  }
+  userdefaultpermission() : void {
+    this.usersService
+      .getUserClaims(this.config.data.users.id)
+      .subscribe({
+        next: (retVal) => {
+          this.listpermissions = retVal;
+        },
+        error: (err) => {
+          console.log(err.error);
+        },
+        complete:()=>{
+          this.prevuserpermissions = [];
+          this.userpermissions = [];
+          this.listpermissions.forEach((val) => {
+            let claim = new Claim();
+            let stringvalue = val.value as unknown;
+            claim.type = val.type;
+            claim.checkboxvalue = stringvalue !== '0' ? true : false;
+            this.userpermissions.push(claim);
+          });
+          this.prevuserpermissions = this.userpermissions;
+        }
+      });
   }
 }

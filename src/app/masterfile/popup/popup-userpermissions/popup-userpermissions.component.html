@@ -9,8 +9,7 @@
     <div class="col">
       <hr />
     </div>
-    <div class="col"></div>
-  </div>
+  </div> 
   <p-toolbar styleClass="p-mb-4">
     <ng-template pTemplate="left" class="flex">
       <h3>Claims</h3>
@@ -30,6 +29,26 @@
       </div>
     </ng-template>
   </p-toolbar>
+  <form [formGroup]="usersForm">
+  <div class="row">
+    <div class="grid">
+      <div class="col-12 lg:col-2">
+        <p-checkbox class="mt-4" [binary]="true" inputId="binary" (onChange)="CopyUser($event)" ></p-checkbox>
+        <label for="binary"> Copy From: </label>
+      </div>
+      <div class="col-12 lg:col-10">
+        <div class="col-4 p-fluid mt-1">
+          <span class="p-float-label">
+              <p-dropdown inputId="rcbUserPermission" appendTo="body" [options]="usersList" formControlName="userId" optionValue="id" 
+                  [showClear]="true" [filter]="true" [autoDisplayFirst]="false" styleClass="dropdown-custom" optionLabel="userName">
+              </p-dropdown>
+              <label>Select a User to copy from <span style="color: red; font-weight: 1000">*</span></label>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
   <p-table
     #dt
     [value]="prevuserpermissions"
