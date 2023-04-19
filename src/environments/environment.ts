@@ -5,11 +5,9 @@
 export const environment = {
   production: false,
 
- //masterfileAPI: 'https://masterfile-development.azurewebsites.net/api/v1',
-//  authAPI: 'https://identity-development.azurewebsites.net/api/v1'
- authAPI: 'https://localhost:44368/api/v1'
-  ,masterfileAPI: 'https://localhost:44370/api/v1'
-  ,addressInformationAPI: 'https://localhost:44318/api/v1'
+  authAPI: 'https://identity-development.azurewebsites.net/api/v1'
+  ,masterfileAPI: 'https://masterfile-development.azurewebsites.net/api/v1'
+  ,addressInformationAPI: 'https://address-mfe.azurewebsites.net/remoteAddressInformation.js'
   ,mediaAPI: 'http://13.75.89.190:11198/api/v1'
   ,appId:'EHR-QA'
 };

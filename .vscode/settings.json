@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/c5c58b4d-c6e4-4a62-b717-a37a7bd6be30/microsoft.web/sites/subscriptions/c5c58b4d-c6e4-4a62-b717-a37a7bd6be30/resourceGroups/masterfile-_group/providers/Microsoft.Web/sites/masterfile-mfe",
+    "appService.deploySubpath": "dist\\masterfile"
+}
