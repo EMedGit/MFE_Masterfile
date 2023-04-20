@@ -52,9 +52,16 @@ export const environment = {
     //  appId:'EHR-ILOCOSNORTE'
 
     //BENGUET
-     masterfileAPI: 'https://benguet-masterfile-live-api.azurewebsites.net/api/v1',
-     authAPI: 'https://benguet-identity-live-api.azurewebsites.net/api/v1',
+    //  masterfileAPI: 'https://benguet-masterfile-live-api.azurewebsites.net/api/v1',
+    //  authAPI: 'https://benguet-identity-live-api.azurewebsites.net/api/v1',
+    //  addressInformationAPI: 'https://psgcaddress-live-api.azurewebsites.net/api/v1',
+    //  mediaAPI: 'http://13.75.89.190:11195/api/v1',
+    //  appId:'EHR-BENGUET'
+
+    //ZAMBALES
+     masterfileAPI: 'https://zambales-masterfile-live-api.azurewebsites.net/api/v1',
+     authAPI: 'https://zambales-identity-live-api.azurewebsites.net/api/v1',
      addressInformationAPI: 'https://psgcaddress-live-api.azurewebsites.net/api/v1',
      mediaAPI: 'http://13.75.89.190:11195/api/v1',
-     appId:'EHR-BENGUET'
+     appId:'EHR-ZAMBALES'
 };
