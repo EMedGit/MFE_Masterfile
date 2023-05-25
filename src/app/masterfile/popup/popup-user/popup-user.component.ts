@@ -202,14 +202,34 @@ export class PopupUserComponent implements OnInit {
   getValue(): Users {
     this.users = Object.assign(this.users, this.usersForm.value);
     this.users.prefix = this.usersForm.controls['prefix'].value.description;
-    this.users.fullName = this.users.lastName.concat(
-      ', ',
-      this.users.firstName,
-      ' ',
-      this.users.middleName,
-      ' ',
-      this.users.extensionName
-    );
+    // this.users.fullName = this.users.lastName.concat(
+    //   ', ',
+    //   this.users.firstName,
+    //   ' ',
+    //   this.users.middleName,
+    //   ' ',
+    //   this.users.extensionName
+    // );
+    if (this.users.prefix != null && this.users.prefix != undefined && this.users.prefix != '') {
+      this.users.fullName = this.users.prefix + ' ' + this.users.firstName.concat(
+        ', ',
+        this.users.middleName,
+        ' ',
+        this.users.lastName,
+        ' ',
+        this.users.extensionName
+      );
+    }
+    else {
+      this.users.fullName = this.users.firstName.concat(
+        ', ',
+        this.users.middleName,
+        ' ',
+        this.users.lastName,
+        ' ',
+        this.users.extensionName
+      );
+    }
     this.users.userTypeId =
       this.usersForm.controls['userTypeId'].value.description;
     this.users.isActive = true;
