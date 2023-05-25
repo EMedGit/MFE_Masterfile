@@ -212,7 +212,7 @@ export class PopupUserComponent implements OnInit {
     // );
     if (this.users.prefix != null && this.users.prefix != undefined && this.users.prefix != '') {
       this.users.fullName = this.users.prefix + ' ' + this.users.firstName.concat(
-        ', ',
+        ' ',
         this.users.middleName,
         ' ',
         this.users.lastName,
@@ -222,7 +222,7 @@ export class PopupUserComponent implements OnInit {
     }
     else {
       this.users.fullName = this.users.firstName.concat(
-        ', ',
+        ' ',
         this.users.middleName,
         ' ',
         this.users.lastName,
