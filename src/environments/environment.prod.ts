@@ -59,9 +59,16 @@ export const environment = {
     //  appId:'EHR-BENGUET'
 
     //ZAMBALES
-     masterfileAPI: 'https://zambales-masterfile-live-api.azurewebsites.net/api/v1',
-     authAPI: 'https://zambales-identity-live-api.azurewebsites.net/api/v1',
+    //  masterfileAPI: 'https://zambales-masterfile-live-api.azurewebsites.net/api/v1',
+    //  authAPI: 'https://zambales-identity-live-api.azurewebsites.net/api/v1',
+    //  addressInformationAPI: 'https://psgcaddress-live-api.azurewebsites.net/api/v1',
+    //  mediaAPI: 'http://13.75.89.190:11195/api/v1',
+    //  appId:'EHR-ZAMBALES'
+
+    //LABXASIA
+     masterfileAPI: 'https://labxasia-masterfile-live-api.azurewebsites.net/api/v1',
+     authAPI: 'https://labxasia-identity-live-api.azurewebsites.net/api/v1',
      addressInformationAPI: 'https://psgcaddress-live-api.azurewebsites.net/api/v1',
      mediaAPI: 'http://13.75.89.190:11195/api/v1',
-     appId:'EHR-ZAMBALES'
+     appId:'EHR-LABXASIA'
 };
