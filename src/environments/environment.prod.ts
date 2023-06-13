@@ -2,11 +2,11 @@ export const environment = {
   production: true,
 
   // QA
-  // masterfileAPI: 'https://masterfile-development.azurewebsites.net/api/v1',
-  // authAPI: 'https://identity-development.azurewebsites.net/api/v1',
-  // addressInformationAPI: 'https://psgcaddress-development.azurewebsites.net/api/v1',
-  // mediaAPI: 'http://13.75.89.190:11198/api/v1',
-  // appId:'EHR-QA'
+  masterfileAPI: 'https://masterfile-development.azurewebsites.net/api/v1',
+  authAPI: 'https://identity-development.azurewebsites.net/api/v1',
+  addressInformationAPI: 'https://psgcaddress-development.azurewebsites.net/api/v1',
+  mediaAPI: 'http://13.75.89.190:11198/api/v1',
+  appId:'EHR-QA'
 
   //MABINI
   // masterfileAPI: 'https://masterfile-live-api.azurewebsites.net/api/v1',
@@ -32,8 +32,7 @@ export const environment = {
   //DEMO
   // masterfileAPI: 'https://demo-masterfile-live-api.azurewebsites.net/api/v1',
   // authAPI: 'https://demo-identity-live-api.azurewebsites.net/api/v1',
-  // addressInformationAPI:
-  //   'https://psgcaddress-live-api.azurewebsites.net/api/v1',
+  // addressInformationAPI: 'https://psgcaddress-live-api.azurewebsites.net/api/v1',
   // mediaAPI: 'http://13.75.89.190:11195/api/v1',
   // appId: 'EHR-DEMO',
 
@@ -47,6 +46,13 @@ export const environment = {
      //ILOCOS NORTE
     //  masterfileAPI: 'https://ilocosnorte-masterfile-live-api.azurewebsites.net/api/v1',
     //  authAPI: 'https://ilocosnorte-identity-live-api.azurewebsites.net/api/v1',
+    //  addressInformationAPI: 'https://psgcaddress-live-api.azurewebsites.net/api/v1',
+    //  mediaAPI: 'http://13.75.89.190:11195/api/v1',
+    //  appId:'EHR-ILOCOSNORTE'
+
+    //BENGUET
+    //  masterfileAPI: 'https://benguet-masterfile-live-api.azurewebsites.net/api/v1',
+    //  authAPI: 'https://benguet-identity-live-api.azurewebsites.net/api/v1',
     //  addressInformationAPI: 'https://psgcaddress-live-api.azurewebsites.net/api/v1',
     //  mediaAPI: 'http://13.75.89.190:11195/api/v1',
     //  appId:'EHR-ILOCOSNORTE'

@@ -5,11 +5,17 @@
 export const environment = {
   production: false,
 
-  authAPI: 'https://identity-development.azurewebsites.net/api/v1'
-  ,masterfileAPI: 'https://masterfile-development.azurewebsites.net/api/v1'
-  ,addressInformationAPI: 'https://address-mfe.azurewebsites.net/remoteAddressInformation.js'
-  ,mediaAPI: 'http://13.75.89.190:11198/api/v1'
-  ,appId:'EHR-QA'
+  // authAPI: 'https://identity-development.azurewebsites.net/api/v1'
+  // ,masterfileAPI: 'https://masterfile-development.azurewebsites.net/api/v1'
+  // ,addressInformationAPI: 'https://address-mfe.azurewebsites.net/remoteAddressInformation.js'
+  // ,mediaAPI: 'http://13.75.89.190:11198/api/v1'
+  // ,appId:'EHR-QA'
+  //LABXASIA
+  masterfileAPI: 'https://labxasia-masterfile-live-api.azurewebsites.net/api/v1',
+  authAPI: 'https://labxasia-identity-live-api.azurewebsites.net/api/v1',
+  addressInformationAPI: 'https://psgcaddress-live-api.azurewebsites.net/api/v1',
+  mediaAPI: 'http://13.75.89.190:11195/api/v1',
+  appId:'EHR-LABXASIA'
 };
 
 /*
